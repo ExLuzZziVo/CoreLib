@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers
+namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public class StringExtendedComparer : IComparer<string>
     {

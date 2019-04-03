@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using UIServiceLib.CORE.Helpers.StringHelpers;
+﻿using System.Reflection;
+using CoreLib.CORE.Helpers.StringHelpers;
 
-namespace UIServiceLib.CORE.Helpers.IntHelpers
+namespace CoreLib.CORE.Helpers.IntHelpers
 {
     public static class IntExtensions
     {

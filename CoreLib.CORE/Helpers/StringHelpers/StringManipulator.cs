@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers
+namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class StringManipulator
     {

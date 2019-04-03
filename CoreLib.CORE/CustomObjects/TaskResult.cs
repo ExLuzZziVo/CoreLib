@@ -1,4 +1,4 @@
-﻿namespace UIServiceLib.CORE.CustomObjects
+﻿namespace CoreLib.CORE.CustomObjects
 {
     public enum ResultType
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers.Parsers
+namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
 {
     public static class DocumentAuthorityParser
     {

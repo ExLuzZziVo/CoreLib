@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.EnumHelpers
+namespace CoreLib.CORE.Helpers.EnumHelpers
 {
     public static class EnumManipulator
     {

@@ -7,14 +7,14 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using CoreLib.CORE.Helpers.AssemblyHelpers;
+using CoreLib.CORE.Helpers.ObjectHelpers;
+using CoreLib.CORE.Helpers.StringHelpers;
 using GOST;
-using UIServiceLib.CORE.Helpers.AssemblyHelpers;
-using UIServiceLib.CORE.Helpers.ObjectHelpers;
-using UIServiceLib.CORE.Helpers.StringHelpers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.CryptoHelpers
+namespace CoreLib.CORE.Helpers.CryptoHelpers
 {
     public enum CryptoType
     {

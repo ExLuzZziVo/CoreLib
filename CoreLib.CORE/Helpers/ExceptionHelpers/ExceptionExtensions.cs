@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.ExceptionHelpers
+namespace CoreLib.CORE.Helpers.ExceptionHelpers
 {
     public static class ExceptionExtensions
     {

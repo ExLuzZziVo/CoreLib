@@ -6,7 +6,7 @@ using System.Linq;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.CollectionHelpers
+namespace CoreLib.CORE.Helpers.CollectionHelpers
 {
     public static class CollectionExtensions
     {

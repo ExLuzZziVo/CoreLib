@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.AssemblyHelpers
+namespace CoreLib.CORE.Helpers.AssemblyHelpers
 {
     public sealed class SearchAssembliesBinder : SerializationBinder
     {

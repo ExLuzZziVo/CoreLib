@@ -6,7 +6,7 @@ using System.Linq;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.ObjectHelpers
+namespace CoreLib.CORE.Helpers.ObjectHelpers
 {
     public static class ObjectManipulator
     {

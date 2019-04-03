@@ -2,11 +2,11 @@
 
 using System;
 using System.IO;
-using UIServiceLib.CORE.Helpers.StringHelpers;
+using CoreLib.CORE.Helpers.StringHelpers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.FileHelpers.Generators
+namespace CoreLib.CORE.Helpers.FileHelpers.Generators
 {
     public static class FileNameGenerator
     {

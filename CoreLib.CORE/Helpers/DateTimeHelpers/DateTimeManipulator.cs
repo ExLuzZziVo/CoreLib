@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.DateTimeHelpers
+namespace CoreLib.CORE.Helpers.DateTimeHelpers
 {
     public static class DateTimeManipulator
     {

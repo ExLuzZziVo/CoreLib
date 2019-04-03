@@ -3,11 +3,10 @@
 using System;
 using NameCaseLib;
 using NameCaseLib.NCL;
-using UIServiceLib.CORE.Helpers.StringHelpers.Parsers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers.Generators
+namespace CoreLib.CORE.Helpers.StringHelpers.Generators
 {
     public static class NameCasesGenerator
     {

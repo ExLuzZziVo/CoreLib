@@ -2,11 +2,11 @@
 
 using System;
 using System.Threading.Tasks;
-using UIServiceLib.CORE.CustomObjects;
+using CoreLib.CORE.CustomObjects;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.TaskHelpers
+namespace CoreLib.CORE.Helpers.TaskHelpers
 {
     public static class TaskManipulator
     {

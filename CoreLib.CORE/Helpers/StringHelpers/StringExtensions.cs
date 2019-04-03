@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers
+namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class StringExtensions
     {

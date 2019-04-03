@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.StringHelpers.Parsers
+namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
 {
     public static class AddressParser
     {

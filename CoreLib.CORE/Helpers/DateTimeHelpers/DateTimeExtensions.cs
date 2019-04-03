@@ -2,11 +2,11 @@
 
 using System;
 using System.Globalization;
-using UIServiceLib.CORE.Helpers.IntHelpers;
+using CoreLib.CORE.Helpers.IntHelpers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.DateTimeHelpers
+namespace CoreLib.CORE.Helpers.DateTimeHelpers
 {
     public static class DateTimeExtensions
     {

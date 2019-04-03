@@ -6,11 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using UIServiceLib.CORE.Helpers.AssemblyHelpers;
+using CoreLib.CORE.Helpers.AssemblyHelpers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.ObjectHelpers
+namespace CoreLib.CORE.Helpers.ObjectHelpers
 {
     public static class ObjectExtensions
     {

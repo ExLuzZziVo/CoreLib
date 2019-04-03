@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using AngleSharp.Parser.Html;
+using CoreLib.CORE.Helpers.StringHelpers;
 using Ganss.XSS;
-using UIServiceLib.CORE.Helpers.StringHelpers;
 
 #endregion
 
-namespace UIServiceLib.CORE.Helpers.HtmlHelpers
+namespace CoreLib.CORE.Helpers.HtmlHelpers
 {
     public static class HtmlSanitizerHelper
     {
