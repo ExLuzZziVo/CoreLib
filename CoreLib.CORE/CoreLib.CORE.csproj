@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NameCaseLib.NET\NameCaseLib\NameCaseLib.csproj" />
     <ProjectReference Include="..\GOST\GOST\GOST.csproj" />
+    <ProjectReference Include="..\NameCaseLib\NameCaseLib\NameCaseLib.csproj" />
   </ItemGroup>
 
 </Project>
