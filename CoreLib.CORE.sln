@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOST", "GOST\GOST\GOST.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NameCaseLib", "NameCaseLib\NameCaseLib\NameCaseLib.csproj", "{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLib.ASP", "CoreLib.ASP\CoreLib.ASP.csproj", "{5F111929-FA24-4024-B109-856FFEE26490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F111929-FA24-4024-B109-856FFEE26490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F111929-FA24-4024-B109-856FFEE26490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F111929-FA24-4024-B109-856FFEE26490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F111929-FA24-4024-B109-856FFEE26490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
