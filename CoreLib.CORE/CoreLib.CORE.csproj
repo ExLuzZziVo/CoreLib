@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>CoreLib.CORE</AssemblyName>
+    <RootNamespace>CoreLib.CORE</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="4.0.210" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NameCaseLib.NET\NameCaseLib\NameCaseLib.csproj" />
+    <ProjectReference Include="..\GOST\GOST\GOST.csproj" />
+  </ItemGroup>
+
+</Project>
