@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using CoreLib.CORE.Helpers.StringHelpers;
 
 namespace CoreLib.CORE.Helpers.IntHelpers
@@ -239,6 +240,16 @@ namespace CoreLib.CORE.Helpers.IntHelpers
         public static bool IsEven(this int source)
         {
             return (source % 2) == 0;
+        }
+
+        public enum SizeUnits
+        {
+            Byte, KB, MB, GB, TB, PB, EB, ZB, YB
+        }
+
+        public static string ToFileSize(this long value, SizeUnits unit)
+        {
+            return (value / Math.Pow(1024, (long)unit)).ToString("0.00")+unit;
         }
 
     }
