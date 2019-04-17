@@ -35,7 +35,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                             imageFileSizeLimit.ToFileSize(IntExtensions.SizeUnits.MB)));
                 if (!imageFile.IsImage())
                     throw new FormatException(CommonStrings.ResourceManager.GetString("UploadFileFormatError"));
-                using (var stream = new FileStream(saveImageFilePath,
+                using (var stream = new FileStream($"{Directory.GetCurrentDirectory()}\\wwwroot{saveImageFilePath}",
                     FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);

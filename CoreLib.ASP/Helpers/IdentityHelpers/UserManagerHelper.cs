@@ -149,6 +149,7 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
         public async Task<Tuple<int, List<T>>> GetIdentityUsersAsync(int searchParamIndex, string searchString,
             int pageNumber, int pageSize)
         {
+
             if (searchString.IsNullOrEmptyOrWhiteSpace())
                 throw new ValidationException(
                     IdentityResources.ResourceManager.GetString("IdentityUserSearchStringIsEmpty"));
@@ -191,12 +192,12 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
                         (await _userManager.GetUsersInRoleAsync(searchString)).AsQueryable(), pageIndex, pageSize);
                     break;
             }
-
+            
             if (searchResult.Item1 == 0)
                 throw new ValidationException(
                     IdentityResources.ResourceManager.GetString("IdentityUserSearchResultEmptyError"));
 
-
+            
             return searchResult;
         }
 

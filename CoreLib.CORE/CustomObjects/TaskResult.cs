@@ -1,4 +1,6 @@
-﻿namespace CoreLib.CORE.CustomObjects
+﻿using System.Reflection;
+
+namespace CoreLib.CORE.CustomObjects
 {
     public enum ResultType
     {
