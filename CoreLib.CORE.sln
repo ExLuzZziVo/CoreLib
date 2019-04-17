@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE", "CoreLib.CORE\CoreLib.CORE.csproj", "{0E2F216A-0EF9-4678-950B-05E2E5A94019}"
 EndProject
@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOST", "GOST\GOST\GOST.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NameCaseLib", "NameCaseLib\NameCaseLib\NameCaseLib.csproj", "{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLib.ASP", "CoreLib.ASP\CoreLib.ASP.csproj", "{5F111929-FA24-4024-B109-856FFEE26490}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.ASP", "CoreLib.ASP\CoreLib.ASP.csproj", "{5F111929-FA24-4024-B109-856FFEE26490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLib.STANDALONE", "CoreLib.STANDALONE\CoreLib.STANDALONE.csproj", "{CC774938-2B4A-412E-92E8-296E4CF46F96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLib.OPENXML", "CoreLib.OPENXML\CoreLib.OPENXML.csproj", "{9CE9F480-25F8-4D90-A5C2-48C3C947A04C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{5F111929-FA24-4024-B109-856FFEE26490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F111929-FA24-4024-B109-856FFEE26490}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F111929-FA24-4024-B109-856FFEE26490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC774938-2B4A-412E-92E8-296E4CF46F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC774938-2B4A-412E-92E8-296E4CF46F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC774938-2B4A-412E-92E8-296E4CF46F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC774938-2B4A-412E-92E8-296E4CF46F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE9F480-25F8-4D90-A5C2-48C3C947A04C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE9F480-25F8-4D90-A5C2-48C3C947A04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE9F480-25F8-4D90-A5C2-48C3C947A04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE9F480-25F8-4D90-A5C2-48C3C947A04C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
