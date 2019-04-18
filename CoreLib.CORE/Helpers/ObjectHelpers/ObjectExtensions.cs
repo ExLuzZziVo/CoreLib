@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using CoreLib.CORE.Helpers.AssemblyHelpers;
 
 #endregion
@@ -70,24 +71,27 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             return obj;
         }
 
-        public static byte[] ToByteArray(this object obj)
+        public static byte[] ToByteArray(this object obj, DataContractJsonSerializerSettings jsonSerializerSettings = null)
         {
             if (obj == null)
                 return null;
             using (var ms = new MemoryStream())
             {
-                new BinaryFormatter().Serialize(ms, obj);
+                if(jsonSerializerSettings==null)
+                    new BinaryFormatter().Serialize(ms, obj);
+                else
+                    new DataContractJsonSerializer(obj.GetType(), jsonSerializerSettings).WriteObject(ms, obj);
                 return ms.ToArray();
             }
         }
 
-        public static T GetObject<T>(this byte[] data)
+        public static T GetObject<T>(this byte[] data, DataContractJsonSerializerSettings jsonSerializerSettings = null)
         {
             if (data == null)
-                return default(T);
+                return default;
             using (var ms = new MemoryStream(data))
             {
-                var obj = new BinaryFormatter().Deserialize(ms);
+                var obj = jsonSerializerSettings==null ? new BinaryFormatter().Deserialize(ms) : new DataContractJsonSerializer(typeof(T), jsonSerializerSettings).ReadObject(ms);
                 return (T) obj;
             }
         }
@@ -95,7 +99,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         public static T GetObject<T>(this byte[] data, Assembly assembly)
         {
             if (data == null)
-                return default(T);
+                return default;
             using (var ms = new MemoryStream(data))
             {
                 var obj = new BinaryFormatter {Binder = new SearchAssembliesBinder(assembly, true)}.Deserialize(ms);

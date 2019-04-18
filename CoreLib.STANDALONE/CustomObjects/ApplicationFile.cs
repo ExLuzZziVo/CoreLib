@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using CoreLib.CORE.Helpers.CryptoHelpers;
 
 #endregion
@@ -12,6 +13,7 @@ using CoreLib.CORE.Helpers.CryptoHelpers;
 namespace CoreLib.STANDALONE.CustomObjects
 {
     [DataContract]
+    [Serializable]
     public abstract class ApplicationFile : INotifyPropertyChanged
     {
         [field: NonSerialized] private static string _applicationFolder;
@@ -57,7 +59,8 @@ namespace CoreLib.STANDALONE.CustomObjects
 
             using (var fs = new FileStream(_filePath, FileMode.CreateNew))
             {
-                _cryptoService.CryptObject(fs, this, true);
+                _cryptoService.EncryptObject(fs, this,
+                    new DataContractJsonSerializerSettings {EmitTypeInformation = EmitTypeInformation.Never});
             }
 
             OnSaveFinished();
@@ -87,7 +90,8 @@ namespace CoreLib.STANDALONE.CustomObjects
                 {
                     using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
-                        return _cryptoService.CryptObject(fs, null, false) as ApplicationFile;
+                        return _cryptoService.DecryptObject<ApplicationFile>(fs,
+                            new DataContractJsonSerializerSettings {EmitTypeInformation = EmitTypeInformation.Never});
                     }
                 }
                 catch
@@ -105,10 +109,14 @@ namespace CoreLib.STANDALONE.CustomObjects
                                 using (var fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read,
                                     FileShare.Read))
                                 {
-                                    var objectToReturn = _cryptoService.CryptObject(fs, null, false) as ApplicationFile;
+                                    var objectToReturn = _cryptoService.DecryptObject<ApplicationFile>(fs,
+                                        new DataContractJsonSerializerSettings
+                                            {EmitTypeInformation = EmitTypeInformation.Never});
                                     using (var wfs = new FileStream(_filePath, FileMode.CreateNew))
                                     {
-                                        _cryptoService.CryptObject(wfs, objectToReturn, true);
+                                        _cryptoService.DecryptObject<ApplicationFile>(wfs,
+                                            new DataContractJsonSerializerSettings
+                                                {EmitTypeInformation = EmitTypeInformation.Never});
                                     }
 
                                     return objectToReturn;

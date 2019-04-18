@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.Text;
 using CoreLib.CORE.Helpers.AssemblyHelpers;
@@ -24,14 +25,14 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
 
     public class CryptoService
     {
+        private readonly string _key;
         private readonly CryptoType _provider;
         private readonly byte[] _salt;
-        private readonly string _key;
-    
+
         public CryptoService(string key,
             string salt, CryptoType provider = CryptoType.AES)
         {
-            if(key.IsNullOrEmptyOrWhiteSpace() || salt.IsNullOrEmptyOrWhiteSpace())
+            if (key.IsNullOrEmptyOrWhiteSpace() || salt.IsNullOrEmptyOrWhiteSpace())
                 throw new CryptographicException("Key and Salt must be specified!");
             _provider = provider;
             _salt = Encoding.ASCII.GetBytes(salt);
@@ -102,32 +103,34 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             return buffer;
         }
 
-        public string CryptString(string str, bool crypt)
+        public string EncryptString(string str)
         {
-            if (crypt)
-                using (var msEncrypt = new MemoryStream())
+            using (var msEncrypt = new MemoryStream())
+            {
+                switch (_provider)
                 {
-                    switch (_provider)
-                    {
-                        default:
-                        case CryptoType.AES:
-                            using (var csEncrypt =
-                                new CryptoStream(msEncrypt, CreateEncryptor(msEncrypt), CryptoStreamMode.Write))
+                    default:
+                    case CryptoType.AES:
+                        using (var csEncrypt =
+                            new CryptoStream(msEncrypt, CreateEncryptor(msEncrypt), CryptoStreamMode.Write))
+                        {
+                            using (var swEncrypt = new StreamWriter(csEncrypt))
                             {
-                                using (var swEncrypt = new StreamWriter(csEncrypt))
-                                {
-                                    swEncrypt.Write(str);
-                                }
+                                swEncrypt.Write(str);
                             }
+                        }
 
-                            return Convert.ToBase64String(msEncrypt.ToArray());
-                        case CryptoType.GOST:
-                            EncryptGost(msEncrypt,
-                                (gost, key, iv) => gost.XOREncode(key, iv, Encoding.Unicode.GetBytes(str)));
-                            return Convert.ToBase64String(msEncrypt.ToArray());
-                    }
+                        return Convert.ToBase64String(msEncrypt.ToArray());
+                    case CryptoType.GOST:
+                        EncryptGost(msEncrypt,
+                            (gost, key, iv) => gost.XOREncode(key, iv, Encoding.Unicode.GetBytes(str)));
+                        return Convert.ToBase64String(msEncrypt.ToArray());
                 }
+            }
+        }
 
+        public string DecryptString(string str)
+        {
             try
             {
                 var bytes = Convert.FromBase64String(str);
@@ -157,38 +160,48 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             }
         }
 
-        public object CryptObject(Stream s, object obj, bool crypt)
+        public void EncryptObject<T>(Stream s, T obj,
+            DataContractJsonSerializerSettings jsonSerializerSettings = null)
         {
-            if (crypt)
-                switch (_provider)
-                {
-                    case CryptoType.AES:
-                        using (var cs = new CryptoStream(s, CreateEncryptor(s), CryptoStreamMode.Write))
-                        {
-                            new BinaryFormatter().Serialize(cs, obj);
-                        }
-
-                        return null;
-                    case CryptoType.GOST:
-                        EncryptGost(s,
-                            (gost, key, iv) => gost.XOREncode(key, iv, obj.ToByteArray()));
-                        return null;
-                }
             switch (_provider)
             {
                 case CryptoType.AES:
+                    using (var cs = new CryptoStream(s, CreateEncryptor(s), CryptoStreamMode.Write))
+                    {
+                        if (jsonSerializerSettings == null)
+                            new BinaryFormatter().Serialize(cs, obj);
+                        else
+                            new DataContractJsonSerializer(typeof(T), jsonSerializerSettings).WriteObject(cs,
+                                obj);
+                    }
+                    break;
+                case CryptoType.GOST:
+                    var byteArray = jsonSerializerSettings == null ? obj.ToByteArray() : obj.ToByteArray(jsonSerializerSettings);
+                    EncryptGost(s,
+                        (gost, key, iv) => gost.XOREncode(key, iv, byteArray));
+                    break;
+            }
+        }
+
+        public T DecryptObject<T>(Stream s, DataContractJsonSerializerSettings jsonSerializerSettings = null)
+        {
+            switch (_provider)
+            {
+                default:
+                case CryptoType.AES:
                     using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))
                     {
-                        return new BinaryFormatter
-                            {Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true)}.Deserialize(cs);
+                        if (jsonSerializerSettings == null)
+                            return (T)new BinaryFormatter { Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true) }.Deserialize(cs);
+                        return (T)new DataContractJsonSerializer(typeof(T), jsonSerializerSettings).ReadObject(cs);
                     }
                 case CryptoType.GOST:
-                    return DecryptGost(s,
-                            (gost, key, iv, encrypted) => gost.XORDecode(key, iv, encrypted))
-                        .GetObject<object>(Assembly.GetEntryAssembly());
+                {
+                    var byteArray = DecryptGost(s,
+                        (gost, key, iv, encrypted) => gost.XORDecode(key, iv, encrypted));
+                    return jsonSerializerSettings == null ? byteArray.GetObject<T>(Assembly.GetEntryAssembly()) : byteArray.GetObject<T>(jsonSerializerSettings);
+                }
             }
-
-            return null;
         }
 
         private delegate byte[] GostEncryptOperationDelegate(GOSTManaged gost, byte[] key, byte[] iv);
