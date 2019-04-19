@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Json;
 using CoreLib.CORE.Helpers.AssemblyHelpers;
 
 #endregion
@@ -71,28 +70,24 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             return obj;
         }
 
-        public static byte[] ToByteArray(this object obj, DataContractJsonSerializerSettings jsonSerializerSettings = null)
+        public static byte[] ToByteArray(this object obj)
         {
             if (obj == null)
                 return null;
             using (var ms = new MemoryStream())
             {
-                if(jsonSerializerSettings==null)
-                    new BinaryFormatter().Serialize(ms, obj);
-                else
-                    new DataContractJsonSerializer(obj.GetType(), jsonSerializerSettings).WriteObject(ms, obj);
+                new BinaryFormatter().Serialize(ms, obj);
                 return ms.ToArray();
             }
         }
 
-        public static T GetObject<T>(this byte[] data, DataContractJsonSerializerSettings jsonSerializerSettings = null)
+        public static T GetObject<T>(this byte[] data)
         {
             if (data == null)
                 return default;
             using (var ms = new MemoryStream(data))
-            {
-                var obj = jsonSerializerSettings==null ? new BinaryFormatter().Deserialize(ms) : new DataContractJsonSerializer(typeof(T), jsonSerializerSettings).ReadObject(ms);
-                return (T) obj;
+            {              
+                return (T)new BinaryFormatter().Deserialize(ms);
             }
         }
 

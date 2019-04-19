@@ -4,24 +4,23 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using CoreLib.CORE.Helpers.CryptoHelpers;
+using CoreLib.CORE.Helpers.StringHelpers;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace CoreLib.STANDALONE.CustomObjects
 {
-    [DataContract]
-    [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public abstract class ApplicationFile : INotifyPropertyChanged
     {
-        [field: NonSerialized] private static string _applicationFolder;
-        [field: NonSerialized] private static string _backupFolder;
-        [field: NonSerialized] private static string _fileName;
-        [field: NonSerialized] private static string _filePath;
-        [field: NonSerialized] private static bool _isBackupEnabled;
-        [field: NonSerialized] private static CryptoService _cryptoService;
+        [field: NonSerialized] private string _applicationFolder;
+        [field: NonSerialized] private string _backupFolder;
+        [field: NonSerialized] private CryptoService _cryptoService;
+        [field: NonSerialized] private string _fileName;
+        [field: NonSerialized] private string _filePath;
+        [field: NonSerialized] private bool _isBackupEnabled;
 
         protected ApplicationFile(string applicationFolder, string fileName, CryptoService cryptoService,
             bool isBackupEnabled = false)
@@ -29,13 +28,13 @@ namespace CoreLib.STANDALONE.CustomObjects
             Init(applicationFolder, fileName, cryptoService, isBackupEnabled);
         }
 
-        private static void Init(string applicationFolder, string fileName, CryptoService cryptoService,
+        protected void Init(string applicationFolder, string fileName, CryptoService cryptoService,
             bool isBackupEnabled = false)
         {
             _applicationFolder = applicationFolder;
             _fileName = fileName;
             _filePath = Path.Combine(_applicationFolder, _fileName);
-            _backupFolder = Path.Combine(_applicationFolder, _fileName, "Backup");
+            _backupFolder = Path.Combine(_applicationFolder, "Backup");
             _isBackupEnabled = isBackupEnabled;
             _cryptoService = cryptoService;
         }
@@ -59,8 +58,10 @@ namespace CoreLib.STANDALONE.CustomObjects
 
             using (var fs = new FileStream(_filePath, FileMode.CreateNew))
             {
-                _cryptoService.EncryptObject(fs, this,
-                    new DataContractJsonSerializerSettings {EmitTypeInformation = EmitTypeInformation.Never});
+                using (var sw = new StreamWriter(fs))
+                {
+                    sw.Write(_cryptoService.EncryptString(JsonConvert.SerializeObject(this)));
+                }
             }
 
             OnSaveFinished();
@@ -70,68 +71,78 @@ namespace CoreLib.STANDALONE.CustomObjects
         {
         }
 
-        public static void ClearBackups(string applicationFolder, string fileName,
+        protected internal static void ClearBackups(string applicationFolder, string fileName,
             DateTime clearBeforeDate = new DateTime())
         {
-            Init(applicationFolder, fileName, null);
-            if (Directory.Exists(_backupFolder))
-                foreach (var file in new DirectoryInfo(_backupFolder)
+            var backupFolder = Path.Combine(applicationFolder, "Backup");
+            if (Directory.Exists(backupFolder))
+                foreach (var file in new DirectoryInfo(backupFolder)
                     .GetFiles($"{fileName}*").Where(f =>
                         clearBeforeDate == new DateTime() || f.LastWriteTime < clearBeforeDate))
                     file.Delete();
         }
 
-        public static ApplicationFile Load(string applicationFolder, string fileName, CryptoService cryptoService,
-            bool isBackupEnabled = false)
+        protected internal static T Load<T>(string applicationFolder, string fileName,
+            CryptoService cryptoService, bool isBackupEnabled = false) where T : ApplicationFile
         {
-            Init(applicationFolder, fileName, cryptoService, isBackupEnabled);
-            if (File.Exists(_filePath))
+            var filePath = Path.Combine(applicationFolder, fileName);
+            var backupFolder = Path.Combine(applicationFolder, "Backup");
+            T applicationFile = null;
+            if (File.Exists(filePath))
                 try
                 {
-                    using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
-                        return _cryptoService.DecryptObject<ApplicationFile>(fs,
-                            new DataContractJsonSerializerSettings {EmitTypeInformation = EmitTypeInformation.Never});
+                        using (var sr = new StreamReader(fs))
+                        {
+                            var jsonString =cryptoService.DecryptString(sr.ReadToEnd());
+                            if (jsonString.IsNullOrEmptyOrWhiteSpace())
+                                throw new ArgumentNullException(nameof(jsonString));
+                            applicationFile =
+                                JsonConvert.DeserializeObject<T>(jsonString);
+                        }
                     }
                 }
                 catch
                 {
-                    File.Delete(_filePath);
-                    if (_isBackupEnabled)
-                    {
-                        if (!Directory.Exists(_backupFolder))
-                            return null;
-
-                        foreach (var file in new DirectoryInfo(_backupFolder).GetFiles($"{_fileName}*")
-                            .OrderByDescending(f => f.LastWriteTime))
-                            try
+                    File.Delete(filePath);
+                    if (!Directory.Exists(backupFolder))
+                        return null;
+                    foreach (var file in new DirectoryInfo(backupFolder).GetFiles($"{fileName}*")
+                        .OrderByDescending(f => f.LastWriteTime))
+                        try
+                        {
+                            using (var fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read,
+                                FileShare.Read))
                             {
-                                using (var fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read,
-                                    FileShare.Read))
+                                using (var sr = new StreamReader(fs))
                                 {
-                                    var objectToReturn = _cryptoService.DecryptObject<ApplicationFile>(fs,
-                                        new DataContractJsonSerializerSettings
-                                            {EmitTypeInformation = EmitTypeInformation.Never});
-                                    using (var wfs = new FileStream(_filePath, FileMode.CreateNew))
-                                    {
-                                        _cryptoService.DecryptObject<ApplicationFile>(wfs,
-                                            new DataContractJsonSerializerSettings
-                                                {EmitTypeInformation = EmitTypeInformation.Never});
-                                    }
-
-                                    return objectToReturn;
+                                    var jsonString = cryptoService.DecryptString(sr.ReadToEnd());
+                                    if (jsonString.IsNullOrEmptyOrWhiteSpace())
+                                        throw new ArgumentNullException(nameof(jsonString));
+                                    applicationFile =
+                                        JsonConvert.DeserializeObject<T>(jsonString);
                                 }
-                            }
-                            catch
-                            {
-                                //
-                            }
-                    }
 
-                    return null;
+                                File.Copy(file.FullName, filePath, true);
+                                //using (var wfs = new FileStream(filePath, FileMode.CreateNew))
+                                //{
+                                //    using (var sw = new StreamWriter(wfs))
+                                //    {
+                                //        sw.Write(cryptoService.EncryptString(JsonConvert.SerializeObject(applicationFile)));
+                                //    }
+                                //}
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                            File.Delete(file.FullName);
+                        }
                 }
 
-            return null;
+            applicationFile?.Init(applicationFolder, fileName, cryptoService, isBackupEnabled);
+            return applicationFile;
         }
 
         #region Implement INotifyPropertyChanged
