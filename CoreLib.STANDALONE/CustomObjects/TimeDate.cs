@@ -28,7 +28,7 @@ namespace CoreLib.STANDALONE.CustomObjects
         }
 
         public DateTime GetDateTime => new DateTime(_date.Year, _date.Month, _date.Day, _hours, _minutes, 0);
-
+        [JsonProperty(nameof(Hours))]
         [DataMember]
         public int Hours
         {
@@ -43,7 +43,7 @@ namespace CoreLib.STANDALONE.CustomObjects
                 OnPropertyChanged(nameof(_hours));
             }
         }
-
+        [JsonProperty(nameof(Minutes))]
         [DataMember]
         public int Minutes
         {
@@ -58,7 +58,7 @@ namespace CoreLib.STANDALONE.CustomObjects
                 OnPropertyChanged(nameof(Minutes));
             }
         }
-
+        [JsonProperty(nameof(Date))]
         [DataMember]
         public DateTime Date
         {

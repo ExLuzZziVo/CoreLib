@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 #endregion
@@ -272,6 +273,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {"-г/о ", "-го "}
         };
 
+        public static string ReverseAddress(string source)
+        {
+            if (source.IsNullOrEmptyOrWhiteSpace())
+                return string.Empty;
+            var reversedArray = source.Split(',').Reverse();
+            return string.Join(", ", reversedArray).FormatText();
+        }
         public static string FormatAddress(string source)
         {
             if (source.IsNullOrEmptyOrWhiteSpace())
