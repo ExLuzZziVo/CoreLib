@@ -34,7 +34,7 @@ namespace CoreLib.STANDALONE.Helpers.ExceptionHelpers
         public static void SaveExceptionToFile(string applicationFolder, Exception ex)
         {
             var rootDir = Path.Combine(applicationFolder, "Logs");
-            var path = FileNameGenerator.GenerateNewFileName(rootDir, string.Empty, ".log");
+            var path = FileNameGenerator.GenerateNewFileName(rootDir, string.Empty, "log");
             var nowDate = DateTime.Now;
             using (var fs = new FileStream(path, FileMode.Create))
             {

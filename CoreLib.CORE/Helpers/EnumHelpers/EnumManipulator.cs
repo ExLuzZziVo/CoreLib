@@ -2,6 +2,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 #endregion
 
@@ -26,7 +27,8 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
                         return (T) field.GetValue(null);
                 }
 
-            throw new ArgumentException("Not found exception", $"Description \"{description}\" not found!");
+            return (T)Enum.ToObject(typeof(T), 0);
+            //throw new ArgumentException("Not found exception", $"Description \"{description}\" not found!");
         }
     }
 }

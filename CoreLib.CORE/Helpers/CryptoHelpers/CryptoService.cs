@@ -34,10 +34,18 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             if (key.IsNullOrEmptyOrWhiteSpace() || salt.IsNullOrEmptyOrWhiteSpace())
                 throw new CryptographicException("Key and Salt must be specified!");
             _provider = provider;
-            _salt = Encoding.ASCII.GetBytes(salt);
+            _salt = Encoding.Unicode.GetBytes(salt);
             _key = key;
         }
-
+        public CryptoService(string key,
+            byte[] salt, CryptoType provider = CryptoType.AES)
+        {
+            if (key.IsNullOrEmptyOrWhiteSpace() || salt.Length==0)
+                throw new CryptographicException("Key and Salt must be specified!");
+            _provider = provider;
+            _salt = salt;
+            _key = key;
+        }
         private ICryptoTransform CreateEncryptor(Stream s)
         {
             var key = new Rfc2898DeriveBytes(_key, _salt);

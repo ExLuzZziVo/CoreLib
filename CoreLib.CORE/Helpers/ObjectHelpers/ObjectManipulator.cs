@@ -10,6 +10,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 {
     public static class ObjectManipulator
     {
+        public static readonly object Locker = new object();
         public static IEnumerable<string> GetPropertyDescriptions<T>()
         {
             var attributes = typeof(T).GetMembers()

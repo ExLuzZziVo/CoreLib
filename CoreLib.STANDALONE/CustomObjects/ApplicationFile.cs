@@ -21,7 +21,7 @@ namespace CoreLib.STANDALONE.CustomObjects
         [field: NonSerialized] private string _fileName;
         [field: NonSerialized] private string _filePath;
         [field: NonSerialized] private bool _isBackupEnabled;
-
+        [field:NonSerialized] private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings{ ObjectCreationHandling = ObjectCreationHandling.Replace };
         protected ApplicationFile(string applicationFolder, string fileName, CryptoService cryptoService,
             bool isBackupEnabled = false)
         {
@@ -60,7 +60,7 @@ namespace CoreLib.STANDALONE.CustomObjects
             {
                 using (var sw = new StreamWriter(fs))
                 {
-                    sw.Write(_cryptoService.EncryptString(JsonConvert.SerializeObject(this)));
+                    sw.Write(_cryptoService.EncryptString(JsonConvert.SerializeObject(this, _jsonSerializerSettings)));
                 }
             }
 
@@ -99,7 +99,7 @@ namespace CoreLib.STANDALONE.CustomObjects
                             if (jsonString.IsNullOrEmptyOrWhiteSpace())
                                 throw new ArgumentNullException(nameof(jsonString));
                             applicationFile =
-                                JsonConvert.DeserializeObject<T>(jsonString);
+                                JsonConvert.DeserializeObject<T>(jsonString, _jsonSerializerSettings);
                         }
                     }
                 }
@@ -121,7 +121,7 @@ namespace CoreLib.STANDALONE.CustomObjects
                                     if (jsonString.IsNullOrEmptyOrWhiteSpace())
                                         throw new ArgumentNullException(nameof(jsonString));
                                     applicationFile =
-                                        JsonConvert.DeserializeObject<T>(jsonString);
+                                        JsonConvert.DeserializeObject<T>(jsonString, _jsonSerializerSettings);
                                 }
 
                                 File.Copy(file.FullName, filePath, true);

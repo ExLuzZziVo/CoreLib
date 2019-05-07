@@ -1,14 +1,28 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 #endregion
 
 namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
 {
+    [Obfuscation(Exclude = false, Feature = "optimizations:EnumRemoval=false")]
+    public enum DocumentType
+    {
+        [Description("паспорт гражданина РФ")]
+        RU_Passport,
+        [Description("ВНЖ")]
+        RU_Residence,
+        [Description("РВП")]
+        RU_TempResidence
+    }
     public static class DocumentAuthorityParser
     {
-        private static readonly Dictionary<string, string> DocumentStringsDictionary = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> DocumentShortStringsDictionary = new Dictionary<string, string>
         {
             {"Гу", "ГУ"},
             {"Уфмс", "УФМС"},
@@ -30,6 +44,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {"Пс", "ПС"},
             {"Мп", "МП"},
             {"Рф", "РФ"},
+            {"Пвс", "ПВС"},
             {"Овм", "ОВМ"},
             {"Увм", "УВМ"},
             {"Увд", "УВД"},
@@ -92,7 +107,10 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {"О.", "о."},
             {"П.", "п."},
             {"Пос.", "пос."},
-            {"Р.", "р."},
+            {"Р.", "р."}
+        };
+        private static readonly Dictionary<string,string> DocumentLongStringsDictionary = new Dictionary<string, string>
+        {
             {"Городской Округ", "г. о."},
             {"Городского Округа", "г. о."},
             {"Городскому Округу", "г. о."},
@@ -127,14 +145,51 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {"Территориальным Пунктом", "ТП"},
             {"Миграционным Пунктом", "МП"}
         };
-
         public static string FormatDocumentAuthority(string source)
         {
             if (source.IsNullOrEmptyOrWhiteSpace())
                 return string.Empty;
             source = source.FormatText().ToUpperAllFirstChars();
-            foreach (var e in DocumentStringsDictionary) source = source.Replace(e.Key, e.Value);
+            var strArray = source.Split(' ');
+            source = string.Empty;
+            var i = 0;
+            foreach (var str in strArray)
+            {
+                if (str == string.Empty)
+                    continue;
+                foreach (var d in DocumentShortStringsDictionary.Where(d => str == d.Key))
+                {
+                    strArray[i] = d.Value;
+                    break;
+                }
+                source += $"{(i == 0 ? "" : " ")}{strArray[i]}";
+                i++;
+            }
+            foreach (var e in DocumentLongStringsDictionary) source = source.Replace(e.Key, e.Value);
             return source.TrimWholeString();
+        }
+
+        public static string DocumentNumberSeparator(string number, DocumentType documentType)
+        {
+            if(number.IsNullOrEmptyOrWhiteSpace())
+                throw new ArgumentNullException(nameof(number), "Document number must be specified!");
+            string tempNumber;
+            switch (documentType)
+            {
+                case DocumentType.RU_Passport:
+                    tempNumber = number.Replace(" ", "");
+                    if(tempNumber.Length!=10)
+                        throw new ArgumentOutOfRangeException(nameof(number), "RU_Passport must be 10 characters length.");
+                    return tempNumber.Insert(4, " ");
+                case DocumentType.RU_Residence:
+                    tempNumber = number.Replace(" ", "");
+                    if (tempNumber.Length != 8)
+                        throw new ArgumentOutOfRangeException(nameof(number), "RU_Residence must be 8 characters length.");
+                    return tempNumber.Insert(2, " ");
+                case DocumentType.RU_TempResidence:
+                default:
+                    return number;
+            }
         }
     }
 }
