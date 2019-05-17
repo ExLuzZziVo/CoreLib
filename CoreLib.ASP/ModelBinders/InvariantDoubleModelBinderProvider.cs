@@ -1,36 +1,34 @@
-﻿#region
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-#endregion
-
 namespace CoreLib.ASP.ModelBinders
 {
-    public class InvariantDecimalModelBinderProvider : IModelBinderProvider
+    public class InvariantDoubleModelBinderProvider : IModelBinderProvider
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
-            if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(decimal) ||
-                                                    context.Metadata.ModelType == typeof(decimal?)))
-                return new InvariantDecimalModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType,
+            if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(double) ||
+                                                    context.Metadata.ModelType == typeof(double?)))
+                return new InvariantDoubleModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType,
                     context.Services.GetService<ILoggerFactory>()));
 
             return null;
         }
     }
 
-    public class InvariantDecimalModelBinder : IModelBinder
+    public class InvariantDoubleModelBinder : IModelBinder
     {
         private readonly IModelBinder _modelBinder;
 
-        public InvariantDecimalModelBinder(IModelBinder modelBinder)
+        public InvariantDoubleModelBinder(IModelBinder modelBinder)
         {
             _modelBinder = modelBinder;
         }
@@ -48,7 +46,7 @@ namespace CoreLib.ASP.ModelBinders
                 var valueAsString = valueProviderResult.FirstValue;
 
 
-                if (decimal.TryParse(valueAsString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
+                if (double.TryParse(valueAsString, NumberStyles.Any,
                     CultureInfo.InvariantCulture, out var result))
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);
