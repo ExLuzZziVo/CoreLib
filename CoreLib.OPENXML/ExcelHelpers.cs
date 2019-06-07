@@ -11,7 +11,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 #endregion
 
-namespace OpenXMLProcLib
+namespace CoreLib.OPENXML
 {
     public static class ExcelHelpers
     {

@@ -252,5 +252,12 @@ namespace CoreLib.CORE.Helpers.IntHelpers
             return (value / Math.Pow(1024, (long)unit)).ToString("0.00")+unit;
         }
 
+        public static bool IsInRange(this int value, int value1, int value2)
+        {
+            if (value2 < value1)
+                return value.IsInRange(value2, value1);
+            return value >= value1 && value <= value2;
+        }
+
     }
 }

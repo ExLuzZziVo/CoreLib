@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 #endregion
 
@@ -20,6 +22,12 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
             }
 
             return en.ToString();
+        }
+
+        public static IEnumerable<string> GetDescriptions(Type type)
+        {
+            var names = Enum.GetNames(type);
+            return (from name in names select type.GetField(name) into field from DescriptionAttribute fd in field.GetCustomAttributes(typeof(DescriptionAttribute), true) select fd.Description).ToList();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
     [Obfuscation(Exclude = false, Feature = "optimizations:EnumRemoval=false")]
     public enum DocumentType
     {
+        Custom,
         [Description("паспорт гражданина РФ")]
         RU_Passport,
         [Description("ВНЖ")]
@@ -186,6 +187,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                     if (tempNumber.Length != 8)
                         throw new ArgumentOutOfRangeException(nameof(number), "RU_Residence must be 8 characters length.");
                     return tempNumber.Insert(2, " ");
+                case DocumentType.Custom:
                 case DocumentType.RU_TempResidence:
                 default:
                     return number;

@@ -9,13 +9,15 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 #endregion
 
-namespace OpenXMLProcLib
+namespace CoreLib.OPENXML
 {
     public static class WordHelpers
     {
         public static void FindAndReplaceTextInWordDocument(string docFullPath,
             Dictionary<string, string> findReplaceDictionary)
         {
+            if(findReplaceDictionary.Count==0)
+                return;
             using (var wordDoc = WordprocessingDocument.Open(
                 docFullPath,
                 true))
@@ -27,6 +29,56 @@ namespace OpenXMLProcLib
                 foreach (var e in elements)
                 foreach (var de in findReplaceDictionary)
                     ReplaceText(e, de.Key, de.Value);
+            }
+        }
+
+        public static void FindAndSetBoldTextInWordDocument(string docFullPath, IEnumerable<string> findText)
+        {
+            if(!findText.Any())
+                return;
+            using (var wordDoc = WordprocessingDocument.Open(
+                docFullPath,
+                true))
+            {
+                var body = wordDoc.MainDocumentPart.Document.Body;
+                var elements = new List<OpenXmlCompositeElement>();
+                elements.AddRange(body.Elements<Paragraph>());
+                elements.AddRange(body.Elements<Table>());
+                foreach (var e in elements)
+                foreach (var t in findText)
+                    SetBoldText(e, t);
+            }
+        }
+
+        private static void SetBoldText(OpenXmlCompositeElement element, string text)
+        {
+            foreach (var run in element.Descendants<Run>())
+            {
+                var txt = run.GetFirstChild<Text>();
+                if (txt != null)
+                {
+                    if (txt.Text.Contains(text) && txt.Text != text)
+                    {
+                        var indexOfText = txt.Text.IndexOf(text);
+                        var runBefore = (Run) run.Clone();
+                        var runBeforeText = runBefore.GetFirstChild<Text>();
+                        runBeforeText.Space = SpaceProcessingModeValues.Preserve;
+                        runBeforeText.Text = txt.Text.Substring(0, indexOfText == 0 ? 0 : indexOfText);
+                        var runAfter = (Run) run.Clone();
+                        var runAfterText = runAfter.GetFirstChild<Text>();
+                        runAfterText.Space = SpaceProcessingModeValues.Preserve;
+                        runAfterText.Text = txt.Text.Substring(indexOfText + text.Length);
+                        run.Parent.InsertBefore(runBefore, run);
+                        run.Parent.InsertAfter(runAfter, run);
+
+                        txt.Text = text;
+                        run.RunProperties.Bold = new Bold();
+                    }
+                    else if (txt.Text == text)
+                    {
+                        run.RunProperties.Bold = new Bold();
+                    }
+                }
             }
         }
 
@@ -44,19 +96,15 @@ namespace OpenXMLProcLib
                         // now replace the text
                         var lines = replaceWith.Replace(Environment.NewLine, "\r")
                             .Split('\n', '\r');
-
                         var skip = lines[lines.Length - 1].Length - 1;
-
                         if (c > 0)
                             lines[0] = txt.Text.Substring(0, c) + lines[0];
                         if (match.EndCharIndex + 1 < texts.ElementAt(match.EndElementIndex).Text.Length)
                             lines[lines.Length - 1] = lines[lines.Length - 1] + texts.ElementAt(match.EndElementIndex)
                                                           .Text.Substring(match.EndCharIndex + 1);
-
                         txt.Space = new EnumValue<SpaceProcessingModeValues>(SpaceProcessingModeValues
                             .Preserve);
                         txt.Text = lines[0];
-
                         for (var i = t + 1; i <= match.EndElementIndex; i++)
                             texts.ElementAt(i).Text = string.Empty;
                         if (lines.Count() > 1)

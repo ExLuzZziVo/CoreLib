@@ -21,7 +21,7 @@ namespace CoreLib.STANDALONE.CustomObjects
         [field: NonSerialized] private string _fileName;
         [field: NonSerialized] private string _filePath;
         [field: NonSerialized] private bool _isBackupEnabled;
-        [field:NonSerialized] private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings{ ObjectCreationHandling = ObjectCreationHandling.Replace };
+        [field:NonSerialized] private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings{ ObjectCreationHandling = ObjectCreationHandling.Replace, TypeNameHandling = TypeNameHandling.Auto };
         protected ApplicationFile(string applicationFolder, string fileName, CryptoService cryptoService,
             bool isBackupEnabled = false)
         {
