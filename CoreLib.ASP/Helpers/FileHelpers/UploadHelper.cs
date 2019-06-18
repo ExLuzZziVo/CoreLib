@@ -69,7 +69,11 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                             imageFileSizeLimit.ToFileSize(IntExtensions.SizeUnits.MB)));
                 if (!imageFile.IsImage())
                     throw new FormatException(CommonStrings.ResourceManager.GetString("UploadFileFormatError"));
-                using (var stream = new FileStream($"{Directory.GetCurrentDirectory()}\\wwwroot{saveImageFilePath}",
+                var fullSaveFilePath = $"{Directory.GetCurrentDirectory()}\\wwwroot{saveImageFilePath}";
+                var fullSaveDirectoryPath = Path.GetDirectoryName(fullSaveFilePath);
+                if (!Directory.Exists(fullSaveDirectoryPath))
+                    Directory.CreateDirectory(fullSaveDirectoryPath);
+                using (var stream = new FileStream(fullSaveFilePath,
                     FileMode.Create))
                 {
                     await imageFile.CopyToAsync(stream);
@@ -88,5 +92,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
 
             return new OkObjectResult(new {saveImageFilePath});
         }
+
+
     }
 }
