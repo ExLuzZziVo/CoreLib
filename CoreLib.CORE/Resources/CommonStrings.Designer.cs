@@ -19,7 +19,7 @@ namespace CoreLib.CORE.Resources {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class CommonStrings {
@@ -79,11 +79,65 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Описание.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Поле &apos;{0}&apos; должно иметь значение не менее {1}  и не более {2}.
         /// </summary>
         public static string DigitRangeValuesError {
             get {
                 return ResourceManager.GetString("DigitRangeValuesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Объект с таким № п/п уже существует.
+        /// </summary>
+        public static string DuplicateIndexError {
+            get {
+                return ResourceManager.GetString("DuplicateIndexError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Объект с таким названием уже существует.
+        /// </summary>
+        public static string DuplicateNameError {
+            get {
+                return ResourceManager.GetString("DuplicateNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Один или несколько файлов не найдены.
+        /// </summary>
+        public static string FileNotFoundError {
+            get {
+                return ResourceManager.GetString("FileNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ИД.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на № п/п.
+        /// </summary>
+        public static string Index {
+            get {
+                return ResourceManager.GetString("Index", resourceCulture);
             }
         }
         
@@ -97,11 +151,92 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Один или несколько файлов имеют некорректный путь сохранения.
+        /// </summary>
+        public static string InvalidFilePathError {
+            get {
+                return ResourceManager.GetString("InvalidFilePathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Номер телефона введен некорректно.
         /// </summary>
         public static string InvalidPhoneFormatError {
             get {
                 return ResourceManager.GetString("InvalidPhoneFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Название.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Идентификатор объекта не найден.
+        /// </summary>
+        public static string NoIdError {
+            get {
+                return ResourceManager.GetString("NoIdError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Объект не найден.
+        /// </summary>
+        public static string NotFoundError {
+            get {
+                return ResourceManager.GetString("NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на В базе данных появились новые объекты.
+        /// </summary>
+        public static string Reorder_CollectionChangedError {
+            get {
+                return ResourceManager.GetString("Reorder_CollectionChangedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Некоторые объекты имеют одинаковый индекс.
+        /// </summary>
+        public static string Reorder_DuplicateIndexError {
+            get {
+                return ResourceManager.GetString("Reorder_DuplicateIndexError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Один или несколько объектов имеют некорректный № п/п.
+        /// </summary>
+        public static string Reorder_InvalidIndexError {
+            get {
+                return ResourceManager.GetString("Reorder_InvalidIndexError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Нарушена нумерация объектов.
+        /// </summary>
+        public static string Reorder_InvalidIndexSequenceError {
+            get {
+                return ResourceManager.GetString("Reorder_InvalidIndexSequenceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Один или несколько объектов не существуют в базе данных.
+        /// </summary>
+        public static string Reorder_NotFoundError {
+            get {
+                return ResourceManager.GetString("Reorder_NotFoundError", resourceCulture);
             }
         }
         
@@ -156,6 +291,15 @@ namespace CoreLib.CORE.Resources {
         public static string StringRangeLengthError {
             get {
                 return ResourceManager.GetString("StringRangeLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Количество загружаемых файлов должно быть не больше {0}.
+        /// </summary>
+        public static string UploadFileCountError {
+            get {
+                return ResourceManager.GetString("UploadFileCountError", resourceCulture);
             }
         }
         

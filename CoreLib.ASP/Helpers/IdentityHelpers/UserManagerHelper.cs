@@ -112,9 +112,10 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
                 throw new NullReferenceException(
                     IdentityResources.ResourceManager.GetString("IdentityUserNotFoundError"));
             if (currentContext.User.Identity.Name == item.UserName)
-                throw new ValidationException(IdentityResources.ResourceManager.GetString("IdentityUserCurrentUserError"));
+                throw new ValidationException(
+                    IdentityResources.ResourceManager.GetString("IdentityUserCurrentUserError"));
             var deleteUserResult = await _userManager.DeleteAsync(item);
-            if(!deleteUserResult.Succeeded)
+            if (!deleteUserResult.Succeeded)
                 throw new ExtendedValidationException(deleteUserResult.Errors.Select(e => e.Description));
         }
 
@@ -149,7 +150,6 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
         public async Task<Tuple<int, List<T>>> GetIdentityUsersAsync(int searchParamIndex, string searchString,
             int pageNumber, int pageSize)
         {
-
             if (searchString.IsNullOrEmptyOrWhiteSpace())
                 throw new ValidationException(
                     IdentityResources.ResourceManager.GetString("IdentityUserSearchStringIsEmpty"));
@@ -192,12 +192,12 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
                         (await _userManager.GetUsersInRoleAsync(searchString)).AsQueryable(), pageIndex, pageSize);
                     break;
             }
-            
+
             if (searchResult.Item1 == 0)
                 throw new ValidationException(
                     IdentityResources.ResourceManager.GetString("IdentityUserSearchResultEmptyError"));
 
-            
+
             return searchResult;
         }
 

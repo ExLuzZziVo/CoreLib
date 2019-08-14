@@ -41,5 +41,11 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
                 .FirstOrDefault(x => comparer.Equals(x.a, value));
             return found?.i ?? -1;
         }
+
+        public static IEnumerable<T> ReverseTake<T>(this IEnumerable<T> enumerable, int length)
+        {
+            var count = enumerable.Count();
+            return length >= count ? enumerable : enumerable.Skip(count-length);
+        }
     }
 }

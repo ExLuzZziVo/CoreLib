@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+
+#endregion
 
 namespace CoreLib.ASP.Helpers.CheckHelpers
 {

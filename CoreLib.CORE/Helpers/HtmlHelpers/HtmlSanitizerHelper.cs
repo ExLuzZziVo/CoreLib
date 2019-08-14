@@ -1,6 +1,8 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using AngleSharp.Parser.Html;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Ganss.XSS;
@@ -19,7 +21,7 @@ namespace CoreLib.CORE.Helpers.HtmlHelpers
             _simpleTextSanitizerInstance ?? (_simpleTextSanitizerInstance = new HtmlSanitizer(
                 new List<string>
                 {
-                    "b", "ul", "li", "br", "i", "u", "div", "p", "span"
+                    "b", "ul", "li", "br", "i", "u", "div", "p", "span", "details", "summary"
                 }, allowedAttributes: new List<string>
                 {
                     "style"
@@ -34,7 +36,7 @@ namespace CoreLib.CORE.Helpers.HtmlHelpers
             _extendedTextSanitizerInstance ?? (_extendedTextSanitizerInstance = new HtmlSanitizer(
                 new List<string>
                 {
-                    "b", "ul", "li", "br", "i", "u", "div", "p", "span", "a", "img"
+                    "b", "ul", "li", "br", "i", "u", "div", "p", "span", "details", "summary", "a", "img", "iframe"
                 }, allowedAttributes: new List<string>
                 {
                     "style",
@@ -67,14 +69,34 @@ namespace CoreLib.CORE.Helpers.HtmlHelpers
             var dom = _htmlParser.Parse("<html><body></body></html>");
             dom.Body.InnerHtml = htmlIn;
             foreach (var i in dom.Images)
+            {
                 if (i.ClassName.IsNullOrEmptyOrWhiteSpace() || !i.ClassName.Contains("img-fluid"))
-                    i.ClassName = i.ClassName + " img-fluid";
+                    i.ClassName += " img-fluid";
+            }
+
+            foreach (var i in dom.All.Where(el=>el.TagName=="iframe"))
+            {
+                if(i.ClassName.IsNullOrEmptyOrWhiteSpace() || !i.ClassName.Contains("embed-responsive-item"))
+                    i.ClassName += " embed-responsive-item";
+            }
             return dom.Body.InnerHtml;
+        }
+
+        public static IEnumerable<string> GetAllImagesSrc(this string htmlIn)
+        {
+            if (htmlIn == null)
+                return null;
+            var dom = _htmlParser.Parse("<html><body></body></html>");
+            dom.Body.InnerHtml = htmlIn;
+            return dom.Images.Select(i => i.Source.Replace("about://", "")).ToList();
         }
 
         public static string TotalCleanHtml(this string htmlIn)
         {
             return htmlIn == null ? null : _htmlParser.Parse(htmlIn).DocumentElement.TextContent;
+            //Regex.Replace(htmlIn, "<.*?>|&.*?;", string.Empty);
+            //
+            //string.Concat(_htmlParser.ParseFragment(htmlIn,null).Select(n => n.Text()));
         }
 
         public static string RemoveHtmlXssFromSimpleText(this string htmlIn, string baseUrl = null)

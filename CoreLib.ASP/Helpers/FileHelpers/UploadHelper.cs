@@ -19,7 +19,6 @@ namespace CoreLib.ASP.Helpers.FileHelpers
 {
     public class UploadHelper
     {
-
         private readonly ILogger<UploadHelper> _logger;
 
         public UploadHelper(ILogger<UploadHelper> logger)
@@ -27,7 +26,8 @@ namespace CoreLib.ASP.Helpers.FileHelpers
             _logger = logger;
         }
 
-        public async Task<IEnumerable<string>> UploadAndParseTextFileByLine(IFormFile file, Encoding encoding, long fileSizeLimit = 2048000)
+        public async Task<IEnumerable<string>> UploadAndParseTextFileByLine(IFormFile file, Encoding encoding,
+            long fileSizeLimit = 2048000)
         {
             try
             {
@@ -42,10 +42,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                     ms.Position = 0;
                     using (var sr = new StreamReader(ms, encoding))
                     {
-                        while (!sr.EndOfStream)
-                        {
-                            result.Add(await sr.ReadLineAsync());
-                        }
+                        while (!sr.EndOfStream) result.Add(await sr.ReadLineAsync());
                     }
                 }
 
@@ -92,7 +89,5 @@ namespace CoreLib.ASP.Helpers.FileHelpers
 
             return new OkObjectResult(new {saveImageFilePath});
         }
-
-
     }
 }

@@ -65,6 +65,18 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
                 $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dateTime.Month)} {dateTime.Year} г.";
         }
 
+        public static string ToDayMonthShortString(this DateTime dateTime)
+        {
+            return
+                $"{dateTime.Day.ToStringWithZero()}.{dateTime.Month.ToStringWithZero()}";
+        }
+
+        public static string ToDayMonthLongString(this DateTime dateTime)
+        {
+            return
+                $"{dateTime.Day.ToStringWithZero()} {dateTime.ToLongDateString().Replace($"{dateTime.Year} г.","").Replace($"{dateTime.Day}","").Trim()}";
+        }
+
         public static string MonthToString(this DateTime dateTime)
         {
             return $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dateTime.Month)}";

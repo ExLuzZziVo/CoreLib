@@ -38,11 +38,13 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
         public async Task DeleteIdentityRoleAsync(string id)
         {
             if (id.IsNullOrEmptyOrWhiteSpace())
-                throw new ArgumentNullException(nameof(id), IdentityResources.ResourceManager.GetString("IdentityRoleNoIdError"));
+                throw new ArgumentNullException(nameof(id),
+                    IdentityResources.ResourceManager.GetString("IdentityRoleNoIdError"));
             var roleToDelete = await _roleManager.Roles.SingleOrDefaultAsync(r =>
                 r.Id == id && !(r.Name == "Administrators" || r.Name == "SimpleUsers"));
             if (roleToDelete == null)
-                throw new NullReferenceException(IdentityResources.ResourceManager.GetString("IdentityRoleNotFoundError"));
+                throw new NullReferenceException(
+                    IdentityResources.ResourceManager.GetString("IdentityRoleNotFoundError"));
             var result = await _roleManager.DeleteAsync(roleToDelete);
             if (result.Succeeded)
                 RefreshIdentityRoleNameCache();

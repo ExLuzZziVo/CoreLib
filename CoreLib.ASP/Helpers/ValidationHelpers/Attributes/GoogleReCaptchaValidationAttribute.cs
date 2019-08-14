@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 #endregion
 
-namespace CoreLib.ASP.Helpers.ValidationHelpers
+namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
 {
     public class GoogleReCaptchaValidationAttribute : ValidationAttribute
     {

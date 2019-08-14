@@ -184,7 +184,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                     return tempNumber.Insert(4, " ");
                 case DocumentType.RU_Residence:
                     tempNumber = number.Replace(" ", "");
-                    if (tempNumber.Length != 8)
+                    if (tempNumber.Length != 9)
                         throw new ArgumentOutOfRangeException(nameof(number), "RU_Residence must be 8 characters length.");
                     return tempNumber.Insert(2, " ");
                 case DocumentType.Custom:

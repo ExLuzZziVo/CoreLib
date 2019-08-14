@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+#endregion
 
 namespace CoreLib.ASP.ModelBinders
 {

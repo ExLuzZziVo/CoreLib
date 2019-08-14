@@ -123,14 +123,59 @@
   <data name="DateTimeError" xml:space="preserve">
     <value>Дата в поле '{0}' введена некорректно</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
   <data name="DigitRangeValuesError" xml:space="preserve">
     <value>Поле '{0}' должно иметь значение не менее {1}  и не более {2}</value>
+  </data>
+  <data name="DuplicateIndexError" xml:space="preserve">
+    <value>Объект с таким № п/п уже существует</value>
+  </data>
+  <data name="DuplicateNameError" xml:space="preserve">
+    <value>Объект с таким названием уже существует</value>
+  </data>
+  <data name="FileNotFoundError" xml:space="preserve">
+    <value>Один или несколько файлов не найдены</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ИД</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>№ п/п</value>
   </data>
   <data name="InvalidEmailAddressFormatError" xml:space="preserve">
     <value>E-mail введен некорректно</value>
   </data>
+  <data name="InvalidFilePathError" xml:space="preserve">
+    <value>Один или несколько файлов имеют некорректный путь сохранения</value>
+  </data>
   <data name="InvalidPhoneFormatError" xml:space="preserve">
     <value>Номер телефона введен некорректно</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="NoIdError" xml:space="preserve">
+    <value>Идентификатор объекта не найден</value>
+  </data>
+  <data name="NotFoundError" xml:space="preserve">
+    <value>Объект не найден</value>
+  </data>
+  <data name="Reorder_CollectionChangedError" xml:space="preserve">
+    <value>В базе данных появились новые объекты</value>
+  </data>
+  <data name="Reorder_DuplicateIndexError" xml:space="preserve">
+    <value>Некоторые объекты имеют одинаковый индекс</value>
+  </data>
+  <data name="Reorder_InvalidIndexError" xml:space="preserve">
+    <value>Один или несколько объектов имеют некорректный № п/п</value>
+  </data>
+  <data name="Reorder_InvalidIndexSequenceError" xml:space="preserve">
+    <value>Нарушена нумерация объектов</value>
+  </data>
+  <data name="Reorder_NotFoundError" xml:space="preserve">
+    <value>Один или несколько объектов не существуют в базе данных</value>
   </data>
   <data name="RequiredError" xml:space="preserve">
     <value>Поле '{0}' должно быть заполнено</value>
@@ -149,6 +194,9 @@
   </data>
   <data name="StringRangeLengthError" xml:space="preserve">
     <value>Поле '{0}' должно содержать не менее {1}  и не более {2} символов</value>
+  </data>
+  <data name="UploadFileCountError" xml:space="preserve">
+    <value>Количество загружаемых файлов должно быть не больше {0}</value>
   </data>
   <data name="UploadFileFormatError" xml:space="preserve">
     <value>Загружаемый файл имеет неверный формат</value>
