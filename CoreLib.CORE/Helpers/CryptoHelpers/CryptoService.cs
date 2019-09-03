@@ -48,49 +48,65 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         }
         private ICryptoTransform CreateEncryptor(Stream s)
         {
-            var key = new Rfc2898DeriveBytes(_key, _salt);
-            var aesAlg = new RijndaelManaged();
-            aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
-            s.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
-            s.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-            return aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            using (var key = new Rfc2898DeriveBytes(_key, _salt))
+            {
+                using (var aesAlg = new RijndaelManaged())
+                {
+                    aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+                    s.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
+                    s.Write(aesAlg.IV, 0, aesAlg.IV.Length);
+                    return aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                }
+            }
         }
 
         private ICryptoTransform CreateDecryptor(Stream s)
         {
-            var key = new Rfc2898DeriveBytes(_key, _salt);
-            var aesAlg = new RijndaelManaged();
-            aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
-            aesAlg.IV = ReadByteArray(s);
-            return aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            using(var key = new Rfc2898DeriveBytes(_key, _salt))
+            {
+                using (var aesAlg = new RijndaelManaged())
+                {
+                    aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+                    aesAlg.IV = ReadByteArray(s);
+                    return aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                }
+            }
         }
 
         private void EncryptGost(Stream s, GostEncryptOperationDelegate actions)
         {
-            var key = new Rfc2898DeriveBytes(_key, _salt);
-            var aesAlg = new RijndaelManaged();
-            var gostKey = key.GetBytes(aesAlg.KeySize / 8);
-            var gostIV = aesAlg.IV.Take(8).ToArray();
-            s.Write(BitConverter.GetBytes(gostIV.Length), 0, sizeof(int));
-            s.Write(gostIV, 0, gostIV.Length);
-            using (var gost = new GOSTManaged())
+            using (var key = new Rfc2898DeriveBytes(_key, _salt))
             {
-                var encrypted = actions(gost, gostKey, gostIV);
-                s.Write(encrypted, 0, encrypted.Length);
+                using (var aesAlg = new RijndaelManaged())
+                {
+                    var gostKey = key.GetBytes(aesAlg.KeySize / 8);
+                    var gostIV = aesAlg.IV.Take(8).ToArray();
+                    s.Write(BitConverter.GetBytes(gostIV.Length), 0, sizeof(int));
+                    s.Write(gostIV, 0, gostIV.Length);
+                    using (var gost = new GOSTManaged())
+                    {
+                        var encrypted = actions(gost, gostKey, gostIV);
+                        s.Write(encrypted, 0, encrypted.Length);
+                    }
+                }
             }
         }
 
         private byte[] DecryptGost(Stream s, GostDecryptOperationDelegate actions)
         {
-            var gostIV = ReadByteArray(s);
-            var key = new Rfc2898DeriveBytes(_key, _salt);
-            var aesAlg = new RijndaelManaged();
-            var gostKey = key.GetBytes(aesAlg.KeySize / 8);
-            var encrypted = new byte[s.Length - s.Position];
-            s.Read(encrypted, 0, encrypted.Length);
-            using (var gost = new GOSTManaged())
+            using (var key = new Rfc2898DeriveBytes(_key, _salt))
             {
-                return actions(gost, gostKey, gostIV, encrypted);
+                using (var aesAlg = new RijndaelManaged())
+                {
+                    var gostIV = ReadByteArray(s);
+                    var gostKey = key.GetBytes(aesAlg.KeySize / 8);
+                    var encrypted = new byte[s.Length - s.Position];
+                    s.Read(encrypted, 0, encrypted.Length);
+                    using (var gost = new GOSTManaged())
+                    {
+                        return actions(gost, gostKey, gostIV, encrypted);
+                    }
+                }
             }
         }
 

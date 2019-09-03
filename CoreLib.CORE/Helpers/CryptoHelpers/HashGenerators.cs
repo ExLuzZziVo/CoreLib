@@ -11,12 +11,18 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
     {
         public static string GetSHA256Hash(this string source)
         {
-            return Encoding.Unicode.GetString(new SHA256Managed().ComputeHash(Encoding.Unicode.GetBytes(source)));
+            using (var shaManaged = new SHA256Managed())
+            {
+                return Encoding.Unicode.GetString(shaManaged.ComputeHash(Encoding.Unicode.GetBytes(source)));
+            }
         }
 
         public static string GetSHA512Hash(this string source)
         {
-            return Encoding.Unicode.GetString(new SHA512Managed().ComputeHash(Encoding.Unicode.GetBytes(source)));
+            using (var shaManaged = new SHA512Managed())
+            {
+                return Encoding.Unicode.GetString(shaManaged.ComputeHash(Encoding.Unicode.GetBytes(source)));
+            }
         }
     }
 }

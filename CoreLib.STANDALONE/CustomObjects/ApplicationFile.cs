@@ -55,7 +55,10 @@ namespace CoreLib.STANDALONE.CustomObjects
                     File.Delete(backUpPath);
                 File.Move(_filePath, backUpPath);
             }
-
+            else if (!_isBackupEnabled && File.Exists(_filePath))
+            {
+                File.Delete(_filePath);
+            }
             using (var fs = new FileStream(_filePath, FileMode.CreateNew))
             {
                 using (var sw = new StreamWriter(fs))
