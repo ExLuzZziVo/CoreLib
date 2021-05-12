@@ -12,20 +12,32 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreLib.ASP.ModelBinders
 {
+    /// <summary>
+    /// <see cref="IModelBinderProvider"/>, which allows model binding of <see cref="decimal"/> with dot or comma
+    /// </summary>
     public class InvariantDecimalModelBinderProvider : IModelBinderProvider
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(decimal) ||
                                                     context.Metadata.ModelType == typeof(decimal?)))
+            {
                 return new InvariantDecimalModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType,
                     context.Services.GetService<ILoggerFactory>()));
+            }
 
             return null;
         }
     }
 
+    /// <summary>
+    /// An <see cref="IModelBinder"/> implementation for the <see cref="InvariantDecimalModelBinderProvider"/>
+    /// </summary>
     public class InvariantDecimalModelBinder : IModelBinder
     {
         private readonly IModelBinder _modelBinder;
@@ -37,7 +49,10 @@ namespace CoreLib.ASP.ModelBinders
 
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
 
             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
@@ -47,11 +62,11 @@ namespace CoreLib.ASP.ModelBinders
 
                 var valueAsString = valueProviderResult.FirstValue;
 
-
                 if (decimal.TryParse(valueAsString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
                     CultureInfo.InvariantCulture, out var result))
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);
+
                     return Task.CompletedTask;
                 }
             }

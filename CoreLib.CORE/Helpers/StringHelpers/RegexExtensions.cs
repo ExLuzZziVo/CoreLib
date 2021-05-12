@@ -9,54 +9,171 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class RegexExtensions
     {
-        public const string PositiveNumberWithSpacesRegExp = "[^0-9 ]+";
+        /// <summary>
+        /// Positive integer with random spaces
+        /// </summary>
+        public const string PositiveNumberWithSpacesPattern = @"^[0-9\s]+$";
 
-        public const string PositiveAndNegativeNumberRegExp = "[^0-9-]+";
+        /// <summary>
+        /// Positive and negative integers
+        /// </summary>
+        public const string PositiveAndNegativeNumberPattern = @"^-?[0-9]+$";
 
-        public const string PositiveNumberRegExp = "[^0-9]+";
+        /// <summary>
+        /// Positive integers
+        /// </summary>
+        public const string PositiveNumberPattern = @"^[0-9]+$";
 
-        public const string IpAddressRegExp =
+        /// <summary>
+        /// ASCII symbols
+        /// </summary>
+        public const string ASCIIPattern = @"^[\x00-\x7F]*$";
+
+        /// <summary>
+        /// GTIN
+        /// </summary>
+        public const string GTINPattern = @"^((\d{8})|(\d{12,14}))$";
+
+        /// <summary>
+        /// Positive and negative fractional numbers
+        /// </summary>
+        public static readonly string PositiveAndNegativeFractionalNumberPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive negative fractional numbers
+        /// </summary>
+        public static readonly string PositiveFractionalNumberPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive and negative percents
+        /// </summary>
+        public static readonly string PositiveAndNegativePercentPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive percents
+        /// </summary>
+        public static readonly string PositivePercentPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive and negative decimals
+        /// </summary>
+        public static readonly string PositiveAndNegativeMoneyPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive decimals
+        /// </summary>
+        public static readonly string PositiveMoneyPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
+
+        /// <summary>
+        /// EAN8
+        /// </summary>
+        public const string BarcodeEAN8Pattern = @"^\d{8}$";
+
+        /// <summary>
+        /// EAN13
+        /// </summary>
+        public const string BarcodeEAN13Pattern = @"^\d{13}$";
+
+        /// <summary>
+        /// UPCA
+        /// </summary>
+        public const string BarcodeUPCAPattern = @"^\d{12}$";
+
+        /// <summary>
+        /// UPCE
+        /// </summary>
+        public const string BarcodeUPCEPattern = @"^\d{6}$";
+
+        /// <summary>
+        /// ITF
+        /// </summary>
+        public const string BarcodeITFPattern = @"^\d{6}$";
+
+        /// <summary>
+        /// ITF14
+        /// </summary>
+        public const string BarcodeITF14Pattern = @"^\d{14}$";
+
+        /// <summary>
+        /// CODE39
+        /// </summary>
+        public const string BarcodeCODE39Pattern = @"^([*]?)(?:[0-9A-Z/.,%$+\s-]+)*(\1)$";
+
+        /// <summary>
+        /// CODE93
+        /// </summary>
+        public const string BarcodeCODE93Pattern =
+            @"^[*](?:[0-9A-Z/.,%$+\s-]|(\(\$\)[A-Z])|(\(%\)[A-Z])|(\(\+\)[A-Z])|(\(/\)[A-CF-JLZ])+)*[*]$";
+
+        /// <summary>
+        /// CODE128
+        /// </summary>
+        public const string BarcodeCODE128Pattern = ASCIIPattern;
+
+        /// <summary>
+        /// CODABAR
+        /// </summary>
+        public const string BarcodeCODABARPattern = @"^[0-9A-D/.$+:-]*$";
+
+        /// <summary>
+        /// GS1-128
+        /// </summary>
+        public const string BarcodeGS1_128Pattern = @"^(\(\d{2,4}\)[A-Za-z0-9]+)*$";
+
+        /// <summary>
+        /// PDF417
+        /// </summary>
+        public const string BarcodePDF417Pattern = @"^[\x00-\xFF]*$";
+
+        /// <summary>
+        /// CODE39 EXTENDED
+        /// </summary>
+        public const string BarcodeCODE39_EXTENDEDPattern = ASCIIPattern;
+
+        /// <summary>
+        /// IP-address
+        /// </summary>
+        public const string IpAddressPattern =
             @"^(0[0-7]{10,11}|0(x|X)[0-9a-fA-F]{8}|(\b4\d{8}[0-5]\b|\b[1-3]?\d{8}\d?\b)|((2[0-5][0-5]|1\d{2}|[1-9]\d?)|(0(x|X)[0-9a-fA-F]{2})|(0[0-7]{3}))(\.((2[0-5][0-5]|1\d{2}|\d\d?)|(0(x|X)[0-9a-fA-F]{2})|(0[0-7]{3}))){3})$";
 
-        public const string EmailAddressRegExp =
-            @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+        /// <summary>
+        /// Email address
+        /// </summary>
+        public const string EmailAddressPattern =
+            @"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)";
 
-        public const string RussianPhoneNumberRegExp = @"\+7-?\(?\d{3}\)?-? *\d{3}-? *-?\d{2} *-?\d{2}";
+        /// <summary>
+        /// Url
+        /// </summary>
+        public const string UrlPattern =
+            @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$";
 
-        public static readonly string PositiveAndNegativeFractionalNumberRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}-]+";
-
-        public static readonly string PositiveFractionalNumberRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+";
-
-        public static readonly string PositiveAndNegativePercentRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}-]+";
-
-        public static readonly string PositivePercentRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+";
-
-        public static readonly string PositiveAndNegativeMoneyRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}-]+";
-
-        public static readonly string PositiveMoneyRegExp =
-            $"[^0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+";
-
-        public static bool IsRussianPhoneNumber(this string source)
-        {
-            return !source.IsNullOrEmptyOrWhiteSpace() && Regex.IsMatch(source,
-                       RussianPhoneNumberRegExp, RegexOptions.IgnoreCase);
-        }
-
+        /// <summary>
+        /// Checks if provided string is email address
+        /// </summary>
+        /// <param name="source">Target string</param>
+        /// <returns>True if provided string is email address</returns>
         public static bool IsEmailAddress(this string source)
         {
             return !source.IsNullOrEmptyOrWhiteSpace() &&
-                   Regex.IsMatch(source, EmailAddressRegExp, RegexOptions.IgnoreCase);
+                   Regex.IsMatch(source, EmailAddressPattern, RegexOptions.IgnoreCase);
         }
 
+        /// <summary>
+        /// Checks if provided string is IP-address
+        /// </summary>
+        /// <param name="source">Target string</param>
+        /// <returns>True if provided string is IP-address</returns>
         public static bool IsIpAddress(this string source)
         {
             return !source.IsNullOrEmptyOrWhiteSpace() &&
-                   Regex.IsMatch(source, IpAddressRegExp, RegexOptions.IgnoreCase);
+                   Regex.IsMatch(source, IpAddressPattern, RegexOptions.IgnoreCase);
         }
     }
 }

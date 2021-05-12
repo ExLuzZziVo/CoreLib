@@ -1,38 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net471</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
     <AssemblyName>CoreLib.CORE</AssemblyName>
     <RootNamespace>CoreLib.CORE</RootNamespace>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net471'">
-    <PackageReference Include="System.IO.Compression" Version="4.0.0.0" />
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlSanitizer" Version="4.0.217" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+    <EmbeddedResource Update="Resources\ValidationStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ValidationStrings.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationStrings.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ValidationStrings.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationStrings.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\GOST\GOST\GOST.csproj" />
-    <ProjectReference Include="..\NameCaseLib\NameCaseLib\NameCaseLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\CommonStrings.Designer.cs">
-      <DependentUpon>CommonStrings.resx</DependentUpon>
+    <Compile Update="Resources\ValidationStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>ValidationStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ValidationStrings.ru.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ValidationStrings.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ValidationStrings.en.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ValidationStrings.en.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\CommonStrings.resx">
-      <LastGenOutput>CommonStrings.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
 
 </Project>

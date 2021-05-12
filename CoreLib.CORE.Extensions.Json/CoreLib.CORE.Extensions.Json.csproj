@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
+    <RootNamespace>CoreLib.CORE</RootNamespace>
+    <AssemblyName>CoreLib.CORE.Extensions.Json</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
+  </ItemGroup>
+
+</Project>

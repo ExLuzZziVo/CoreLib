@@ -1,12 +1,20 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Text;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.DictionaryHelpers
 {
     public static class DictionaryExtensions
     {
-        public static void AddOrUpdate<T,T1>(this Dictionary<T,T1> dictionary, T key, T1 value)
+        /// <summary>
+        /// Updates value in dictionary if key exists. If not, adds provided key-value pair
+        /// </summary>
+        /// <param name="dictionary">Target dictionary</param>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        public static void AddOrUpdate<T, T1>(this Dictionary<T, T1> dictionary, T key, T1 value)
         {
             if (dictionary.ContainsKey(key))
             {

@@ -1,263 +1,65 @@
-﻿using System;
-using System.Reflection;
-using CoreLib.CORE.Helpers.StringHelpers;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.IntHelpers
 {
     public static class IntExtensions
     {
-
-        [Obfuscation(Exclude = true, Feature = "dynamic proxy")]
-        public static string ToLongIntString(this int value)
+        /// <summary>
+        /// Data storage units
+        /// </summary>
+        public enum SizeUnits : byte
         {
-            var number = 0;
-            var result = string.Empty;
-            if (value < 0)
-            {
-                number = -value;
-                result = "минус";
-            }
-            else if (value == 0)
-            {
-                return "ноль";
-            }
-            else if (value > 0)
-            {
-                number = value;
-                result = "";
-            }
-
-            var arrayInt = new int[4];
-            var arrayString = new[,]
-            {
-                {" миллиард", " миллиарда", " миллиардов"},
-                {" миллион", " миллиона", " миллионов"},
-                {" тысяча", " тысячи", " тысяч"},
-                {"", "", ""}
-            };
-            arrayInt[0] = (number - number % 1000000000) / 1000000000;
-            arrayInt[1] = (number % 1000000000 - number % 1000000) / 1000000;
-            arrayInt[2] = (number % 1000000 - number % 1000) / 1000;
-            arrayInt[3] = number % 1000;
-
-            for (var i = 0; i < 4; i++)
-            {
-                if (arrayInt[i] != 0)
-                {
-                    if ((arrayInt[i] - arrayInt[i] % 100) / 100 != 0)
-                        switch ((arrayInt[i] - arrayInt[i] % 100) / 100)
-                        {
-                            case 1:
-                                result += " сто";
-                                break;
-                            case 2:
-                                result += " двести";
-                                break;
-                            case 3:
-                                result += " триста";
-                                break;
-                            case 4:
-                                result += " четыреста";
-                                break;
-                            case 5:
-                                result += " пятьсот";
-                                break;
-                            case 6:
-                                result += " шестьсот";
-                                break;
-                            case 7:
-                                result += " семьсот";
-                                break;
-                            case 8:
-                                result += " восемьсот";
-                                break;
-                            case 9:
-                                result += " девятьсот";
-                                break;
-                        }
-                    if ((arrayInt[i] % 100 - arrayInt[i] % 100 % 10) / 10 != 1)
-                        switch ((arrayInt[i] % 100 - arrayInt[i] % 100 % 10) / 10)
-                        {
-                            case 2:
-                                result += " двадцать";
-                                break;
-                            case 3:
-                                result += " тридцать";
-                                break;
-                            case 4:
-                                result += " сорок";
-                                break;
-                            case 5:
-                                result += " пятьдесят";
-                                break;
-                            case 6:
-                                result += " шестьдесят";
-                                break;
-                            case 7:
-                                result += " семьдесят";
-                                break;
-                            case 8:
-                                result += " восемьдесят";
-                                break;
-                            case 9:
-                                result += " девяносто";
-                                break;
-                        }
-                    switch (arrayInt[i] % 10)
-                    {
-                        case 1:
-                            if (i == 2) result += " одна";
-                            else result += " один";
-                            break;
-                        case 2:
-                            if (i == 2) result += " две";
-                            else result += " два";
-                            break;
-                        case 3:
-                            result += " три";
-                            break;
-                        case 4:
-                            result += " четыре";
-                            break;
-                        case 5:
-                            result += " пять";
-                            break;
-                        case 6:
-                            result += " шесть";
-                            break;
-                        case 7:
-                            result += " семь";
-                            break;
-                        case 8:
-                            result += " восемь";
-                            break;
-                        case 9:
-                            result += " девять";
-                            break;
-                    }
-
-                    switch (arrayInt[i] % 100)
-                    {
-                        case 10:
-                            result += " десять";
-                            break;
-                        case 11:
-                            result += " одиннадцать";
-                            break;
-                        case 12:
-                            result += " двенадцать";
-                            break;
-                        case 13:
-                            result += " тринадцать";
-                            break;
-                        case 14:
-                            result += " четырнадцать";
-                            break;
-                        case 15:
-                            result += " пятнадцать";
-                            break;
-                        case 16:
-                            result += " шестнадцать";
-                            break;
-                        case 17:
-                            result += " семнадцать";
-                            break;
-                        case 18:
-                            result += " восемннадцать";
-                            break;
-                        case 19:
-                            result += " девятнадцать";
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (arrayInt[i] % 100)
-                    {
-                        case 10:
-                            result += " десять";
-                            break;
-                        case 11:
-                            result += " одиннадцать";
-                            break;
-                        case 12:
-                            result += " двенадцать";
-                            break;
-                        case 13:
-                            result += " тринадцать";
-                            break;
-                        case 14:
-                            result += " четырнадцать";
-                            break;
-                        case 15:
-                            result += " пятнадцать";
-                            break;
-                        case 16:
-                            result += " шестнадцать";
-                            break;
-                        case 17:
-                            result += " семнадцать";
-                            break;
-                        case 18:
-                            result += " восемннадцать";
-                            break;
-                        case 19:
-                            result += " девятнадцать";
-                            break;
-                    }
-                }
-
-                if (arrayInt[i] % 100 >= 10 && arrayInt[i] % 100 <= 19) result += " " + arrayString[i, 2] + " ";
-                else
-                    switch (arrayInt[i] % 10)
-                    {
-                        case 1:
-                            result += " " + arrayString[i, 0] + " ";
-                            break;
-                        case 2:
-                        case 3:
-                        case 4:
-                            result += " " + arrayString[i, 1] + " ";
-                            break;
-                        case 5:
-                        case 6:
-                        case 7:
-                        case 8:
-                        case 9:
-                            result += " " + arrayString[i, 2] + " ";
-                            break;
-                    }
-            }
-
-            return result.TrimWholeString();
+            Byte,
+            KB,
+            MB,
+            GB,
+            TB,
+            PB,
+            EB,
+            ZB,
+            YB
         }
 
-        public static string ToStringWithZero(this int source)
-        {
-            return source.ToString().Length == 1 ? $"0{source}" : source.ToString();
-        }
-
+        /// <summary>
+        /// Checks if specified value is even
+        /// </summary>
+        /// <param name="source">Value to process</param>
+        /// <returns>True if specified value is even</returns>
         public static bool IsEven(this int source)
         {
-            return (source % 2) == 0;
+            return source % 2 == 0;
         }
 
-        public enum SizeUnits
-        {
-            Byte, KB, MB, GB, TB, PB, EB, ZB, YB
-        }
-
+        /// <summary>
+        /// Converts value to specified size units
+        /// </summary>
+        /// <param name="value">Value to process</param>
+        /// <param name="unit">Size unit</param>
+        /// <returns>String that represents size of the <paramref name="value"/> in specified <paramref name="unit"/>s</returns>
         public static string ToFileSize(this long value, SizeUnits unit)
         {
-            return (value / Math.Pow(1024, (long)unit)).ToString("0.00")+unit;
+            return (value / Math.Pow(1024, (long) unit)).ToString("0.00") + unit;
         }
 
+        /// <summary>
+        /// Checks if specified value is in provided range
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <param name="value1">Range start value</param>
+        /// <param name="value2">Range end value</param>
+        /// <returns>True if specified value is in provided range</returns>
         public static bool IsInRange(this int value, int value1, int value2)
         {
             if (value2 < value1)
+            {
                 return value.IsInRange(value2, value1);
+            }
+
             return value >= value1 && value <= value2;
         }
-
     }
 }

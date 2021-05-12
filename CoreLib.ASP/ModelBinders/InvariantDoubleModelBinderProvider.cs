@@ -12,20 +12,32 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreLib.ASP.ModelBinders
 {
+    /// <summary>
+    /// <see cref="IModelBinderProvider"/>, which allows model binding of <see cref="double"/> with dot or comma
+    /// </summary>
     public class InvariantDoubleModelBinderProvider : IModelBinderProvider
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
-            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(double) ||
                                                     context.Metadata.ModelType == typeof(double?)))
+            {
                 return new InvariantDoubleModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType,
                     context.Services.GetService<ILoggerFactory>()));
+            }
 
             return null;
         }
     }
 
+    /// <summary>
+    /// An <see cref="IModelBinder"/> implementation for the <see cref="InvariantDoubleModelBinderProvider"/>
+    /// </summary>
     public class InvariantDoubleModelBinder : IModelBinder
     {
         private readonly IModelBinder _modelBinder;
@@ -37,7 +49,10 @@ namespace CoreLib.ASP.ModelBinders
 
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));
+            if (bindingContext == null)
+            {
+                throw new ArgumentNullException(nameof(bindingContext));
+            }
 
             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
@@ -47,11 +62,11 @@ namespace CoreLib.ASP.ModelBinders
 
                 var valueAsString = valueProviderResult.FirstValue;
 
-
                 if (double.TryParse(valueAsString, NumberStyles.Any,
                     CultureInfo.InvariantCulture, out var result))
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);
+
                     return Task.CompletedTask;
                 }
             }

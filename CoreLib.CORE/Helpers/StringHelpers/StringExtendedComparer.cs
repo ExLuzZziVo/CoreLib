@@ -6,13 +6,29 @@ using System.Collections.Generic;
 
 namespace CoreLib.CORE.Helpers.StringHelpers
 {
+    /// <summary>
+    /// A helper class that is used to correctly sort strings containing numbers
+    /// </summary>
+
+    // Source: https://stackoverflow.com/questions/54462513/sorting-numbers-listview-didnt-work-correctly-c-sharp
     public class StringExtendedComparer : IComparer<string>
     {
+        /// <summary>
+        /// Global instance of comparer
+        /// </summary>
+        public static StringExtendedComparer Instance { get; } = new StringExtendedComparer();
+
         public int Compare(string s1, string s2)
         {
-            if (s1 == null) return 0;
+            if (s1 == null)
+            {
+                return 0;
+            }
 
-            if (s2 == null) return 0;
+            if (s2 == null)
+            {
+                return 0;
+            }
 
             var len1 = s1.Length;
             var len2 = s2.Length;
@@ -40,9 +56,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers
                     marker1++;
 
                     if (marker1 < len1)
+                    {
                         ch1 = s1[marker1];
+                    }
                     else
+                    {
                         break;
+                    }
                 } while (char.IsDigit(ch1) == char.IsDigit(space1[0]));
 
                 do
@@ -51,9 +71,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers
                     marker2++;
 
                     if (marker2 < len2)
+                    {
                         ch2 = s2[marker2];
+                    }
                     else
+                    {
                         break;
+                    }
                 } while (char.IsDigit(ch2) == char.IsDigit(space2[0]));
 
                 // If we have collected numbers, compare them numerically.
@@ -65,16 +89,24 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 
                 if (char.IsDigit(space1[0]) && char.IsDigit(space2[0]))
                 {
-                    var thisNumericChunk = int.Parse(str1);
-                    var thatNumericChunk = int.Parse(str2);
-                    result = thisNumericChunk.CompareTo(thatNumericChunk);
+                    if (int.TryParse(str1, out var thisNumericChunk) && int.TryParse(str2, out var thatNumericChunk))
+                    {
+                        result = thisNumericChunk.CompareTo(thatNumericChunk);
+                    }
+                    else
+                    {
+                        result = str1.CompareTo(str2);
+                    }
                 }
                 else
                 {
                     result = str1.CompareTo(str2);
                 }
 
-                if (result != 0) return result;
+                if (result != 0)
+                {
+                    return result;
+                }
             }
 
             return len1 - len2;

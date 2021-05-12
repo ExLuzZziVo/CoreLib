@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿#region
+
+using System.Collections.Generic;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class StringManipulator
     {
-        public static readonly NumberFormatInfo MoneyCultureStringFormatter =
-            new NumberFormatInfo { NumberDecimalDigits = 2 };
-
+        /// <summary>
+        /// Punctuation dictionary for text formatting
+        /// </summary>
         private static readonly Dictionary<string, string> PunctuationDictionary = new Dictionary<string, string>
         {
             {".", ". "},
@@ -25,9 +28,17 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             {" -", "-"}
         };
 
+        /// <summary>
+        /// Formats specified string using <see cref="PunctuationDictionary"/> and <see cref="StringExtensions.TrimWholeString"/>
+        /// </summary>
+        /// <param name="source">Target string</param>
+        /// <returns>Formatted string</returns>
         public static string FormatText(this string source)
         {
-            foreach (var e in PunctuationDictionary) source = source.Replace(e.Key, e.Value);
+            foreach (var e in PunctuationDictionary)
+            {
+                source = source.Replace(e.Key, e.Value);
+            }
 
             return source.TrimWholeString();
         }

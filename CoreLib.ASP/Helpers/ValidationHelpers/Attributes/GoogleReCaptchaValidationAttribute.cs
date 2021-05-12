@@ -2,36 +2,50 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Http;
-using CoreLib.ASP.Resources;
+using CoreLib.ASP.Helpers.CheckHelpers;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
 
 #endregion
 
 namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
 {
-    public class GoogleReCaptchaValidationAttribute : ValidationAttribute
+    /// <summary>
+    /// Google ReCaptchaV2 validation attribute
+    /// </summary>
+    public class GoogleReCaptchaV2ValidationAttribute : ValidationAttribute
     {
+        private readonly bool _invisible;
+
+        /// <summary>
+        /// Google ReCaptchaV2 validation attribute
+        /// </summary>
+        /// <param name="invisible">The flag indicating the use of invisible ReCaptchaV2. Default value: false</param>
+        public GoogleReCaptchaV2ValidationAttribute(bool invisible = false)
+        {
+            _invisible = invisible;
+        }
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var errorResult = new Lazy<ValidationResult>(() =>
-                new ValidationResult(CommonResources.ResourceManager.GetString("ReCaptchaValidationError"),
+                new ValidationResult(Resources.ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"),
                     new[] {validationContext.MemberName}));
-            if (value == null || string.IsNullOrWhiteSpace(value.ToString())) return errorResult.Value;
+
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
+            {
+                return errorResult.Value;
+            }
+
             var configuration = (IConfiguration) validationContext.GetService(typeof(IConfiguration));
-            var reCaptchResponse = value.ToString();
-            var reCaptchaSecret = configuration.GetValue<string>("GoogleReCaptcha:SecretKey");
-            var httpClient = new HttpClient();
-            var httpResponse = httpClient
-                .GetAsync(
-                    $"https://www.google.com/recaptcha/api/siteverify?secret={reCaptchaSecret}&response={reCaptchResponse}")
-                .Result;
-            if (httpResponse.StatusCode != HttpStatusCode.OK) return errorResult.Value;
-            var jsonResponse = httpResponse.Content.ReadAsStringAsync().Result;
-            dynamic jsonData = JObject.Parse(jsonResponse);
-            return jsonData.success != true.ToString().ToLower() ? errorResult.Value : ValidationResult.Success;
+            var reCaptchaResponse = value.ToString();
+
+            var reCaptchaSecret =
+                configuration.GetValue<string>(
+                    $"GoogleReCaptchaV2{(_invisible ? "Invisible" : string.Empty)}:SecretKey");
+
+            return !CheckGoogleReCaptchaHelper.CheckV2Async(reCaptchaResponse, reCaptchaSecret).Result
+                ? errorResult.Value
+                : ValidationResult.Success;
         }
     }
 }

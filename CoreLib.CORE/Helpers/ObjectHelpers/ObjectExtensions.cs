@@ -2,11 +2,16 @@
 
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using CoreLib.CORE.Helpers.AssemblyHelpers;
+using CoreLib.CORE.Helpers.StringHelpers;
 
 #endregion
 
@@ -14,6 +19,12 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 {
     public static class ObjectExtensions
     {
+        /// <summary>
+        /// Sets property value by its name
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <param name="propertyName">Property name</param>
+        /// <param name="value">Property value</param>
         public static void SetPropertyValueByName(this object obj, string propertyName, object value)
         {
             var type = obj.GetType();
@@ -21,8 +32,12 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             if (propertyName.Contains("."))
             {
                 var array = propertyName.Split('.');
+
                 if (array.Length < 2)
+                {
                     throw new ArgumentOutOfRangeException(propertyName, $"Wrong format of property: {propertyName}");
+                }
+
                 var x = type.GetProperty(array[0]);
                 var y = x.GetValue(obj, null);
 
@@ -31,16 +46,54 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             else
             {
                 var propertyInfo = type.GetProperty(propertyName);
+
                 if (propertyInfo == null)
+                {
                     throw new ArgumentOutOfRangeException(propertyName,
                         $"There is no property with name {propertyName} in object {type.FullName}");
+                }
+
                 propertyInfo.SetValue(obj, value, null);
             }
         }
 
+        /// <summary>
+        /// Gets property value by its name
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <param name="propertyName">Property name</param>
+        /// <returns>Property value</returns>
+        public static object GetPropertyValueByName(this object obj, string propertyName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+
+            if (propertyName.IsNullOrEmptyOrWhiteSpace() || propertyName == ".")
+            {
+                return obj;
+            }
+
+            var propertyDescriptor = TypeDescriptor.GetProperties(obj.GetType()).Find(propertyName, false);
+
+            if (propertyDescriptor == null)
+            {
+                throw new ArgumentOutOfRangeException(propertyName);
+            }
+
+            return propertyDescriptor.GetValue(obj);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="DescriptionAttribute"/> value from provided property
+        /// </summary>
+        /// <param name="propertyInfo">Property info</param>
+        /// <returns>Description attribute value from provided property</returns>
         public static string GetPropertyDescription(this PropertyInfo propertyInfo)
         {
             if (propertyInfo != null)
+            {
                 try
                 {
                     return ((DescriptionAttribute) propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
@@ -50,62 +103,196 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 {
                     return propertyInfo.Name;
                 }
+            }
 
             return null;
         }
 
-        public static object GetPropertyValueByName(this object obj, string name)
+        /// <summary>
+        /// Gets a <see cref="DisplayAttribute"/> value from provided property using <see cref="CultureInfo.CurrentCulture"/>
+        /// </summary>
+        /// <param name="propertyInfo">Property info</param>
+        /// <returns>Display attribute value from provided property</returns>
+        public static string GetPropertyDisplayName(this PropertyInfo propertyInfo)
         {
-            foreach (var part in name.Split('.'))
-            {
-                if (obj == null) return null;
-
-                var type = obj.GetType();
-                var info = type.GetProperty(part);
-                if (info == null) return null;
-
-                obj = info.GetValue(obj, null);
-            }
-
-            return obj;
+            return GetPropertyDisplayName(propertyInfo, CultureInfo.CurrentCulture);
         }
 
+        /// <summary>
+        /// Gets a <see cref="DisplayAttribute"/> value from provided property using <see cref="CultureInfo"/>
+        /// </summary>
+        /// <param name="propertyInfo">Property info</param>
+        /// <param name="cultureInfo">Culture info</param>
+        /// <returns>Display attribute value from provided property</returns>
+        public static string GetPropertyDisplayName(this PropertyInfo propertyInfo, CultureInfo cultureInfo)
+        {
+            if (propertyInfo != null)
+            {
+                var displayAttr = (DisplayAttribute) propertyInfo
+                    .GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .FirstOrDefault();
+
+                var resourceManager =
+                    displayAttr?.ResourceType
+                        ?.GetProperty(@"ResourceManager",
+                            BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                        ?.GetValue(null, null) as ResourceManager;
+
+                return resourceManager?.GetString(displayAttr.Name, cultureInfo) ??
+                       displayAttr?.GetName() ?? propertyInfo.Name;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts an object to byte array
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <returns>Byte array that represent <paramref name="obj"/></returns>
         public static byte[] ToByteArray(this object obj)
         {
             if (obj == null)
+            {
                 return null;
+            }
+
             using (var ms = new MemoryStream())
             {
                 new BinaryFormatter().Serialize(ms, obj);
+
                 return ms.ToArray();
             }
         }
 
+        /// <summary>
+        /// Gets an object from byte array
+        /// </summary>
+        /// <param name="data">Byte array that represent an object</param>
+        /// <typeparam name="T">Target object type</typeparam>
+        /// <returns>Target object</returns>
         public static T GetObject<T>(this byte[] data)
         {
             if (data == null)
+            {
                 return default;
+            }
+
             using (var ms = new MemoryStream(data))
-            {              
-                return (T)new BinaryFormatter().Deserialize(ms);
+            {
+                return (T) new BinaryFormatter().Deserialize(ms);
             }
         }
 
+        /// <summary>
+        /// Gets an object from byte array using specified assembly to search
+        /// </summary>
+        /// <param name="data">Byte array that represent an object</param>
+        /// <param name="assembly">The assembly in which the object is located</param>
+        /// <typeparam name="T">Target object type</typeparam>
+        /// <returns>Target object</returns>
         public static T GetObject<T>(this byte[] data, Assembly assembly)
         {
             if (data == null)
+            {
                 return default;
+            }
+
             using (var ms = new MemoryStream(data))
             {
                 var obj = new BinaryFormatter {Binder = new SearchAssembliesBinder(assembly, true)}.Deserialize(ms);
+
                 return (T) obj;
             }
         }
 
-        public static void CopyTo(this object source, object destination)
+        /// <summary>
+        /// Changes type of object
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <typeparam name="T">Target type</typeparam>
+        /// <returns>Target object of the specified type</returns>
+        public static T ChangeType<T>(this object obj)
+        {
+            return (T) Convert.ChangeType(obj, typeof(T));
+        }
+
+        /// <summary>
+        /// Checks if the first object is greater than the second
+        /// </summary>
+        /// <param name="value">First object</param>
+        /// <param name="other">Second object</param>
+        /// <typeparam name="T">Object type that implements the <see cref="IComparable"/> interface</typeparam>
+        /// <returns>True if the first object is greater than the second</returns>
+        public static bool IsGreaterThan<T>(this T value, T other) where T : IComparable
+        {
+            return value.CompareTo(other) > 0;
+        }
+
+        /// <summary>
+        /// Checks if the first object is less than the second
+        /// </summary>
+        /// <param name="value">First object</param>
+        /// <param name="other">Second object</param>
+        /// <typeparam name="T">Object type that implements the <see cref="IComparable"/> interface</typeparam>
+        /// <returns>True if the first object is less than the second</returns>
+        public static bool IsLessThan<T>(this T value, T other) where T : IComparable
+        {
+            return value.CompareTo(other) < 0;
+        }
+
+        /// <summary>
+        /// Converts provided string to target structure
+        /// </summary>
+        /// <param name="input">A string containing an object to convert</param>
+        /// <param name="parsedValue">Object reference for conversion result. If conversion failed the result object will have a default value</param>
+        /// <typeparam name="T">Structure</typeparam>
+        /// <returns>True if provided value was converted successfully</returns>
+        public static bool TryParse<T>(this string input, out T parsedValue) where T : struct
+        {
+            parsedValue = default;
+
+            try
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                var value = converter.ConvertFromString(input);
+
+                if (value == null)
+                {
+                    return false;
+                }
+
+                parsedValue = (T) value;
+
+                return true;
+            }
+            catch (NotSupportedException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Creates a deep copy of an object asynchronously
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <returns>A task that represents the asynchronous deep copy of an object operation</returns>
+        public static Task CopyToAsync<T>(this T source, T destination)
+        {
+            return Task.Run(() => CopyTo(source, destination));
+        }
+
+        /// <summary>
+        /// Creates a deep copy of an object
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        public static void CopyTo<T>(this T source, T destination)
         {
             var typeDest = destination.GetType();
             var typeSrc = source.GetType();
+
             var results = from srcProp in typeSrc.GetProperties()
                 let targetProperty = typeDest.GetProperty(srcProp.Name)
                 where srcProp.CanRead && targetProperty?.GetSetMethod(true) != null &&
@@ -113,8 +300,11 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                       (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
                       targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
                 select new {sourceProperty = srcProp, targetProperty};
+
             foreach (var props in results)
+            {
                 props.targetProperty.SetValue(destination, props.sourceProperty.GetValue(source, null), null);
+            }
         }
     }
 }
