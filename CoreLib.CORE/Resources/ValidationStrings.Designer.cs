@@ -61,11 +61,29 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The sequence &apos;{0}&apos; must contain no more than {1}.
+        /// </summary>
+        public static string CollectionMaxLengthError {
+            get {
+                return ResourceManager.GetString("CollectionMaxLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The sequence &apos;{0}&apos; must contain at least {1} elements.
         /// </summary>
         public static string CollectionMinLengthError {
             get {
                 return ResourceManager.GetString("CollectionMinLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sequence &apos;{0}&apos; must contain at least {1} and no more than {2} elements.
+        /// </summary>
+        public static string CollectionRangeLengthError {
+            get {
+                return ResourceManager.GetString("CollectionRangeLengthError", resourceCulture);
             }
         }
         

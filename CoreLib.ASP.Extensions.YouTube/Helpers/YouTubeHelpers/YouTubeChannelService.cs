@@ -35,21 +35,13 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
             var url =
                 $"https://www.googleapis.com/youtube/v3/search?key={key}&channelId={channelId}&part=snippet,id&order=date&maxResults={maxResults}{(pageToken.IsNullOrEmptyOrWhiteSpace() ? string.Empty : $"&pageToken={pageToken}")}";
 
-            using (var response = await _client.SendAsync(new HttpRequestMessage {RequestUri = new Uri(url)}))
+            using (var response = await _client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    string data;
+                    var responseResult = await response.Content.ReadAsStringAsync();
 
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        using (var myStream = new StreamReader(stream))
-                        {
-                            data = await myStream.ReadToEndAsync();
-                        }
-                    }
-
-                    youTubeVideoResponseItem = JsonConvert.DeserializeObject<YouTubeVideoResponseItem>(data);
+                    youTubeVideoResponseItem = JsonConvert.DeserializeObject<YouTubeVideoResponseItem>(responseResult);
                 }
             }
 
@@ -64,21 +56,13 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
             var url =
                 $"https://www.googleapis.com/youtube/v3/playlistItems?key={key}&playlistId={playlistId}&part=snippet,id&order=date&maxResults={maxResults}{(pageToken.IsNullOrEmptyOrWhiteSpace() ? string.Empty : $"&pageToken={pageToken}")}";
 
-            using (var response = await _client.SendAsync(new HttpRequestMessage {RequestUri = new Uri(url)}))
+            using (var response = await _client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    string data;
+                    var responseResult = await response.Content.ReadAsStringAsync();
 
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        using (var myStream = new StreamReader(stream))
-                        {
-                            data = await myStream.ReadToEndAsync();
-                        }
-                    }
-
-                    youTubePlaylistResponseItem = JsonConvert.DeserializeObject<YouTubePlaylistResponseItem>(data);
+                    youTubePlaylistResponseItem = JsonConvert.DeserializeObject<YouTubePlaylistResponseItem>(responseResult);
                 }
             }
 
@@ -90,21 +74,13 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
             var youTubeChannelResponseItem = new YouTubeChannelResponseItem();
             var url = $"https://www.googleapis.com/youtube/v3/channels?key={key}&id={channelId}&part=contentDetails";
 
-            using (var response = await _client.SendAsync(new HttpRequestMessage {RequestUri = new Uri(url)}))
+            using (var response = await _client.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    string data;
+                    var responseResult = await response.Content.ReadAsStringAsync();
 
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        using (var myStream = new StreamReader(stream))
-                        {
-                            data = await myStream.ReadToEndAsync();
-                        }
-                    }
-
-                    youTubeChannelResponseItem = JsonConvert.DeserializeObject<YouTubeChannelResponseItem>(data);
+                    youTubeChannelResponseItem = JsonConvert.DeserializeObject<YouTubeChannelResponseItem>(responseResult);
                 }
             }
 
@@ -189,6 +165,11 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
             }
 
             return result;
+        }
+
+        public void Dispose()
+        {
+            _client.Dispose();
         }
     }
 }

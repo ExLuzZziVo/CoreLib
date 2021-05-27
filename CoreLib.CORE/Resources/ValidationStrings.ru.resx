@@ -195,4 +195,10 @@
   <data name="StringRangeLengthError" xml:space="preserve">
     <value>Поле '{0}' должно содержать не менее {1} и не более {2} символов</value>
   </data>
+  <data name="CollectionMaxLengthError" xml:space="preserve">
+    <value>Количество элементов в последовательности '{0}' должно быть не более {1}</value>
+  </data>
+  <data name="CollectionRangeLengthError" xml:space="preserve">
+    <value>Количество элементов в последовательности '{0}' должно быть не менее {1} и не более {2}</value>
+  </data>
 </root>

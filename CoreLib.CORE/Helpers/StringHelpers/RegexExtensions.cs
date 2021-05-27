@@ -151,6 +151,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <summary>
         /// Url
         /// </summary>
+        // ToDo Punycode?: ^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)+(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})(\/.*)?$
         public const string UrlPattern =
             @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$";
 

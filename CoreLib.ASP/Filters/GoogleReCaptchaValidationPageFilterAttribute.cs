@@ -55,12 +55,12 @@ namespace CoreLib.ASP.Filters
             {
                 return string.Equals(context.HandlerMethod?.HttpMethod, HttpMethod.Post.Method,
                     StringComparison.OrdinalIgnoreCase)
-                    ? context.CheckGoogleReCaptchaAsync(_invisible, _requiredScore, _actionName)
+                    ? CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(context, _invisible, _requiredScore, _actionName)
                     : Task.CompletedTask;
             }
 
             return HandlerNames.Contains(context.HandlerMethod.Name)
-                ? context.CheckGoogleReCaptchaAsync(_invisible, _requiredScore, _actionName)
+                ? CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(context, _invisible, _requiredScore, _actionName)
                 : Task.CompletedTask;
         }
     }

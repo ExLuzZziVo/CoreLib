@@ -37,7 +37,7 @@ namespace CoreLib.ASP.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.CheckGoogleReCaptchaAsync(_invisible, _requiredScore, _actionName).Wait();
+            CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(filterContext, _invisible, _requiredScore, _actionName).Wait();
             base.OnActionExecuting(filterContext);
         }
     }

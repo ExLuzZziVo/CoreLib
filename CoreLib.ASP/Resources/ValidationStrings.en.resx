@@ -98,4 +98,20 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="ReCaptchaValidationError" xml:space="preserve">
+		<value>Please complete the captcha</value>
+	</data>
+	<data name="UploadFileCountError" xml:space="preserve">
+		<value>The number of uploaded files must be no more than {0}</value>
+	</data>
+	<data name="UploadFileFormatError" xml:space="preserve">
+		<value>The uploaded file has the incorrect format</value>
+	</data>
+	<data name="UploadFileSizeError" xml:space="preserve">
+		<value>The size of the uploaded file must not exceed {0}</value>
+	</data>
+	<data name="UploadFileWithDisplayNameSizeError" xml:space="preserve">
+		<value>
+The size of the uploaded file '{0}' must not exceed {1}</value>
+	</data>
 </root>

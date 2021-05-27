@@ -7,7 +7,7 @@ using CoreLib.CORE.Helpers.StringHelpers;
 
 namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
 {
-    public static class FileManipulator
+    public static class FileManipulator_Compression
     {
         /// <summary>
         /// Packs specified file to zip archive

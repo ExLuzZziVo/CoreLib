@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoreLib.ASP.Extensions.YouTube.Types.YouTube;
@@ -11,7 +12,7 @@ using CoreLib.ASP.Extensions.YouTube.Types.YouTube.Videos;
 
 namespace CoreLib.ASP.Extensions.YouTube.Interfaces
 {
-    public interface IYouTubeChannelService
+    public interface IYouTubeChannelService: IDisposable
     {
         Task<YouTubeVideoResponseItem> YouTubeSearchVideosByChannelId(string key, string channelId, int maxResults,
             string pageToken);

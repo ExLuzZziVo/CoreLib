@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -9,13 +8,22 @@ using CoreLib.ASP.Types;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
 namespace CoreLib.ASP.Helpers.CheckHelpers
 {
-    public static class CheckGoogleReCaptchaHelper
+    public class CheckGoogleReCaptchaHelper : ICheckGoogleReCaptchaHelper
     {
+        private readonly HttpClient _httpClient;
+
+        [ActivatorUtilitiesConstructor]
+        public CheckGoogleReCaptchaHelper(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+        
         /// <summary>
         /// Asynchronously validates Google's Recaptcha
         /// </summary>
@@ -27,7 +35,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         /// <remarks>
         /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
         /// </remarks>
-        internal static async Task CheckGoogleReCaptchaAsync(this ActionContext filterContext, bool invisibleV2 = false,
+        internal static async Task CheckGoogleReCaptchaAsync(ActionContext filterContext, bool invisibleV2 = false,
             float? requiredScore = null, string actionName = null)
         {
             var reCaptchaResponse = string.Empty;
@@ -56,23 +64,26 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 return;
             }
 
-            var configuration =
-                (IConfiguration) filterContext.HttpContext.RequestServices.GetService(typeof(IConfiguration));
+            var configuration = filterContext.HttpContext.RequestServices.GetService<IConfiguration>();
 
             var reCaptchaSecret =
                 configuration.GetValue<string>(
                     $"GoogleReCaptchaV{(reCaptchaV3 ? "3" : invisibleV2 ? "2Invisible" : "2")}:SecretKey");
 
+            var checkGoogleReCaptchaHelper =
+                filterContext.HttpContext.RequestServices.GetService<ICheckGoogleReCaptchaHelper>();
+
             if (reCaptchaV3)
             {
-                if (!await CheckV3Async(reCaptchaResponse, reCaptchaSecret, actionName, requiredScore.Value))
+                if (!await checkGoogleReCaptchaHelper.CheckV3Async(reCaptchaResponse, reCaptchaSecret, actionName,
+                    requiredScore.Value))
                 {
                     AddReCaptchaValidationError(filterContext);
                 }
             }
             else
             {
-                if (!await CheckV2Async(reCaptchaResponse, reCaptchaSecret))
+                if (!await checkGoogleReCaptchaHelper.CheckV2Async(reCaptchaResponse, reCaptchaSecret))
                 {
                     AddReCaptchaValidationError(filterContext);
                 }
@@ -89,26 +100,12 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 Resources.ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"));
         }
 
-        /// <summary>
-        /// Asynchronously validates Google's RecaptchaV2
-        /// </summary>
-        /// <param name="reCaptchaResponse">ReCaptchaV2 response</param>
-        /// <param name="reCaptchaSecret">ReCaptchaV2 secret key</param>
-        /// <returns>A task that represents the asynchronous validation of ReCaptchaV2. If the validation is passed, the result of the task will be true</returns>
-        public static Task<bool> CheckV2Async(string reCaptchaResponse, string reCaptchaSecret)
+        public Task<bool> CheckV2Async(string reCaptchaResponse, string reCaptchaSecret)
         {
             return CheckAsync(reCaptchaResponse, reCaptchaSecret);
         }
 
-        /// <summary>
-        /// Asynchronously validates Google's RecaptchaV3
-        /// </summary>
-        /// <param name="reCaptchaResponse">ReCaptchaV3 response</param>
-        /// <param name="reCaptchaSecret">ReCaptchaV3 secret key</param>
-        /// <param name="actionName">RecaptchaV3 action name</param>
-        /// <param name="requiredScore">Required ReCaptchaV3 score to pass the validation</param>
-        /// <returns>A task that represents the asynchronous validation of ReCaptchaV3. If the validation is passed, the result of the task will be true</returns>
-        public static Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName,
+        public Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName,
             float requiredScore)
         {
             return CheckAsync(reCaptchaResponse, reCaptchaSecret, actionName, requiredScore);
@@ -122,7 +119,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         /// <param name="actionName">RecaptchaV3 action name. Default value: null</param>
         /// <param name="requiredScore">Required ReCaptchaV3 score to pass the validation. Default value: null</param>
         /// <returns>A task that represents the asynchronous validation of ReCaptcha. If the validation is passed, the result of the task will be true</returns>
-        private static async Task<bool> CheckAsync(string reCaptchaResponse, string reCaptchaSecret,
+        private async Task<bool> CheckAsync(string reCaptchaResponse, string reCaptchaSecret,
             string actionName = null, float? requiredScore = null)
         {
             if (reCaptchaSecret.IsNullOrEmptyOrWhiteSpace())
@@ -142,25 +139,21 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
 
             string jsonResponse;
 
-            //ToDo dependency injection
-            using (var httpClient = new HttpClient())
+            using (var response = await _httpClient
+                .GetAsync(
+                    $"https://www.google.com/recaptcha/api/siteverify?secret={reCaptchaSecret}&response={reCaptchaResponse}"))
             {
-                var httpResponse = httpClient
-                    .GetAsync(
-                        $"https://www.google.com/recaptcha/api/siteverify?secret={reCaptchaSecret}&response={reCaptchaResponse}")
-                    .Result;
-
-                if (httpResponse.StatusCode != HttpStatusCode.OK)
+                if (!response.IsSuccessStatusCode)
                 {
                     return false;
                 }
 
-                jsonResponse = await httpResponse.Content.ReadAsStringAsync();
+                jsonResponse = await response.Content.ReadAsStringAsync();
             }
-
+            
             var reCaptchaResponseResult = JsonSerializer.Deserialize<GoogleReCaptchaResponse>(jsonResponse,
                 new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
-
+            
             if (requiredScore != null)
             {
                 if (!reCaptchaResponseResult.Success)
@@ -177,6 +170,11 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
             }
 
             return reCaptchaResponseResult.Success;
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
         }
     }
 }

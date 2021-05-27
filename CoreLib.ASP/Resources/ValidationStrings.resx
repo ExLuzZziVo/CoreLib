@@ -118,18 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UploadFileCountError" xml:space="preserve">
-    <value />
+    <value>The number of uploaded files must be no more than {0}</value>
   </data>
   <data name="UploadFileFormatError" xml:space="preserve">
-    <value />
+    <value>The uploaded file has the incorrect format</value>
   </data>
   <data name="UploadFileSizeError" xml:space="preserve">
-    <value />
+    <value>The size of the uploaded file must not exceed {0}</value>
   </data>
   <data name="UploadFileWithDisplayNameSizeError" xml:space="preserve">
-    <value />
+    <value>
+The size of the uploaded file '{0}' must not exceed {1}</value>
   </data>
   <data name="ReCaptchaValidationError" xml:space="preserve">
-    <value />
+    <value>Please complete the captcha</value>
   </data>
 </root>

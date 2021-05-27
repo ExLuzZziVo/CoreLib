@@ -270,5 +270,23 @@ namespace CoreLib.CORE.Helpers.StringHelpers
                     ? char.IsUpper(x) ? x.ToString().ToLower().First() : x.ToString().ToUpper().First()
                     : x).ToArray());
         }
+
+        /// <summary>
+        /// Removes only the first leading and trailing occurrences of a character from the specified string
+        /// </summary>
+        /// <param name="str">Target string</param>
+        /// <param name="ch">A character to remove</param>
+        /// <returns>The string that remains after the first instances of the <paramref name="ch"/> character are removed from the beginning and end of the specified string</returns>
+        public static string TrimOnce(this string str, char ch)
+        {
+            var resultStr = str.Substring(str[0] == ch ? 1 : 0);
+
+            if (str[str.Length - 1] == ch)
+            {
+                resultStr = resultStr.Substring(0, resultStr.Length - 1);
+            }
+
+            return resultStr;
+        }
     }
 }

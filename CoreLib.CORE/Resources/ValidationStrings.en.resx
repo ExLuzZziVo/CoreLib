@@ -96,4 +96,10 @@
     <data name="InvalidFilePathError" xml:space="preserve">
         <value>One or more files have an invalid save path</value>
     </data>
+    <data name="CollectionMaxLengthError" xml:space="preserve">
+        <value>The sequence '{0}' must contain no more than {1}</value>
+    </data>
+    <data name="CollectionRangeLengthError" xml:space="preserve">
+        <value>The sequence '{0}' must contain at least {1} and no more than {2} elements</value>
+    </data>
 </root>

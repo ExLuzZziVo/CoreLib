@@ -61,7 +61,7 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Please complete the captcha.
         /// </summary>
         public static string ReCaptchaValidationError {
             get {
@@ -70,7 +70,7 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The number of uploaded files must be no more than {0}.
         /// </summary>
         public static string UploadFileCountError {
             get {
@@ -79,7 +79,7 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The uploaded file has the incorrect format.
         /// </summary>
         public static string UploadFileFormatError {
             get {
@@ -88,7 +88,7 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The size of the uploaded file must not exceed {0}.
         /// </summary>
         public static string UploadFileSizeError {
             get {
@@ -97,7 +97,8 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 
+        ///The size of the uploaded file &apos;{0}&apos; must not exceed {1}.
         /// </summary>
         public static string UploadFileWithDisplayNameSizeError {
             get {
