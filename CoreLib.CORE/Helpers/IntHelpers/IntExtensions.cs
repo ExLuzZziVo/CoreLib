@@ -45,21 +45,5 @@ namespace CoreLib.CORE.Helpers.IntHelpers
             return (value / Math.Pow(1024, (long) unit)).ToString("0.00") + unit;
         }
 
-        /// <summary>
-        /// Checks if specified value is in provided range
-        /// </summary>
-        /// <param name="value">Value to check</param>
-        /// <param name="value1">Range start value</param>
-        /// <param name="value2">Range end value</param>
-        /// <returns>True if specified value is in provided range</returns>
-        public static bool IsInRange(this int value, int value1, int value2)
-        {
-            if (value2 < value1)
-            {
-                return value.IsInRange(value2, value1);
-            }
-
-            return value >= value1 && value <= value2;
-        }
     }
 }

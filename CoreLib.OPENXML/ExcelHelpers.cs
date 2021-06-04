@@ -193,10 +193,12 @@ namespace CoreLib.OPENXML
         ///     1) No borders
         ///     2) Thin black borders
         /// 4. Cell formats:
-        ///     1) Font: 1, Fill: 1, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Left"/>-<see cref="VerticalAlignmentValues.Center"/>
-        ///     2) Font: 2, Fill: 3, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Left"/>-<see cref="VerticalAlignmentValues.Center"/>
-        ///     3) Font: 1, Fill: 1, Borders: 1, Alignment: <see cref="HorizontalAlignmentValues.Center"/>-<see cref="VerticalAlignmentValues.Center"/>
-        ///     4) Font: 1, Fill: 1, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Center"/>-<see cref="VerticalAlignmentValues.Center"/>
+        ///     1) Default
+        ///     2) Font: 1, Fill: 1, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Left"/>-<see cref="VerticalAlignmentValues.Center"/>
+        ///     3) Font: 2, Fill: 3, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Left"/>-<see cref="VerticalAlignmentValues.Center"/>
+        ///     4) Font: 1, Fill: 1, Borders: 1, Alignment: <see cref="HorizontalAlignmentValues.Center"/>-<see cref="VerticalAlignmentValues.Center"/>
+        ///     5) Font: 1, Fill: 1, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Center"/>-<see cref="VerticalAlignmentValues.Center"/>
+        ///     6) Font: 1, Fill: 1, Borders: 2, Alignment: <see cref="HorizontalAlignmentValues.Left"/>-<see cref="VerticalAlignmentValues.Center"/>
         /// </returns>
         public static Stylesheet GenerateStylesheet()
         {
@@ -279,7 +281,22 @@ namespace CoreLib.OPENXML
                     FillId = 0,
                     BorderId = 1,
                     Alignment = new Alignment
-                        {Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center},
+                        { Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center },
+                    ApplyFill = true,
+                    ApplyBorder = true,
+                    ApplyAlignment = true,
+                    ApplyFont = true
+                },
+                new CellFormat
+                {
+                    FontId = 0,
+                    FillId = 0,
+                    BorderId = 1,
+                    Alignment = new Alignment 
+                        { 
+                            Horizontal = HorizontalAlignmentValues.Left, Vertical = VerticalAlignmentValues.Center,
+                            Indent = 1
+                        },
                     ApplyFill = true,
                     ApplyBorder = true,
                     ApplyAlignment = true,

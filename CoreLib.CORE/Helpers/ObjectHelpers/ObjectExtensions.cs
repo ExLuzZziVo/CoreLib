@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -306,5 +307,24 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 props.targetProperty.SetValue(destination, props.sourceProperty.GetValue(source, null), null);
             }
         }
+        
+        /// <summary>
+        /// Checks if specified value is in provided range
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <param name="value1">Range start value</param>
+        /// <param name="value2">Range end value</param>
+        /// <typeparam name="T">A type that implements the <see cref="IComparable{T}"/> interface</typeparam>
+        /// <returns>True if specified value is in provided range</returns>
+        public static bool IsInRange<T>(this T value, T value1, T value2) where T: IComparable<T>
+        {
+            if (Comparer<T>.Default.Compare(value2, value1) < 0)
+            {
+                return value.IsInRange(value2, value1);
+            }
+
+            return Comparer<T>.Default.Compare(value, value1) >= 0 && Comparer<T>.Default.Compare(value, value2) <= 0;
+        }
+        
     }
 }
