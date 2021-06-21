@@ -13,11 +13,11 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// </summary>
         private static readonly Dictionary<string, string> PunctuationDictionary = new Dictionary<string, string>
         {
-            {".", ". "},
-            {",", ", "},
             {":", ": "},
             {";", "; "},
             {"№", "№ "},
+            {" %", "%"},
+            {"%", "% "},
             {". ,", ".,"},
             {" /", "/"},
             {"/ ", "/"},
@@ -25,7 +25,22 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             {"\\ ", "\\"},
             {"\"", "\" "},
             {"- ", "-"},
-            {" -", "-"}
+            {" -", "-"},
+            {"« ", "«"},
+            {" »", "»"},
+            {" '", "'"},
+            {"' ", "'"},
+            {" \"", "\""},
+            {"\" ", "\""},
+            
+            {".", ". "},
+            {" .", "."},
+            {",", ", "},
+            {" ,", ","},
+            {"!", "! "},
+            {" !", "!"},
+            {"?", "? "},
+            {" ?", "?"},
         };
 
         /// <summary>
@@ -35,12 +50,14 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <returns>Formatted string</returns>
         public static string FormatText(this string source)
         {
+            var result = source.TrimWholeString();
+
             foreach (var e in PunctuationDictionary)
             {
-                source = source.Replace(e.Key, e.Value);
+                result = result.Replace(e.Key, e.Value);
             }
 
-            return source.TrimWholeString();
+            return result.TrimWholeString();
         }
     }
 }

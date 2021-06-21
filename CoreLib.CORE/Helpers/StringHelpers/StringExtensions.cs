@@ -219,7 +219,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         {
             if (str.IsNullOrEmptyOrWhiteSpace() || chars == null || chars.Length == 0)
             {
-                return string.Empty;
+                return str;
             }
 
             return string.Join(string.Empty, str.Split(chars));
