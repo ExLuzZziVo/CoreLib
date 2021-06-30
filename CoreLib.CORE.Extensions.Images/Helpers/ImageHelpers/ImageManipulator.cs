@@ -19,7 +19,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <returns>Width and Height of image</returns>
         public static Tuple<int, int> GetImageWidthAndHeight(string pathToImage)
         {
-            return Image.FromFile(pathToImage).GetWidthAndHeight();
+            using (var image = Image.FromFile(pathToImage))
+            {
+                return image.GetWidthAndHeight();
+            }
         }
 
         /// <summary>
