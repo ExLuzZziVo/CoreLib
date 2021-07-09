@@ -307,7 +307,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 props.targetProperty.SetValue(destination, props.sourceProperty.GetValue(source, null), null);
             }
         }
-        
+
         /// <summary>
         /// Checks if specified value is in provided range
         /// </summary>
@@ -316,7 +316,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         /// <param name="value2">Range end value</param>
         /// <typeparam name="T">A type that implements the <see cref="IComparable{T}"/> interface</typeparam>
         /// <returns>True if specified value is in provided range</returns>
-        public static bool IsInRange<T>(this T value, T value1, T value2) where T: IComparable<T>
+        public static bool IsInRange<T>(this T value, T value1, T value2) where T : IComparable<T>
         {
             if (Comparer<T>.Default.Compare(value2, value1) < 0)
             {
@@ -325,6 +325,51 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
             return Comparer<T>.Default.Compare(value, value1) >= 0 && Comparer<T>.Default.Compare(value, value2) <= 0;
         }
-        
+
+        // https://stackoverflow.com/a/24343727/48700
+        /// <summary>
+        /// Hex string lookup table
+        /// </summary>
+        private static readonly Lazy<uint[]> HexStringTable = new Lazy<uint[]>(() =>
+        {
+            var result = new uint[256];
+
+            for (var i = 0; i < 256; i++)
+            {
+                var s = i.ToString("X2");
+                result[i] = s[0] + ((uint) s[1] << 16);
+            }
+
+            return result;
+        });
+
+        /// <summary>
+        /// Converts a byte array to a hex string
+        /// </summary>
+        /// <param name="data">Byte array that will be converted to a hex string</param>
+        /// <returns>Hex representation of the provided byte array</returns>
+        public static string ToHexString(this byte[] data)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            if (data.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            var result = new char[data.Length * 2];
+
+            for (var i = 0; i < data.Length; i++)
+            {
+                var val = HexStringTable.Value[data[i]];
+                result[2 * i] = (char) val;
+                result[2 * i + 1] = (char) (val >> 16);
+            }
+
+            return new string(result);
+        }
     }
 }

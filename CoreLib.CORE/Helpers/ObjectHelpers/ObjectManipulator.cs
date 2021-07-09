@@ -1,8 +1,10 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using CoreLib.CORE.Helpers.StringHelpers;
 
 #endregion
 
@@ -69,6 +71,48 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             }
 
             return true;
+        }
+
+        // https://stackoverflow.com/a/18939148
+        /// <summary>
+        /// Hex nibble
+        /// </summary>
+        private static readonly byte[] HexNibble =
+        {
+            0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
+            0x8, 0x9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF
+        };
+
+        /// <summary>
+        /// Converts a hex string to a byte array
+        /// </summary>
+        /// <param name="hex">Hex string that will be converted to a byte array. Length must be even</param>
+        /// <returns>A byte array obtained from a hex string</returns>
+        public static byte[] GetDataFromHexString(string hex)
+        {
+            if (hex.IsNullOrEmptyOrWhiteSpace())
+            {
+                throw new ArgumentNullException(nameof(hex));
+            }
+
+            if (hex.Length % 2 != 0)
+            {
+                throw new ArgumentException("Hex value length must be even", nameof(hex));
+            }
+
+            var data = new byte[hex.Length / 2];
+
+            for (var i = 0; i < data.Length; i++)
+            {
+                data[i] = (byte) ((HexNibble[hex[i << 1] - 48] << 4) | HexNibble[hex[(i << 1) + 1] - 48]);
+            }
+
+            return data;
         }
     }
 }

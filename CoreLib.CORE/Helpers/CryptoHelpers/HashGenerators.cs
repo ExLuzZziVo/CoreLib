@@ -2,6 +2,7 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using CoreLib.CORE.Helpers.ObjectHelpers;
 
 #endregion
 
@@ -34,7 +35,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
 
             var hashedBytes = hashAlgorithm.ComputeHash(inputToHash);
 
-            return Encoding.Unicode.GetString(hashedBytes);
+            return hashedBytes.ToHexString();
         }
 
         /// <summary>
