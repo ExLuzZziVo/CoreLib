@@ -119,7 +119,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
         /// Checks and saves the uploaded image to specified path
         /// </summary>
         /// <param name="imageFile">Uploaded image</param>
-        /// <param name="saveImageFilePath">Full path to save the uploaded image</param>
+        /// <param name="saveImageFilePath">Absolute path to save the uploaded image</param>
         /// <param name="imageFileSizeLimit">Maximum size of the uploaded image. Default value: 2MB</param>
         /// <returns>A task that represents the asynchronous checking and saving of the uploaded image. If the operation is successful, it returns <see cref="OkObjectResult"/>, otherwise <see cref="BadRequestObjectResult"/></returns>
         public async Task<IActionResult> UploadImage(IFormFile imageFile, string saveImageFilePath,

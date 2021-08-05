@@ -9,8 +9,6 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class NameCasesGenerator
     {
-        private static readonly NameCaseLib.Ru NameCaseLibInstance = new NameCaseLib.Ru();
-
         /// <summary>
         /// Склоняет ФИО по всем падежам
         /// </summary>
@@ -45,6 +43,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             name = name.ToUpperAllFirstChars();
             patronymic = patronymic.ToUpperAllFirstChars();
 
+            var nameCaseLibInstance = new NameCaseLib.Ru();
             var result = new string[6];
 
             result[0] =
@@ -52,23 +51,23 @@ namespace CoreLib.CORE.Helpers.StringHelpers
                     .TrimWholeString();
 
             result[1] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[1]} {NameCaseLibInstance.QFirstName(name, gender)[1]} {GeneratePatronymic(patronymic, 1, gender)}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[1]} {nameCaseLibInstance.QFirstName(name, gender)[1]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 1, gender)}"
                     .TrimWholeString();
 
             result[2] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[2]} {NameCaseLibInstance.QFirstName(name, gender)[2]} {GeneratePatronymic(patronymic, 2, gender)}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[2]} {nameCaseLibInstance.QFirstName(name, gender)[2]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 2, gender)}"
                     .TrimWholeString();
 
             result[3] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[3]} {NameCaseLibInstance.QFirstName(name, gender)[3]} {GeneratePatronymic(patronymic, 3, gender)}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[3]} {nameCaseLibInstance.QFirstName(name, gender)[3]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 3, gender)}"
                     .TrimWholeString();
 
             result[4] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[4]} {NameCaseLibInstance.QFirstName(name, gender)[4]} {GeneratePatronymic(patronymic, 4, gender)}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[4]} {nameCaseLibInstance.QFirstName(name, gender)[4]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 4, gender)}"
                     .TrimWholeString();
 
             result[5] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[5]} {NameCaseLibInstance.QFirstName(name, gender)[5]} {GeneratePatronymic(patronymic, 5, gender)}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[5]} {nameCaseLibInstance.QFirstName(name, gender)[5]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 5, gender)}"
                     .TrimWholeString();
 
             return result;
@@ -107,6 +106,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             surname =
                 surname.ToUpperAllFirstChars();
 
+            var nameCaseLibInstance = new NameCaseLib.Ru();
             var result = new string[6];
 
             var shortNameInitials =
@@ -115,36 +115,37 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             result[0] = $"{surname} {shortNameInitials}".TrimWholeString();
 
             result[1] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[1]} {shortNameInitials}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[1]} {shortNameInitials}"
                     .TrimWholeString();
 
             result[2] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[2]} {shortNameInitials}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[2]} {shortNameInitials}"
                     .TrimWholeString();
 
             result[3] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[3]} {shortNameInitials}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[3]} {shortNameInitials}"
                     .TrimWholeString();
 
             result[4] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[4]} {shortNameInitials}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[4]} {shortNameInitials}"
                     .TrimWholeString();
 
             result[5] =
-                $"{NameCaseLibInstance.QSecondName(surname, gender)[5]} {shortNameInitials}"
+                $"{nameCaseLibInstance.QSecondName(surname, gender)[5]} {shortNameInitials}"
                     .TrimWholeString();
 
             return result;
         }
 
         /// <summary>
-        /// Склоняет отчетсво
+        /// Склоняет отчество
         /// </summary>
-        /// <param name="patronymic">Отчетсво</param>
+        /// <param name="nameCaseLibInstance">Экземпляр класса, склоняющего ФИО</param>
+        /// <param name="patronymic">Отчество</param>
         /// <param name="padej">Индекс падежа</param>
         /// <param name="gender">Пол</param>
         /// <returns>Склоненное отчество</returns>
-        private static string GeneratePatronymic(string patronymic, int padej, Gender gender)
+        private static string GeneratePatronymic(this NameCaseLib.Ru nameCaseLibInstance, string patronymic, int padej, Gender gender)
         {
             if (patronymic.IsNullOrEmptyOrWhiteSpace())
             {
@@ -162,20 +163,20 @@ namespace CoreLib.CORE.Helpers.StringHelpers
                     case "Угли":
                     case "Углы":
                         return
-                            $"{NameCaseLibInstance.QFirstName(strArray[0], Gender.Man)[padej]} {strArray[1]}";
+                            $"{nameCaseLibInstance.QFirstName(strArray[0], Gender.Man)[padej]} {strArray[1]}";
                     case "Кызы":
                     case "Кизы":
                     case "Кызи":
                     case "Кизи":
                         return
-                            $"{NameCaseLibInstance.QFirstName(strArray[0], Gender.Woman)[padej]} {strArray[1]}";
+                            $"{nameCaseLibInstance.QFirstName(strArray[0], Gender.Woman)[padej]} {strArray[1]}";
                     default:
                         return patronymic;
                 }
             }
 
             return
-                NameCaseLibInstance.QFatherName(strArray[0], gender)[padej];
+                nameCaseLibInstance.QFatherName(strArray[0], gender)[padej];
         }
     }
 }
