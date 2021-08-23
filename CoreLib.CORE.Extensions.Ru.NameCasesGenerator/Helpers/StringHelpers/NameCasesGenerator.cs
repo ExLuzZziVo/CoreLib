@@ -15,12 +15,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <param name="surname">Фамилия</param>
         /// <param name="name">Имя</param>
         /// <param name="patronymic">Отчество</param>
-        /// <param name="gender">Пол. True - мужской, False - женский</param>
+        /// <param name="gender">Пол. True - мужской, False - женский, Null - автоматическое определение. По умолчанию: Null</param>
         /// <returns>ФИО, склоненное по всем падежам в виде массива строк с размерностью 6 (кол-во падежей)</returns>
         public static string[] GenerateFullNameCases(string surname,
-            string name, string patronymic, bool gender)
+            string name, string patronymic, bool? gender = null)
         {
-            return GenerateFullNameCases(surname, name, patronymic, gender ? Gender.Man : Gender.Woman);
+            return GenerateFullNameCases(surname, name, patronymic,
+                gender == null ? Gender.Null : gender.Value ? Gender.Man : Gender.Woman);
         }
 
         /// <summary>
@@ -46,29 +47,22 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             var nameCaseLibInstance = new NameCaseLib.Ru();
             var result = new string[6];
 
-            result[0] =
-                $"{surname} {name} {patronymic}"
-                    .TrimWholeString();
+            if (gender == Gender.Null)
+            {
+                gender = nameCaseLibInstance.DetectGender($"{surname} {name} {patronymic}".TrimWholeString());
+            }
 
-            result[1] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[1]} {nameCaseLibInstance.QFirstName(name, gender)[1]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 1, gender)}"
-                    .TrimWholeString();
+            var surnames = nameCaseLibInstance.QSurname(surname, gender);
+            var names = nameCaseLibInstance.QName(name, gender);
+            var patronymics = nameCaseLibInstance.QFatherName(patronymic, gender);
 
-            result[2] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[2]} {nameCaseLibInstance.QFirstName(name, gender)[2]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 2, gender)}"
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = $"{surnames[i]} {names[i]} {patronymics[i]}"
                     .TrimWholeString();
+            }
 
-            result[3] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[3]} {nameCaseLibInstance.QFirstName(name, gender)[3]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 3, gender)}"
-                    .TrimWholeString();
-
-            result[4] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[4]} {nameCaseLibInstance.QFirstName(name, gender)[4]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 4, gender)}"
-                    .TrimWholeString();
-
-            result[5] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[5]} {nameCaseLibInstance.QFirstName(name, gender)[5]} {nameCaseLibInstance.GeneratePatronymic(patronymic, 5, gender)}"
-                    .TrimWholeString();
+            nameCaseLibInstance.FullReset();
 
             return result;
         }
@@ -79,12 +73,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <param name="surname">Фамилия</param>
         /// <param name="name">Имя</param>
         /// <param name="patronymic">Отчество</param>
-        /// <param name="gender">Пол. True - мужской, False - женский</param>
+        /// <param name="gender">Пол. True - мужской, False - женский, Null - автоматическое определение. По умолчанию: Null</param>
         /// <returns>Сокращенное ФИО, склоненное по всем падежам в виде массива строк с размерностью 6 (кол-во падежей)</returns>
         public static string[] GenerateShortNameCases(string surname,
-            string name, string patronymic, bool gender)
+            string name, string patronymic, bool? gender = null)
         {
-            return GenerateShortNameCases(surname, name, patronymic, gender ? Gender.Man : Gender.Woman);
+            return GenerateShortNameCases(surname, name, patronymic,
+                gender == null ? Gender.Null : gender.Value ? Gender.Man : Gender.Woman);
         }
 
         /// <summary>
@@ -112,71 +107,17 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             var shortNameInitials =
                 $"{name.Substring(0, 1).ToUpper()}.{(patronymic.IsNullOrEmptyOrWhiteSpace() ? "" : $" {patronymic.Substring(0, 1).ToUpper()}.")}";
 
-            result[0] = $"{surname} {shortNameInitials}".TrimWholeString();
+            var surnames = nameCaseLibInstance.QSurname(surname, gender);
 
-            result[1] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[1]} {shortNameInitials}"
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = $"{surnames[i]} {shortNameInitials}"
                     .TrimWholeString();
+            }
 
-            result[2] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[2]} {shortNameInitials}"
-                    .TrimWholeString();
-
-            result[3] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[3]} {shortNameInitials}"
-                    .TrimWholeString();
-
-            result[4] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[4]} {shortNameInitials}"
-                    .TrimWholeString();
-
-            result[5] =
-                $"{nameCaseLibInstance.QSecondName(surname, gender)[5]} {shortNameInitials}"
-                    .TrimWholeString();
+            nameCaseLibInstance.FullReset();
 
             return result;
-        }
-
-        /// <summary>
-        /// Склоняет отчество
-        /// </summary>
-        /// <param name="nameCaseLibInstance">Экземпляр класса, склоняющего ФИО</param>
-        /// <param name="patronymic">Отчество</param>
-        /// <param name="padej">Индекс падежа</param>
-        /// <param name="gender">Пол</param>
-        /// <returns>Склоненное отчество</returns>
-        private static string GeneratePatronymic(this NameCaseLib.Ru nameCaseLibInstance, string patronymic, int padej, Gender gender)
-        {
-            if (patronymic.IsNullOrEmptyOrWhiteSpace())
-            {
-                return string.Empty;
-            }
-
-            var strArray = patronymic.Split(' ');
-
-            if (strArray.Length == 2)
-            {
-                switch (strArray[1])
-                {
-                    case "Оглы":
-                    case "Огли":
-                    case "Угли":
-                    case "Углы":
-                        return
-                            $"{nameCaseLibInstance.QFirstName(strArray[0], Gender.Man)[padej]} {strArray[1]}";
-                    case "Кызы":
-                    case "Кизы":
-                    case "Кызи":
-                    case "Кизи":
-                        return
-                            $"{nameCaseLibInstance.QFirstName(strArray[0], Gender.Woman)[padej]} {strArray[1]}";
-                    default:
-                        return patronymic;
-                }
-            }
-
-            return
-                nameCaseLibInstance.QFatherName(strArray[0], gender)[padej];
         }
     }
 }
