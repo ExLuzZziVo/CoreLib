@@ -42,7 +42,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 var x = type.GetProperty(array[0]);
                 var y = x.GetValue(obj, null);
 
-                y.SetPropertyValueByName(array[1], value);
+                y.SetPropertyValueByName(string.Join(".", array.Skip(1).ToArray()), value);
             }
             else
             {

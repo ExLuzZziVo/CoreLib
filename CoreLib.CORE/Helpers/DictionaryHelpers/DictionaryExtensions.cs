@@ -14,7 +14,7 @@ namespace CoreLib.CORE.Helpers.DictionaryHelpers
         /// <param name="dictionary">Target dictionary</param>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        public static void AddOrUpdate<T, T1>(this Dictionary<T, T1> dictionary, T key, T1 value)
+        public static void AddOrUpdate<T, T1>(this IDictionary<T, T1> dictionary, T key, T1 value)
         {
             if (dictionary.ContainsKey(key))
             {

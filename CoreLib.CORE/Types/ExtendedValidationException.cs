@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 #endregion
 
@@ -49,5 +50,7 @@ namespace CoreLib.CORE.Types
         /// List of all validation errors
         /// </summary>
         public IEnumerable<string> ValidationErrors => _validationErrors;
+
+        public override string Message => string.Join("\n", _validationErrors);
     }
 }
