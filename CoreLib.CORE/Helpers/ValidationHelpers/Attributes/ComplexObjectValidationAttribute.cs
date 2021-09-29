@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 {
+    /// <summary>
+    /// This validation attribute is used to validate all entire properties of target property
+    /// </summary>
     public class ComplexObjectValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

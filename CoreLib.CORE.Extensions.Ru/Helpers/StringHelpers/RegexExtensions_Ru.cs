@@ -50,6 +50,21 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         public const string OKVEDPattern = @"^(?:((\d{2}((\.\d{1,3})){0,2})))((?:(?:;)((\d{2}((\.\d{1,3})){0,2})))){0,20}$";
         
         /// <summary>
+        /// Код маркировки меховых изделий
+        /// </summary>
+        public const string BarcodeFurPattern = @"^[A-Z]{2}-[0-9]{6}-[A-Z]{10}$";
+
+        /// <summary>
+        /// ЕГАИС-2.0
+        /// </summary>
+        public const string BarcodeEgais20Pattern = @"^[0-9A-Z]{68}$";
+
+        /// <summary>
+        /// ЕГАИС-3.0
+        /// </summary>
+        public const string BarcodeEgais30Pattern = @"^[0-9A-Z]{150}$";
+        
+        /// <summary>
         /// Российский номер телефона
         /// </summary>
         public const string RussianPhoneNumberPattern = @"\+7-?\(?\d{3}\)?-? *\d{3}-? *-?\d{2} *-?\d{2}";

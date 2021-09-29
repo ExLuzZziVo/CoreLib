@@ -10,8 +10,14 @@ using CoreLib.CORE.Resources;
 
 namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 {
+    /// <summary>
+    /// This validation attribute is used to validate all entire properties of all objects in the target collection
+    /// </summary>
     public class ComplexObjectCollectionValidationAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// Allows null items in the target collection
+        /// </summary>
         public bool AllowNullItems { get; set; } = true;
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

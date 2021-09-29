@@ -162,6 +162,11 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$";
 
         /// <summary>
+        /// Base64
+        /// </summary>
+        public const string Base64Pattern = @"^(?:[A-Za-z\d+/]{4})*(?:[A-Za-z\d+/]{3}=|[A-Za-z\d+/]{2}==)?$";
+        
+        /// <summary>
         /// Checks if provided string is email address
         /// </summary>
         /// <param name="source">Target string</param>
