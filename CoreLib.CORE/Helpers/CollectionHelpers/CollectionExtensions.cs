@@ -11,6 +11,17 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
     public static class CollectionExtensions
     {
         /// <summary>
+        /// Adds a value or values to the end of the collection
+        /// </summary>
+        /// <param name="enumerable">The sequence to add objects to</param>
+        /// <param name="elements">The sequence of objects to be added</param>
+        /// <returns>Filled with value or values from <paramref name="elements"/> sequence <paramref name="enumerable"/></returns>
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, params T[] elements)
+        {
+            return enumerable.AppendRange(elements);
+        }
+
+        /// <summary>
         /// Adds a sequence of objects to the end of collection
         /// </summary>
         /// <param name="enumerable">The sequence to add objects to</param>
@@ -30,7 +41,7 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
 
             foreach (var o in appendCollection)
             {
-                enumerable.Append(o);
+                Enumerable.Append(enumerable, o);
             }
 
             return enumerable;
@@ -69,7 +80,7 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
             comparer = comparer ?? EqualityComparer<T>.Default;
 
             var found = enumerable
-                .Select((a, i) => new {a, i})
+                .Select((a, i) => new { a, i })
                 .FirstOrDefault(x => comparer.Equals(x.a, value));
 
             return found?.i ?? -1;
@@ -86,6 +97,30 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
             var count = enumerable.Count();
 
             return length >= count ? enumerable : enumerable.Skip(count - length);
+        }
+
+        /// <summary>
+        /// Returns a specified page from the target sequence
+        /// </summary>
+        /// <param name="enumerable">Target sequence</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page <b>index</b> (the first page is zero-based)</param>
+        /// <returns>A requested page of target sequence</returns>
+        public static IEnumerable<T> Page<T>(this IEnumerable<T> enumerable, int pageSize, int pageIndex)
+        {
+            return enumerable.Skip(pageIndex * pageSize).Take(pageSize);
+        }
+
+        /// <summary>
+        /// Returns a specified page from the target query
+        /// </summary>
+        /// <param name="queryable">Target query</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page <b>index</b> (the first page is zero-based)</param>
+        /// <returns>A requested page of target query</returns>
+        public static IQueryable<T> Page<T>(this IQueryable<T> queryable, int pageSize, int pageIndex)
+        {
+            return queryable.Skip(pageIndex * pageSize).Take(pageSize);
         }
     }
 }

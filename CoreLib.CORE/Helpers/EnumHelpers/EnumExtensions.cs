@@ -86,5 +86,15 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
 
             return resourceManager?.GetString(displayAttr.Name, cultureInfo) ?? displayAttr?.GetName() ?? en.ToString();
         }
+
+        /// <summary>
+        /// Converts the target <see cref="Enum"/> to an array of its values
+        /// </summary>
+        /// <param name="type">A type of the <see cref="Enum"/> to process</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ToArray<T>(Type type) where T: Enum
+        {
+            return Enum.GetValues(type).Cast<T>().ToArray();
+        }
     }
 }

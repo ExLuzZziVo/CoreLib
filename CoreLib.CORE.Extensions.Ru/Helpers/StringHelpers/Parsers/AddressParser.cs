@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -174,8 +175,8 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {" Им ", " им. "},
             {" Им. ", " им. "},
             {" Кв ", " кв. "},
-            {" Кв-л ", " кв-л "},
-            {" Кв-л. ", " кв-л "},
+            {" Кв-Л ", " кв-л "},
+            {" Кв-Л. ", " кв-л "},
             {" Кв. ", " кв. "},
             {" Км ", " км. "},
             {" Км. ", " км. "},
@@ -210,16 +211,18 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {" Платф ", " платф. "},
             {" Платф. ", " платф. "},
             {" Пл ", " пл. "},
-            {" Пл-ка ", " пл-ка "},
-            {" Пл-ка. ", " пл-ка "},
+            {" Пл-Ка ", " пл-ка "},
+            {" Пл-Ка. ", " пл-ка "},
             {" Пл. ", " пл. "},
             {" Пр ", " пр. "},
             {" Пр. ", " пр. "},
             {" Пос ", " пос. "},
             {" Пос. ", " пос. "},
             {" Промзона ", " промзона "},
-            {" Пр-кт ", " пр-кт "},
-            {" Пр-кт. ", " пр-кт "},
+            {" Пр-Кт ", " пр-кт "},
+            {" Пр-Кт. ", " пр-кт "},
+            {" Пр-Т ", " пр-кт "},
+            {" Пр-Т. ", " пр-кт "},
             {" П/о ", " п/о "},
             {" П/р ", " п/р "},
             {" П/ст ", " п/ст "},
@@ -231,8 +234,6 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {" Рзд. ", " рзд. "},
             {" Рп ", " рп. "},
             {" Рп. ", " рп. "},
-            {" Р-н ", " р-н "},
-            {" Р-н. ", " р-н "},
             {" Р-Н ", " р-н "},
             {" Р-Н. ", " р-н "},
             {" Р-Он ", " р-н "},
@@ -243,7 +244,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             {" Стр ", " стр. "},
             {" Стр. ", " стр. "},
             {" Ст ", " ст. "},
-            {" Ст-ца ", " ст-ца "},
+            {" Ст-Ца ", " ст-ца "},
             {" Ст. ", " ст. "},
             {" С ", " с. "},
             {" С. ", " с. "},
@@ -315,8 +316,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
 
             foreach (var e in AddressLongNamesDictionary)
             {
-                source = Regex.Replace(source, e.Key, e.Value, RegexOptions.IgnoreCase);
-                source = Regex.Replace(source, e.Key.Remove(0, 1), e.Value.Remove(0, 1), RegexOptions.IgnoreCase);
+                #if NETSTANDARD2_1_OR_GREATER
+                    source = source.Replace(e.Key, e.Value, StringComparison.OrdinalIgnoreCase);
+                    source = source.Replace(e.Key.Remove(0, 1), e.Value.Remove(0, 1), StringComparison.OrdinalIgnoreCase);
+                #else
+                    source = Regex.Replace(source, e.Key, e.Value, RegexOptions.IgnoreCase);
+                    source = Regex.Replace(source, e.Key.Remove(0, 1), e.Value.Remove(0, 1), RegexOptions.IgnoreCase);
+                #endif
             }
 
             foreach (var e in AddressShortNamesDictionary)

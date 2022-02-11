@@ -42,6 +42,11 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 }
                 else
                 {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    
                     var itemValidationResults = new List<ValidationResult>();
                     var itemValidationContext = new ValidationContext(item);
                     Validator.TryValidateObject(item, itemValidationContext, itemValidationResults, true);
