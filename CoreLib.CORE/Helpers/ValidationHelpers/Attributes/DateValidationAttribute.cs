@@ -175,7 +175,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
             else if (value is DateTime dateTime)
             {
-                return CompareAttribute.CompareValues(dateTime,
+                return CompareToAttribute.CompareValues(dateTime,
                     IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare, ComparisonType)
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
@@ -183,7 +183,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 #if NET6_0
             else if (value is DateOnly dateOnly)
             {
-                return CompareAttribute.CompareValues(dateOnly, DateOnly.FromDateTime(IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare), ComparisonType)
+                return CompareToAttribute.CompareValues(dateOnly, DateOnly.FromDateTime(IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare), ComparisonType)
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }

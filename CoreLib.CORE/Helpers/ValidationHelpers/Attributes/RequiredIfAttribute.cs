@@ -83,7 +83,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
             else if (currentOtherPropertyValue.GetType().IsNumeric())
             {
-                isRequired = CompareAttribute.CompareValues(
+                isRequired = CompareToAttribute.CompareValues(
                     Convert.ToDecimal(currentOtherPropertyValue, CultureInfo.InvariantCulture),
                     Convert.ToDecimal(OtherPropertyValue, CultureInfo.InvariantCulture), ComparisonType);
             }
@@ -128,7 +128,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             {
                 if (str.TryParse<T>(out var val))
                 {
-                    return CompareAttribute.CompareValues(currentOtherPropertyValue, val, ComparisonType);
+                    return CompareToAttribute.CompareValues(currentOtherPropertyValue, val, ComparisonType);
                 }
                 else
                 {

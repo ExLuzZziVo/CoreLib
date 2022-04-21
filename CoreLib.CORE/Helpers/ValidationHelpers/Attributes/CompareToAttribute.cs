@@ -12,7 +12,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     /// This validation attribute is used to validate target property value by comparing it with other property value
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class CompareAttribute : ValidationAttribute
+    public class CompareToAttribute : ValidationAttribute
     {
         /// <summary>
         /// Generates the default error message using <paramref name="comparisonType"/>
@@ -47,7 +47,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// <remarks>
         /// Comparable properties must be numeric OR of the same type that implements <see cref="IComparable"/> interface
         /// </remarks>
-        public CompareAttribute(string compareToPropertyName, ComparisonType comparisonType) : base(
+        public CompareToAttribute(string compareToPropertyName, ComparisonType comparisonType) : base(
             GetDefaultErrorMessage(comparisonType))
         {
             if (compareToPropertyName.IsNullOrEmptyOrWhiteSpace())
