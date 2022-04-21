@@ -75,6 +75,15 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
 
             DateToCompare = DateTime.Today.AddYears(-years).AddMonths(-months).AddDays(-days);
+            
+            if (comparisonType == ComparisonType.Equal || comparisonType == ComparisonType.NotEqual)
+            {
+                ComparisonType = comparisonType;
+            }
+            else
+            {
+                ComparisonType = (ComparisonType)(-(sbyte)comparisonType);
+            }
         }
 
         /// <summary>
