@@ -34,14 +34,14 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Maximum value for the length
         /// </summary>
         public int Maximum { get; }
-        
+
         public override bool IsValid(object value)
         {
             if (Maximum < 0)
             {
                 return false;
             }
-            
+
             int length;
 
             if (value == null)
