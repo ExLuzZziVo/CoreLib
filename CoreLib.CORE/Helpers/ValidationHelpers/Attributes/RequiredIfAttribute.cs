@@ -67,13 +67,22 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             var currentOtherPropertyType =
                 Nullable.GetUnderlyingType(otherProperty.PropertyType) ?? otherProperty.PropertyType;
 
-            ;
             var currentOtherPropertyValue = otherProperty.GetValue(validationContext.ObjectInstance);
 
             var isRequired = true;
 
             if (OtherPropertyValue == null && currentOtherPropertyValue == null &&
                 ComparisonType == ComparisonType.Equal)
+            {
+                isRequired = true;
+            }
+            else if (OtherPropertyValue == null && currentOtherPropertyValue != null &&
+                    ComparisonType == ComparisonType.NotEqual)
+            {
+                isRequired = true;
+            }
+            else if (OtherPropertyValue != null && currentOtherPropertyValue == null &&
+                     ComparisonType == ComparisonType.NotEqual)
             {
                 isRequired = true;
             }
