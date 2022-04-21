@@ -60,7 +60,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         {
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
-                using (var aesAlg = new RijndaelManaged())
+                using (var aesAlg = Aes.Create())
                 {
                     var gostKey = key.GetBytes(aesAlg.KeySize / 8);
                     var gostIV = aesAlg.IV.Take(8).ToArray();
@@ -76,7 +76,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         {
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
-                using (var aesAlg = new RijndaelManaged())
+                using (var aesAlg = Aes.Create())
                 {
                     var gostIV = ReadByteArray(s);
                     var gostKey = key.GetBytes(aesAlg.KeySize / 8);

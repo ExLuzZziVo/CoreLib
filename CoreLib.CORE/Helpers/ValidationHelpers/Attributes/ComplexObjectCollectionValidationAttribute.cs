@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     /// <summary>
     /// This validation attribute is used to validate all entire properties of all objects in the target collection
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ComplexObjectCollectionValidationAttribute : ValidationAttribute
     {
         /// <summary>
@@ -22,6 +24,11 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (validationContext == null)
+            {
+                throw new ArgumentNullException(nameof(validationContext));
+            }
+
             if (!(value is IEnumerable collectionToCheck))
             {
                 return ValidationResult.Success;
@@ -46,7 +53,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                     {
                         continue;
                     }
-                    
+
                     var itemValidationResults = new List<ValidationResult>();
                     var itemValidationContext = new ValidationContext(item);
                     Validator.TryValidateObject(item, itemValidationContext, itemValidationResults, true);

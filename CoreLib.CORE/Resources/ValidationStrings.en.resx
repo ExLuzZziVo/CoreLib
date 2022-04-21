@@ -102,4 +102,28 @@
     <data name="CollectionRangeLengthError" xml:space="preserve">
         <value>The sequence '{0}' must contain at least {1} and no more than {2} elements</value>
     </data>
+    <data name="CompareToNotEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must not be equal to the value of the field '{1}'</value>
+    </data>
+    <data name="CompareToEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must be equal to the value of the field '{1}'</value>
+    </data>
+    <data name="ValueEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must be equal to '{1}'</value>
+    </data>
+    <data name="ValueGreaterThanError" xml:space="preserve">
+        <value>The value of the field '{0}' must be greater than '{1}'</value>
+    </data>
+    <data name="ValueGreaterThanOrEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must be greater than or equal to '{1}'</value>
+    </data>
+    <data name="ValueNotEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must not be equal to '{1}'</value>
+    </data>
+    <data name="ValueSmallerThanError" xml:space="preserve">
+        <value>The value of the field '{0}' must be less than '{1}'</value>
+    </data>
+    <data name="ValueSmallerThanOrEqualError" xml:space="preserve">
+        <value>The value of the field '{0}' must be less than or equal to '{1}'</value>
+    </data>
 </root>

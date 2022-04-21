@@ -90,7 +90,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
 
             var data = new byte[length];
 
-            using (var crypto = new RNGCryptoServiceProvider())
+            using (var crypto = RandomNumberGenerator.Create())
             {
                 crypto.GetBytes(data);
             }

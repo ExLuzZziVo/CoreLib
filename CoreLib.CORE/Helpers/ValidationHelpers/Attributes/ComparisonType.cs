@@ -1,7 +1,15 @@
 ﻿namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 {
-    public enum ComparisonType
+    /// <summary>
+    /// Comparison types for validation attributes
+    /// </summary>
+    public enum ComparisonType : byte
     {
-        
+        Equal,
+        NotEqual,
+        Less,
+        LessOrEqual,
+        Greater,
+        GreaterOrEqual
     }
 }

@@ -201,4 +201,28 @@
   <data name="CollectionRangeLengthError" xml:space="preserve">
     <value>Количество элементов в последовательности '{0}' должно быть не менее {1} и не более {2}</value>
   </data>
+  <data name="CompareToNotEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' не должно быть равно значению поля '{1}'</value>
+  </data>
+  <data name="CompareToEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть равно значению поля '{1}'</value>
+  </data>
+  <data name="ValueEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть равно '{1}'</value>
+  </data>
+  <data name="ValueGreaterThanError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть больше '{1}'</value>
+  </data>
+  <data name="ValueGreaterThanOrEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть больше или равно '{1}'</value>
+  </data>
+  <data name="ValueNotEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' не должно быть равно '{1}'</value>
+  </data>
+  <data name="ValueSmallerThanError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть меньше '{1}'</value>
+  </data>
+  <data name="ValueSmallerThanOrEqualError" xml:space="preserve">
+    <value>Значение поля '{0}' должно быть меньше или равно '{1}'</value>
+  </data>
 </root>

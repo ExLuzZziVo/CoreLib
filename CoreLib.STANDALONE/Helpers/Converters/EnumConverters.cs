@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -12,9 +13,44 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// </summary>
     public abstract class EnumToDescriptionConverter : IValueConverter
     {
+        private readonly bool _isCacheEnabled;
+
+        private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
+
+        /// <summary>
+        /// The constructor is used to enable a cache to store <see cref="Enum"/> values and their descriptions
+        /// </summary>
+        /// <param name="isCacheEnabled">A flag indicating that <see cref="Enum"/> descriptions caching will be enabled. Is disabled by default</param>
+        protected EnumToDescriptionConverter(bool isCacheEnabled = false)
+        {
+            _isCacheEnabled = isCacheEnabled;
+        }
+        
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? "" : ((Enum) value).GetDescription();
+            if (value == null)
+            {
+                return string.Empty;
+            }
+            
+            var en = (Enum)value;
+            
+            if (_isCacheEnabled)
+            {
+                if (Cache.TryGetValue(en, out var val))
+                {
+                    return val;
+                }
+                else
+                {
+                    val = en.GetDescription();
+                    Cache.Add(en, val);
+                    
+                    return val;
+                }
+            }
+            
+            return en.GetDescription();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -32,9 +68,44 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     public abstract class EnumToDisplayNameConverter : IValueConverter
 
     {
+        private readonly bool _isCacheEnabled;
+
+        private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
+
+        /// <summary>
+        /// The constructor is used to enable a cache to store <see cref="Enum"/> values and their display names
+        /// </summary>
+        /// <param name="isCacheEnabled">A flag indicating that <see cref="Enum"/> display names caching will be enabled. Is disabled by default</param>
+        protected EnumToDisplayNameConverter(bool isCacheEnabled = false)
+        {
+            _isCacheEnabled = isCacheEnabled;
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? "" : ((Enum) value).GetDisplayName(culture);
+            if (value == null)
+            {
+                return string.Empty;
+            }
+            
+            var en = (Enum)value;
+            
+            if (_isCacheEnabled)
+            {
+                if (Cache.TryGetValue(en, out var val))
+                {
+                    return val;
+                }
+                else
+                {
+                    val = en.GetDisplayName(culture);
+                    Cache.Add(en, val);
+                    
+                    return val;
+                }
+            }
+            
+            return en.GetDisplayName(culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -60,7 +60,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>SHA1 hash of <paramref name="source"/></returns>
         public static string GetSHA1Hash(this string source, byte[] salt = null)
         {
-            using (var shaManaged = new SHA1Managed())
+            using (var shaManaged = SHA1.Create())
             {
                 return GetHash(source, shaManaged, salt);
             }
@@ -74,7 +74,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>SHA256 hash of <paramref name="source"/></returns>
         public static string GetSHA256Hash(this string source, byte[] salt = null)
         {
-            using (var shaManaged = new SHA256Managed())
+            using (var shaManaged = SHA256.Create())
             {
                 return GetHash(source, shaManaged, salt);
             }
@@ -88,7 +88,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>SHA384 hash of <paramref name="source"/></returns>
         public static string GetSHA384Hash(this string source, byte[] salt = null)
         {
-            using (var shaManaged = new SHA384Managed())
+            using (var shaManaged = SHA384.Create())
             {
                 return GetHash(source, shaManaged, salt);
             }
@@ -102,7 +102,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>SHA512 hash of <paramref name="source"/></returns>
         public static string GetSHA512Hash(this string source, byte[] salt = null)
         {
-            using (var shaManaged = new SHA512Managed())
+            using (var shaManaged = SHA512.Create())
             {
                 return GetHash(source, shaManaged, salt);
             }

@@ -97,6 +97,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть равно значению поля &apos;{1}&apos;.
+        /// </summary>
+        public static string CompareToEqualError {
+            get {
+                return ResourceManager.GetString("CompareToEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть больше значения поля &apos;{1}&apos;.
         /// </summary>
         public static string CompareToGreaterThanError {
@@ -111,6 +120,15 @@ namespace CoreLib.CORE.Resources {
         public static string CompareToGreaterThanOrEqualError {
             get {
                 return ResourceManager.GetString("CompareToGreaterThanOrEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; не должно быть равно значению поля &apos;{1}&apos;.
+        /// </summary>
+        public static string CompareToNotEqualError {
+            get {
+                return ResourceManager.GetString("CompareToNotEqualError", resourceCulture);
             }
         }
         
@@ -309,6 +327,60 @@ namespace CoreLib.CORE.Resources {
         public static string StringRangeLengthError {
             get {
                 return ResourceManager.GetString("StringRangeLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть равно &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueEqualError {
+            get {
+                return ResourceManager.GetString("ValueEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть больше &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueGreaterThanError {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть больше или равно &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueGreaterThanOrEqualError {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanOrEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; не должно быть равно &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueNotEqualError {
+            get {
+                return ResourceManager.GetString("ValueNotEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть меньше &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueSmallerThanError {
+            get {
+                return ResourceManager.GetString("ValueSmallerThanError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно быть меньше или равно &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueSmallerThanOrEqualError {
+            get {
+                return ResourceManager.GetString("ValueSmallerThanOrEqualError", resourceCulture);
             }
         }
     }

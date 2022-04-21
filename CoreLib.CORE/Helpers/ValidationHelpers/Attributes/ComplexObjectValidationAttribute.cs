@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,10 +12,16 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     /// <summary>
     /// This validation attribute is used to validate all entire properties of target property
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ComplexObjectValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (validationContext == null)
+            {
+                throw new ArgumentNullException(nameof(validationContext));
+            }
+
             if (value == null)
             {
                 return ValidationResult.Success;

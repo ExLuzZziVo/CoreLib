@@ -97,6 +97,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be equal to the value of the field &apos;{1}&apos;.
+        /// </summary>
+        public static string CompareToEqualError {
+            get {
+                return ResourceManager.GetString("CompareToEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be greater than the value of the field &apos;{1}&apos;.
         /// </summary>
         public static string CompareToGreaterThanError {
@@ -111,6 +120,15 @@ namespace CoreLib.CORE.Resources {
         public static string CompareToGreaterThanOrEqualError {
             get {
                 return ResourceManager.GetString("CompareToGreaterThanOrEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must not be equal to the value of the field &apos;{1}&apos;.
+        /// </summary>
+        public static string CompareToNotEqualError {
+            get {
+                return ResourceManager.GetString("CompareToNotEqualError", resourceCulture);
             }
         }
         
@@ -309,6 +327,60 @@ namespace CoreLib.CORE.Resources {
         public static string StringRangeLengthError {
             get {
                 return ResourceManager.GetString("StringRangeLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be equal to &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueEqualError {
+            get {
+                return ResourceManager.GetString("ValueEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be greater than &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueGreaterThanError {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be greater than or equal to &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueGreaterThanOrEqualError {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanOrEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must not be equal to &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueNotEqualError {
+            get {
+                return ResourceManager.GetString("ValueNotEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be less than &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueSmallerThanError {
+            get {
+                return ResourceManager.GetString("ValueSmallerThanError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must be less than or equal to &apos;{1}&apos;.
+        /// </summary>
+        public static string ValueSmallerThanOrEqualError {
+            get {
+                return ResourceManager.GetString("ValueSmallerThanOrEqualError", resourceCulture);
             }
         }
     }

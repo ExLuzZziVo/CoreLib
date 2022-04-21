@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;</TargetFrameworks>
     <AssemblyName>CoreLib.CORE</AssemblyName>
     <RootNamespace>CoreLib.CORE</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\ValidationStrings.resx">

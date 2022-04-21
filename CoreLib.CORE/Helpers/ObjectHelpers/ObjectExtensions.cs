@@ -97,7 +97,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             {
                 try
                 {
-                    return ((DescriptionAttribute) propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                    return ((DescriptionAttribute)propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
                         .First()).Description;
                 }
                 catch
@@ -129,7 +129,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         {
             if (propertyInfo != null)
             {
-                var displayAttr = (DisplayAttribute) propertyInfo
+                var displayAttr = (DisplayAttribute)propertyInfo
                     .GetCustomAttributes(typeof(DisplayAttribute), false)
                     .FirstOrDefault();
 
@@ -181,7 +181,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
             using (var ms = new MemoryStream(data))
             {
-                return (T) new BinaryFormatter().Deserialize(ms);
+                return (T)new BinaryFormatter().Deserialize(ms);
             }
         }
 
@@ -201,9 +201,9 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
             using (var ms = new MemoryStream(data))
             {
-                var obj = new BinaryFormatter {Binder = new SearchAssembliesBinder(assembly, true)}.Deserialize(ms);
+                var obj = new BinaryFormatter { Binder = new SearchAssembliesBinder(assembly, true) }.Deserialize(ms);
 
-                return (T) obj;
+                return (T)obj;
             }
         }
 
@@ -215,7 +215,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         /// <returns>Target object of the specified type</returns>
         public static T ChangeType<T>(this object obj)
         {
-            return (T) Convert.ChangeType(obj, typeof(T));
+            return (T)Convert.ChangeType(obj, typeof(T));
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                     return false;
                 }
 
-                parsedValue = (T) value;
+                parsedValue = (T)value;
 
                 return true;
             }
@@ -300,7 +300,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                       !targetProperty.GetSetMethod(true).IsPrivate &&
                       (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
                       targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
-                select new {sourceProperty = srcProp, targetProperty};
+                select new { sourceProperty = srcProp, targetProperty };
 
             foreach (var props in results)
             {
@@ -337,7 +337,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             for (var i = 0; i < 256; i++)
             {
                 var s = i.ToString("X2");
-                result[i] = s[0] + ((uint) s[1] << 16);
+                result[i] = s[0] + ((uint)s[1] << 16);
             }
 
             return result;
@@ -365,11 +365,61 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             for (var i = 0; i < data.Length; i++)
             {
                 var val = HexStringTable.Value[data[i]];
-                result[2 * i] = (char) val;
-                result[2 * i + 1] = (char) (val >> 16);
+                result[2 * i] = (char)val;
+                result[2 * i + 1] = (char)(val >> 16);
             }
 
             return new string(result);
+        }
+
+        // https://stackoverflow.com/questions/124411/
+        /// <summary>
+        /// Checks if specified type is nullable
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if specified type is nullable</returns>
+        public static bool IsNullable(this Type type)
+        {
+            return type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        // https://stackoverflow.com/questions/124411/
+        /// <summary>
+        /// Checks if specified type is numeric
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if specified type is numeric</returns>
+        public static bool IsNumeric(this Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+
+            var nullableType = Nullable.GetUnderlyingType(type);
+
+            if (nullableType != null)
+            {
+                return nullableType.IsNumeric();
+            }
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

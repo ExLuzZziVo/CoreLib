@@ -9,7 +9,11 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
 {
     public static class HttpRequestExtensions
     {
+#if NET6_0
+        private static readonly HttpRequestOptionsKey<TimeSpan?> TimeoutPropertyKey = new HttpRequestOptionsKey<TimeSpan?>("RequestTimeout");
+#else
         private const string TimeoutPropertyKey = "RequestTimeout";
+#endif
 
         /// <summary>
         /// Sets timeout for http request
@@ -22,8 +26,11 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
             {
                 throw new ArgumentNullException(nameof(request));
             }
-
+#if NET6_0
+            request.Options.Set(TimeoutPropertyKey, timeout);
+#else
             request.Properties[TimeoutPropertyKey] = timeout;
+#endif
         }
 
         /// <summary>
@@ -38,12 +45,16 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
                 throw new ArgumentNullException(nameof(request));
             }
 
+#if NET6_0
+            return request.Options.TryGetValue(TimeoutPropertyKey, out var value) ? value : null;
+#else
             if (request.Properties.TryGetValue(TimeoutPropertyKey, out var value) && value is TimeSpan timeout)
             {
                 return timeout;
             }
 
             return null;
+#endif
         }
     }
 }
