@@ -153,7 +153,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// <summary>
         /// Flag indicating that <see cref="DateTime.Today"/> will be used instead of <see cref="DateToCompare"/>
         /// </summary>
-        private bool IsDateTimeTodayToCompare { get; } = false;
+        public bool IsDateTimeTodayToCompare { get; } = false;
 
         /// <summary>
         /// Comparison type

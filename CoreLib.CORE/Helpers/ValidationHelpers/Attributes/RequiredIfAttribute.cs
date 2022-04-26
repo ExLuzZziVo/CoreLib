@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Helpers.StringHelpers;
 
@@ -49,6 +50,11 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Comparison type
         /// </summary>
         public ComparisonType ComparisonType { get; }
+        
+        /// <summary>
+        /// Flag indicating that the target <see cref="string"/> property is a html string and the inner text should be validated
+        /// </summary>
+        public bool IsStringHtmlText { get; set; }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -120,13 +126,36 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
             else if (currentOtherPropertyValue is string str)
             {
-                isRequired = str.Equals(OtherPropertyValue.ToString());
+                if (ComparisonType == ComparisonType.Equal || ComparisonType == ComparisonType.NotEqual)
+                {
+                    isRequired = CompareToAttribute.CompareValues(str, OtherPropertyValue?.ToString() ?? string.Empty, ComparisonType);
+                }
+                else
+                {
+                    throw new NotSupportedException($"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(String)}' property");
+                }
+            }
+            else if (currentOtherPropertyValue is bool boolean)
+            {
+                if (ComparisonType == ComparisonType.Equal || ComparisonType == ComparisonType.NotEqual)
+                {
+                    isRequired = CompareToAttribute.CompareValues(boolean, OtherPropertyValue, ComparisonType);
+                }
+                else
+                {
+                    throw new NotSupportedException($"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(Boolean)}' property");
+                }
             }
             else
             {
                 throw new NotSupportedException($"The type {currentOtherPropertyType} is not supported");
             }
 
+            if (IsStringHtmlText && value is string val)
+            {
+                value = Regex.Replace(val, @"<.*?>|&nbsp;", string.Empty);
+            }
+            
             return isRequired ? base.IsValid(value, validationContext) : ValidationResult.Success;
         }
 
