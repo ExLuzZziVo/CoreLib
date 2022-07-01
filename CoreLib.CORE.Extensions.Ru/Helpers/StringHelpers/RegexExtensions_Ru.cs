@@ -70,6 +70,12 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         public const string RussianPhoneNumberPattern = @"\+7-?\(?\d{3}\)?-? *\d{3}-? *-?\d{2} *-?\d{2}";
 
         /// <summary>
+        /// Url-адрес, включая кириллицу
+        /// </summary>
+        public const string UrlPattern =
+            @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(((?<!\/|^)[\-\.]{1})?([a-zа-я0-9]+))*\.[a-zа-я]{2,5}(:[0-9]{1,5})?(\/.*)?$";
+        
+        /// <summary>
         /// Проверяет, является ли значение строки российским номером телефона
         /// </summary>
         /// <param name="source">Строка для проверки</param>

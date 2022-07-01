@@ -77,78 +77,89 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 
             var isRequired = true;
 
-            if (OtherPropertyValue == null && currentOtherPropertyValue == null &&
-                ComparisonType == ComparisonType.Equal)
+            if (!(currentOtherPropertyValue is string str))
             {
-                isRequired = true;
-            }
-            else if (OtherPropertyValue == null && currentOtherPropertyValue != null &&
-                    ComparisonType == ComparisonType.NotEqual)
-            {
-                isRequired = true;
-            }
-            else if (OtherPropertyValue != null && currentOtherPropertyValue == null &&
-                     ComparisonType == ComparisonType.NotEqual)
-            {
-                isRequired = true;
-            }
-            else if (OtherPropertyValue == null || currentOtherPropertyValue == null)
-            {
-                isRequired = false;
-            }
-            else if (currentOtherPropertyValue.GetType().IsNumeric())
-            {
-                isRequired = CompareToAttribute.CompareValues(
-                    Convert.ToDecimal(currentOtherPropertyValue, CultureInfo.InvariantCulture),
-                    Convert.ToDecimal(OtherPropertyValue, CultureInfo.InvariantCulture), ComparisonType);
-            }
-            else if (currentOtherPropertyValue is DateTime dateTime)
-            {
-                isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateTime);
-            }
-            else if (currentOtherPropertyValue is DateTimeOffset dateTimeOffset)
-            {
-                isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateTimeOffset);
-            }
+                if (OtherPropertyValue == null && currentOtherPropertyValue == null &&
+                    ComparisonType == ComparisonType.Equal)
+                {
+                    isRequired = true;
+                }
+                else if (OtherPropertyValue == null && currentOtherPropertyValue != null &&
+                         ComparisonType == ComparisonType.NotEqual)
+                {
+                    isRequired = true;
+                }
+                else if (OtherPropertyValue != null && currentOtherPropertyValue == null &&
+                         ComparisonType == ComparisonType.NotEqual)
+                {
+                    isRequired = true;
+                }
+                else if (OtherPropertyValue == null || currentOtherPropertyValue == null)
+                {
+                    isRequired = false;
+                }
+                else if (currentOtherPropertyValue.GetType().IsNumeric())
+                {
+                    isRequired = CompareToAttribute.CompareValues(
+                        Convert.ToDecimal(currentOtherPropertyValue, CultureInfo.InvariantCulture),
+                        Convert.ToDecimal(OtherPropertyValue, CultureInfo.InvariantCulture), ComparisonType);
+                }
+                else if (currentOtherPropertyValue is DateTime dateTime)
+                {
+                    isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateTime);
+                }
+                else if (currentOtherPropertyValue is DateTimeOffset dateTimeOffset)
+                {
+                    isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateTimeOffset);
+                }
 #if NET6_0
-            else if (currentOtherPropertyValue is DateOnly dateOnly)
-            {
-                isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateOnly);
-            }
-            else if (currentOtherPropertyValue is TimeOnly timeOnly)
-            {
-                isRequired = CheckIfOtherPropertyValueIsStringAndCompare(timeOnly);
-            }
+                else if (currentOtherPropertyValue is DateOnly dateOnly)
+                {
+                    isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateOnly);
+                }
+                else if (currentOtherPropertyValue is TimeOnly timeOnly)
+                {
+                    isRequired = CheckIfOtherPropertyValueIsStringAndCompare(timeOnly);
+                }
 #endif
-            else if (currentOtherPropertyValue is TimeSpan timeSpan)
-            {
-                isRequired = CheckIfOtherPropertyValueIsStringAndCompare(timeSpan);
+                else if (currentOtherPropertyValue is TimeSpan timeSpan)
+                {
+                    isRequired = CheckIfOtherPropertyValueIsStringAndCompare(timeSpan);
+                }
+                else if (currentOtherPropertyValue is bool boolean)
+                {
+                    if (ComparisonType == ComparisonType.Equal || ComparisonType == ComparisonType.NotEqual)
+                    {
+                        isRequired = CompareToAttribute.CompareValues(boolean, OtherPropertyValue, ComparisonType);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(
+                            $"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(Boolean)}' property");
+                    }
+                }
+                else
+                {
+                    throw new NotSupportedException($"The type {currentOtherPropertyType} is not supported");
+                }
             }
-            else if (currentOtherPropertyValue is string str)
+            else
             {
                 if (ComparisonType == ComparisonType.Equal || ComparisonType == ComparisonType.NotEqual)
                 {
-                    isRequired = CompareToAttribute.CompareValues(str, OtherPropertyValue?.ToString() ?? string.Empty, ComparisonType);
+                    if (OtherPropertyValue == null)
+                    {
+                        isRequired = CompareToAttribute.CompareValues(str.IsNullOrEmptyOrWhiteSpace(), true, ComparisonType);
+                    }
+                    else
+                    {
+                        isRequired = CompareToAttribute.CompareValues(str, OtherPropertyValue.ToString(), ComparisonType);
+                    }
                 }
                 else
                 {
                     throw new NotSupportedException($"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(String)}' property");
                 }
-            }
-            else if (currentOtherPropertyValue is bool boolean)
-            {
-                if (ComparisonType == ComparisonType.Equal || ComparisonType == ComparisonType.NotEqual)
-                {
-                    isRequired = CompareToAttribute.CompareValues(boolean, OtherPropertyValue, ComparisonType);
-                }
-                else
-                {
-                    throw new NotSupportedException($"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(Boolean)}' property");
-                }
-            }
-            else
-            {
-                throw new NotSupportedException($"The type {currentOtherPropertyType} is not supported");
             }
 
             if (IsStringHtmlText && value is string val)
