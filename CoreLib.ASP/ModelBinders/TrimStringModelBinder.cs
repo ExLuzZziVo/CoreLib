@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace CoreLib.ASP.ModelBinders
 {
     /// <summary>
-    /// <see cref="IModelBinderProvider"/>, which trims all model binding strings/>
+    /// <see cref="IModelBinderProvider"/>, which trims all model binding strings
     /// </summary>
     public class TrimStringModelBinderProvider : IModelBinderProvider
     {

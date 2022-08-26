@@ -206,4 +206,16 @@
 	<data name="ValueSmallerThanOrEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be less than or equal to '{1}'</value>
 	</data>
+	<data name="FileRangeSizeError" xml:space="preserve">
+		<value>The size of file '{0}' must be at least {1} and not more than {2}</value>
+	</data>
+	<data name="FileMinSizeError" xml:space="preserve">
+		<value>The size of file '{0}' must be more than {1}</value>
+	</data>
+	<data name="FileMaxSizeError" xml:space="preserve">
+		<value>The size of file '{0}' must be less than {1}</value>
+	</data>
+	<data name="ErrorOccurred" xml:space="preserve">
+		<value>An error occurred: {0}</value>
+	</data>
 </root>

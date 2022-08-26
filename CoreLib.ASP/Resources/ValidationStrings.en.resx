@@ -114,4 +114,7 @@
 		<value>
 The size of the uploaded file '{0}' must not exceed {1}</value>
 	</data>
+	<data name="FileFormatError" xml:space="preserve">
+		<value>The file '{0}' has the incorrect format</value>
+	</data>
 </root>

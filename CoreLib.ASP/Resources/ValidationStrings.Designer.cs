@@ -61,6 +61,15 @@ namespace CoreLib.ASP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file &apos;{0}&apos; has the incorrect format.
+        /// </summary>
+        public static string FileFormatError {
+            get {
+                return ResourceManager.GetString("FileFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please complete the captcha.
         /// </summary>
         public static string ReCaptchaValidationError {

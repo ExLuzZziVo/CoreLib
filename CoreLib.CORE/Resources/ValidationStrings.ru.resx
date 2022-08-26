@@ -225,4 +225,16 @@
   <data name="ValueSmallerThanOrEqualError" xml:space="preserve">
     <value>Значение поля '{0}' должно быть меньше или равно '{1}'</value>
   </data>
+  <data name="FileMaxSizeError" xml:space="preserve">
+    <value>Размер файла '{0}' должен быть меньше {1}</value>
+  </data>
+  <data name="FileMinSizeError" xml:space="preserve">
+    <value>Размер файла '{0}' должен быть больше {1}</value>
+  </data>
+  <data name="FileRangeSizeError" xml:space="preserve">
+    <value>Размер файла '{0}' должен быть не менее {1} и не более {2}</value>
+  </data>
+  <data name="ErrorOccurred" xml:space="preserve">
+    <value>Произошла ошибка: {0}</value>
+  </data>
 </root>

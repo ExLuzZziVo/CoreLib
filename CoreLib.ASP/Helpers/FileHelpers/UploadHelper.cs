@@ -22,7 +22,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
         /// <summary>
         /// Physical path to the 'wwwroot' directory
         /// </summary>
-        public static readonly string RootDirectory = $"{Directory.GetCurrentDirectory()}\\wwwroot";
+        public static readonly string RootDirectory = $"{Directory.GetCurrentDirectory()}/wwwroot";
 
         private readonly ILogger<UploadHelper> _logger;
 

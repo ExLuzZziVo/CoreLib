@@ -113,4 +113,7 @@
 	<data name="UploadFileWithDisplayNameSizeError" xml:space="preserve">
 		<value>Размер загружаемого файла '{0}' не должен превышать {1}</value>
 	</data>
+	<data name="FileFormatError" xml:space="preserve">
+		<value>Файл '{0}' имеет неверный формат</value>
+	</data>
 </root>
