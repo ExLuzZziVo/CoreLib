@@ -1,6 +1,4 @@
 [submodule "NameCaseLib"]
 	path = NameCaseLib
 	url = https://github.com/ExLuzZziVo/NameCaseLib.NET
-[submodule "GOST.Core"]
-	path = GOST.Core
-	url = https://github.com/ExLuzZziVo/GOST.Core
+	
