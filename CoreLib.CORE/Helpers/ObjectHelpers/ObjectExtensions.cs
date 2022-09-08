@@ -87,6 +87,40 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         }
 
         /// <summary>
+        /// Gets property value by its name
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <param name="propertyName">Property name</param>
+        /// <returns>Property value</returns>
+        public static T GetPropertyValueByName<T>(this object obj, string propertyName)
+        {
+            return (T)obj.GetPropertyValueByName(propertyName);
+        }
+
+        /// <summary>
+        /// Gets property value by its name
+        /// </summary>
+        /// <param name="obj">Target object</param>
+        /// <param name="propertyName">Property name</param>
+        /// <param name="value">When this method returns, contains the value associated with the specified <paramref name="propertyName"/>, if it was found. Otherwise, the default value for the type of the value parameter</param>
+        /// <returns>True if <paramref name="obj"/> contains a property with the specified name and type</returns>
+        public static bool TryGetPropertyValueByName<T>(this object obj, string propertyName, out T value)
+        {
+            try
+            {
+                value = obj.GetPropertyValueByName<T>(propertyName);
+
+                return true;
+            }
+            catch
+            {
+                value = default(T);
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets a <see cref="DescriptionAttribute"/> value from provided property
         /// </summary>
         /// <param name="propertyInfo">Property info</param>

@@ -70,7 +70,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// </summary>
         /// <param name="s">Data stream</param>
         /// <returns>AES encryptor</returns>
-        private ICryptoTransform CreateEncryptor(Stream s)
+        protected virtual ICryptoTransform CreateEncryptor(Stream s)
         {
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
@@ -90,7 +90,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// </summary>
         /// <param name="s">Data stream</param>
         /// <returns>AES decryptor</returns>
-        private ICryptoTransform CreateDecryptor(Stream s)
+        protected virtual ICryptoTransform CreateDecryptor(Stream s)
         {
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {

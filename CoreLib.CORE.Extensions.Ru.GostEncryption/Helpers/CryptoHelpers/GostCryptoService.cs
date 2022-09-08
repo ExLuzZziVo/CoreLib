@@ -1,17 +1,13 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using CoreLib.CORE.Helpers.ObjectHelpers;
-using GOSTCore;
-using GOSTCore.Gost.Types;
+using OpenGost.Security.Cryptography;
 
 namespace CoreLib.CORE.Helpers.CryptoHelpers
 {
     /// <summary>
-    /// Класс для шифрования строк и объектов с помощью шифра ГОСТ 28147-89
+    /// Класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015). Чтобы использовать этот класс необходимо вызвать метод <see cref="OpenGostCryptoConfig.ConfigureCryptographicServices"/> при запуске приложения
     /// </summary>
     public class GostCryptoService : CryptoService
     {
@@ -19,72 +15,57 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
 
         public GostCryptoService(string key, byte[] salt) : base(key, salt) { }
 
-        public override string EncryptString(string str)
+        /// <summary>
+        /// Method that creates GOST encryptor
+        /// </summary>
+        /// <param name="s">Data stream</param>
+        /// <returns>GOST encryptor</returns>
+        protected override ICryptoTransform CreateEncryptor(Stream s)
         {
-            using (var msEncrypt = new MemoryStream())
+            using (var gostAlg = Grasshopper.Create())
             {
-                EncryptGost(msEncrypt, Encoding.Unicode.GetBytes(str));
+                gostAlg.Key = GenerateKey(gostAlg.KeySize / 8);
+                s.Write(BitConverter.GetBytes(gostAlg.IV.Length), 0, sizeof(int));
+                s.Write(gostAlg.IV, 0, gostAlg.IV.Length);
 
-                return Convert.ToBase64String(msEncrypt.ToArray());
+                return gostAlg.CreateEncryptor(gostAlg.Key, gostAlg.IV);
             }
         }
 
-        public override string DecryptString(string str)
+        /// <summary>
+        /// Method that creates GOST decryptor
+        /// </summary>
+        /// <param name="s">Data stream</param>
+        /// <returns>GOST decryptor</returns>
+        protected override ICryptoTransform CreateDecryptor(Stream s)
         {
-            try
+            using (var gostAlg = Grasshopper.Create())
             {
-                var bytes = Convert.FromBase64String(str);
+                gostAlg.Key = GenerateKey(gostAlg.KeySize / 8);
+                gostAlg.IV = ReadByteArray(s);
 
-                using (var msDecrypt = new MemoryStream(bytes))
-                {
-                    return Encoding.Unicode.GetString(DecryptGost(msDecrypt));
-                }
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-
-        public override void EncryptObject<T>(Stream s, T obj)
-        {
-            EncryptGost(s, obj.ToByteArray());
-        }
-
-        public override T DecryptObject<T>(Stream s)
-        {
-            return DecryptGost(s).GetObject<T>(Assembly.GetEntryAssembly());
-        }
-
-        private void EncryptGost(Stream s, byte[] obj)
-        {
-            using (var key = new Rfc2898DeriveBytes(Key, Salt))
-            {
-                using (var aesAlg = Aes.Create())
-                {
-                    var gostKey = key.GetBytes(aesAlg.KeySize / 8);
-                    var gostIV = aesAlg.IV.Take(8).ToArray();
-                    s.Write(BitConverter.GetBytes(gostIV.Length), 0, sizeof(int));
-                    s.Write(gostIV, 0, gostIV.Length);
-                    var encryptedObject = Xor.Encode(gostKey, gostIV, obj, SBlockTypes.GOST);
-                    s.Write(encryptedObject, 0, encryptedObject.Length);
-                }
+                return gostAlg.CreateDecryptor(gostAlg.Key, gostAlg.IV);
             }
         }
 
-        private byte[] DecryptGost(Stream s)
+        /// <summary>
+        /// Генерирует ключ шифрования на основе заданного ключа и соли
+        /// </summary>
+        /// <param name="keySize">Размер ключа</param>
+        /// <returns>Ключ</returns>
+        private byte[] GenerateKey(int keySize)
         {
-            using (var key = new Rfc2898DeriveBytes(Key, Salt))
+            using (var hash = Streebog512.Create())
             {
-                using (var aesAlg = Aes.Create())
-                {
-                    var gostIV = ReadByteArray(s);
-                    var gostKey = key.GetBytes(aesAlg.KeySize / 8);
-                    var encrypted = new byte[s.Length - s.Position];
-                    s.Read(encrypted, 0, encrypted.Length);
+                var keyWithSalt = new byte[Salt.Length + Key.Length];
+                
+                Salt.CopyTo(keyWithSalt, 0);
+                Encoding.Unicode.GetBytes(Key).CopyTo(keyWithSalt, Salt.Length);
+                
+                var gostKey = new byte[keySize];
+                Buffer.BlockCopy(hash.ComputeHash(keyWithSalt), 0, gostKey, 0, keySize);
 
-                    return Xor.Decode(gostKey, gostIV, encrypted, SBlockTypes.GOST);
-                }
+                return gostKey;
             }
         }
     }

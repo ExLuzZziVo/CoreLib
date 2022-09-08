@@ -27,6 +27,15 @@ namespace CoreLib.STANDALONE.Types
         [field: NonSerialized] private bool _isBackupEnabled;
 
         /// <summary>
+        /// The <see cref="JsonSerializerSettings"/> used for serialization
+        /// </summary>
+        [field: NonSerialized]
+        protected readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
+        {
+            ObjectCreationHandling = ObjectCreationHandling.Replace, TypeNameHandling = TypeNameHandling.None, Formatting = Formatting.None
+        };
+
+        /// <summary>
         /// A class that can be inherited for use as an application settings file, application data file, etc. Supports creating the backup and encryption using <see cref="CoreLib.CORE.Interfaces.ICryptoService"/>
         /// </summary>
         /// <param name="directoryToStore">The path to the directory for storing the file</param>
@@ -99,7 +108,7 @@ namespace CoreLib.STANDALONE.Types
                 {
                     using (var sw = new StreamWriter(fs))
                     {
-                        sw.Write(_cryptoService.EncryptString(ObjectExtensions_Json.SerializeToJson(this)));
+                        sw.Write(_cryptoService.EncryptString(JsonConvert.SerializeObject(this, DefaultJsonSerializerSettings)));
                     }
                 }
 
@@ -171,7 +180,7 @@ namespace CoreLib.STANDALONE.Types
                                     throw new ArgumentNullException(nameof(jsonString));
                                 }
 
-                                applicationFile = ObjectExtensions_Json.DeserializeFromJson<T>(jsonString);
+                                applicationFile = JsonConvert.DeserializeObject<T>(jsonString);
                             }
                         }
                     }
@@ -201,8 +210,8 @@ namespace CoreLib.STANDALONE.Types
                                             throw new ArgumentNullException(nameof(jsonString));
                                         }
 
-                                        applicationFile = ObjectExtensions_Json
-                                            .DeserializeFromJson<T>(jsonString);
+                                        applicationFile = JsonConvert
+                                            .DeserializeObject<T>(jsonString);
                                     }
 
                                     File.Copy(file.FullName, filePath, true);

@@ -8,7 +8,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
-        <ProjectReference Include="..\GOST.Core\GOSTCore\GOSTCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OpenGost.Security.Cryptography" Version="0.2.1" />
     </ItemGroup>
     
 </Project>

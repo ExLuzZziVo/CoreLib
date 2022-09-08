@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE", "CoreLib.CORE\CoreLib.CORE.csproj", "{0E2F216A-0EF9-4678-950B-05E2E5A94019}"
 EndProject
@@ -22,8 +22,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Ru.GostEncryption", "CoreLib.CORE.Extensions.Ru.GostEncryption\CoreLib.CORE.Extensions.Ru.GostEncryption.csproj", "{373A46FD-6B0A-4A42-943C-A31A5A9D8817}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Ru.NameCasesGenerator", "CoreLib.CORE.Extensions.Ru.NameCasesGenerator\CoreLib.CORE.Extensions.Ru.NameCasesGenerator.csproj", "{7E8408FA-D8F1-4A4A-BB26-E91CEB09FBE5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOSTCore", "GOST.Core\GOSTCore\GOSTCore.csproj", "{D5AB901A-36E8-4483-8CA7-20E133D0BD71}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Compression", "CoreLib.CORE.Extensions.Compression\CoreLib.CORE.Extensions.Compression.csproj", "{2988466F-559D-4A99-B201-E2560946DC2A}"
 EndProject
@@ -81,10 +79,6 @@ Global
 		{7E8408FA-D8F1-4A4A-BB26-E91CEB09FBE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E8408FA-D8F1-4A4A-BB26-E91CEB09FBE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E8408FA-D8F1-4A4A-BB26-E91CEB09FBE5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5AB901A-36E8-4483-8CA7-20E133D0BD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5AB901A-36E8-4483-8CA7-20E133D0BD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5AB901A-36E8-4483-8CA7-20E133D0BD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5AB901A-36E8-4483-8CA7-20E133D0BD71}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2988466F-559D-4A99-B201-E2560946DC2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2988466F-559D-4A99-B201-E2560946DC2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2988466F-559D-4A99-B201-E2560946DC2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
