@@ -60,6 +60,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Последовательность &apos;{0}&apos; содержит дублирующиеся элементы.
+        /// </summary>
+        public static string CollectionHasDuplicatesError {
+            get {
+                return ResourceManager.GetString("CollectionHasDuplicatesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Количество элементов в последовательности &apos;{0}&apos; должно быть не более {1}.
         /// </summary>
         public static string CollectionMaxLengthError {
@@ -308,6 +317,15 @@ namespace CoreLib.CORE.Resources {
         public static string NotFoundError {
             get {
                 return ResourceManager.GetString("NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Один или несколько элементов последовательности &apos;{0}&apos; не найдены.
+        /// </summary>
+        public static string OneOrMoreObjectsInCollectionNotFoundError {
+            get {
+                return ResourceManager.GetString("OneOrMoreObjectsInCollectionNotFoundError", resourceCulture);
             }
         }
         

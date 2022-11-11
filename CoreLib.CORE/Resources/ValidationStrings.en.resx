@@ -138,4 +138,10 @@
     <data name="ErrorOccurred" xml:space="preserve">
         <value>An error occurred: {0}</value>
     </data>
+    <data name="CollectionHasDuplicatesError" xml:space="preserve">
+        <value>The sequence '{0}' contains duplicated items</value>
+    </data>
+    <data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
+        <value>One or more objects in sequence '{0}' not found</value>
+    </data>
 </root>

@@ -170,10 +170,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="img">Image to cut</param>
         /// <param name="rectangleWidth">Width of the rectangle area to cut</param>
         /// <param name="rectangleHeight">Height of the rectangle area to cut</param>
-        /// <param name="rectangleXPostion">X-position of top-left corner of the rectangle. Default value is 0</param>
+        /// <param name="rectangleXPosition">X-position of top-left corner of the rectangle. Default value is 0</param>
         /// <param name="rectangleYPosition">Y-position of top-left corner of the rectangle. Default value is 0</param>
         /// <returns>Cut image</returns>
-        public static Image Cut(this Image img, int rectangleWidth, int rectangleHeight, int rectangleXPostion = 0,
+        public static Image Cut(this Image img, int rectangleWidth, int rectangleHeight, int rectangleXPosition = 0,
             int rectangleYPosition = 0)
         {
             if (rectangleWidth < 1)
@@ -186,7 +186,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 throw new ArgumentOutOfRangeException(nameof(rectangleHeight));
             }
 
-            return img.Cut(new Rectangle(rectangleXPostion, rectangleYPosition, rectangleWidth, rectangleHeight));
+            return img.Cut(new Rectangle(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight));
         }
 
         /// <summary>
@@ -194,9 +194,9 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// </summary>
         /// <param name="img">Target image</param>
         /// <returns>Width and Height of image</returns>
-        public static Tuple<int, int> GetWidthAndHeight(this Image img)
+        public static ValueTuple<int, int> GetWidthAndHeight(this Image img)
         {
-            return new Tuple<int, int>(img.Width, img.Height);
+            return new ValueTuple<int, int>(img.Width, img.Height);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// </summary>
         /// <param name="pathToImage">Path to the image</param>
         /// <returns>Width and Height of image</returns>
-        public static Tuple<int, int> GetImageWidthAndHeight(string pathToImage)
+        public static ValueTuple<int, int> GetImageWidthAndHeight(string pathToImage)
         {
             using (var image = Image.FromFile(pathToImage))
             {

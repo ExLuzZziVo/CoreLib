@@ -57,10 +57,12 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         {
             using (var hash = Streebog512.Create())
             {
-                var keyWithSalt = new byte[Salt.Length + Key.Length];
+                var keyBytes = Encoding.Unicode.GetBytes(Key);
+                
+                var keyWithSalt = new byte[Salt.Length + keyBytes.Length];
                 
                 Salt.CopyTo(keyWithSalt, 0);
-                Encoding.Unicode.GetBytes(Key).CopyTo(keyWithSalt, Salt.Length);
+                keyBytes.CopyTo(keyWithSalt, Salt.Length);
                 
                 var gostKey = new byte[keySize];
                 Buffer.BlockCopy(hash.ComputeHash(keyWithSalt), 0, gostKey, 0, keySize);

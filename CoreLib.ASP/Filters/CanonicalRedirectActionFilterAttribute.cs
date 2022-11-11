@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Linq;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -53,20 +54,30 @@ namespace CoreLib.ASP.Filters
             var url = urlHelper.RouteUrl(context.RouteData.Values);
             var requestUrl = context.HttpContext.Request.Path.Value;
             var queryString = context.HttpContext.Request.QueryString.Value;
+            var urlHasParams = false;
             var isQueryStringValid = true;
 
-            if (!queryString.IsNullOrEmptyOrWhiteSpace() && queryStringToLowerCase)
+            if (!queryString.IsNullOrEmptyOrWhiteSpace())
             {
-                var tempQueryString = queryString.ToLowerInvariant();
+                urlHasParams = context.ActionDescriptor.Parameters.Any();
 
-                if (queryString != tempQueryString)
+                if (!urlHasParams)
                 {
-                    queryString = tempQueryString;
                     isQueryStringValid = false;
+                }
+                else if (queryStringToLowerCase)
+                {
+                    var tempQueryString = queryString.ToLowerInvariant();
+
+                    if (queryString != tempQueryString)
+                    {
+                        queryString = tempQueryString;
+                        isQueryStringValid = false;
+                    }
                 }
             }
 
-            var resultUrl = url + queryString;
+            var resultUrl = url + (urlHasParams ? queryString : string.Empty);
 
             if (url != requestUrl || !isQueryStringValid)
             {

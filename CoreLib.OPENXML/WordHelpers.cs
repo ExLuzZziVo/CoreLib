@@ -21,7 +21,7 @@ namespace CoreLib.OPENXML
         /// <param name="docFullPath">Full path to OpenXML Word document</param>
         /// <param name="findReplaceDictionary">Dictionary, where the key is the text to be replaced with a value</param>
         public static void FindAndReplaceTextInWordDocument(string docFullPath,
-            Dictionary<string, string> findReplaceDictionary)
+            IDictionary<string, string> findReplaceDictionary)
         {
             if (findReplaceDictionary.Count == 0)
             {
@@ -175,7 +175,7 @@ namespace CoreLib.OPENXML
 
                         if (replaceWith.IsNullOrEmptyOrWhiteSpace())
                         {
-                            txt.Parent.Parent.Remove();
+                            txt.Parent.Remove();
                         }
 
                         if (lines.Count() > 1)

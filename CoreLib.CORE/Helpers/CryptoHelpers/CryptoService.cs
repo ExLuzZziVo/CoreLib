@@ -179,11 +179,13 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             }
         }
 
+        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
         public virtual Task EncryptObjectAsync<T>(Stream s, T obj)
         {
             return Task.Run(() => EncryptObject(s, obj));
         }
 
+        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
         public virtual void EncryptObject<T>(Stream s, T obj)
         {
             using (var cs = new CryptoStream(s, CreateEncryptor(s), CryptoStreamMode.Write))
@@ -192,11 +194,13 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             }
         }
 
+        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
         public virtual Task<T> DecryptObjectAsync<T>(Stream s)
         {
             return Task.Run(() => DecryptObject<T>(s));
         }
 
+        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
         public virtual T DecryptObject<T>(Stream s)
         {
             using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))

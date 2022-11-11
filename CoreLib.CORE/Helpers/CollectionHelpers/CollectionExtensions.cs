@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 #endregion
 
@@ -34,17 +35,7 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
                 throw new ArgumentNullException(nameof(enumerable));
             }
 
-            if (appendCollection == null)
-            {
-                return enumerable;
-            }
-
-            foreach (var o in appendCollection)
-            {
-                Enumerable.Append(enumerable, o);
-            }
-
-            return enumerable;
+            return appendCollection == null ? enumerable : appendCollection.Aggregate(enumerable, Enumerable.Append);
         }
 
         /// <summary>
@@ -121,6 +112,30 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
         public static IQueryable<T> Page<T>(this IQueryable<T> queryable, int pageSize, int pageIndex)
         {
             return queryable.Skip(pageIndex * pageSize).Take(pageSize);
+        }
+
+        /// <summary>
+        /// Checks if the target sequence has duplicates
+        /// </summary>
+        /// <param name="enumerable">Target sequence</param>
+        /// <typeparam name="T">The type of the elements of source</typeparam>
+        /// <returns>True if the target sequence has duplicates</returns>
+        public static bool HasDuplicates<T>(this IEnumerable<T> enumerable)
+        {
+            return enumerable.Distinct().Count() != enumerable.Count();
+        }
+        
+        /// <summary>
+        /// Checks if the target sequence has duplicates
+        /// </summary>
+        /// <param name="enumerable">Target sequence</param>
+        /// <param name="keySelector">A function to extract the key for each element</param>
+        /// <typeparam name="T">The type of the elements of source</typeparam>
+        /// <typeparam name="T2">The type of the key returned by keySelector</typeparam>
+        /// <returns>True if the target sequence has duplicates</returns>
+        public static bool HasDuplicates<T,T2>(this IEnumerable<T> enumerable,  Func<T,T2> keySelector)
+        {
+            return enumerable.GroupBy(keySelector).Any(gr => gr.Count() > 1);
         }
     }
 }

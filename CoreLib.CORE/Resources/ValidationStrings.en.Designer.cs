@@ -60,6 +60,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The sequence &apos;{0}&apos; contains duplicated items.
+        /// </summary>
+        public static string CollectionHasDuplicatesError {
+            get {
+                return ResourceManager.GetString("CollectionHasDuplicatesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The sequence &apos;{0}&apos; must contain no more than {1}.
         /// </summary>
         public static string CollectionMaxLengthError {
@@ -308,6 +317,15 @@ namespace CoreLib.CORE.Resources {
         public static string NotFoundError {
             get {
                 return ResourceManager.GetString("NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more objects in sequence &apos;{0}&apos; not found.
+        /// </summary>
+        public static string OneOrMoreObjectsInCollectionNotFoundError {
+            get {
+                return ResourceManager.GetString("OneOrMoreObjectsInCollectionNotFoundError", resourceCulture);
             }
         }
         

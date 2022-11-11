@@ -237,4 +237,10 @@
   <data name="ErrorOccurred" xml:space="preserve">
     <value>Произошла ошибка: {0}</value>
   </data>
+  <data name="CollectionHasDuplicatesError" xml:space="preserve">
+    <value>Последовательность '{0}' содержит дублирующиеся элементы</value>
+  </data>
+  <data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
+    <value>Один или несколько элементов последовательности '{0}' не найдены</value>
+  </data>
 </root>
