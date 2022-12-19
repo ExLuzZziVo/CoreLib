@@ -1,9 +1,11 @@
 ﻿#region
 
+using System;
 using System.Linq;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -56,10 +58,23 @@ namespace CoreLib.ASP.Filters
             var queryString = context.HttpContext.Request.QueryString.Value;
             var urlHasParams = false;
             var isQueryStringValid = true;
-
+            
             if (!queryString.IsNullOrEmptyOrWhiteSpace())
             {
-                urlHasParams = context.ActionDescriptor.Parameters.Any();
+                if (context.ActionDescriptor is CompiledPageActionDescriptor cpad)
+                {
+                    // Get handler name from query string, because RouteData doesn't contain it
+                    context.HttpContext.Request.Query.TryGetValue("handler", out var handlerName);
+                    
+                    urlHasParams = cpad.HandlerMethods.Any(hmd =>
+                        string.Equals(hmd.Name, handlerName, StringComparison.OrdinalIgnoreCase) &&
+                        string.Equals(hmd.HttpMethod, context.HttpContext.Request.Method,
+                            StringComparison.OrdinalIgnoreCase) && hmd.Parameters.Count > 0);
+                }
+                else
+                {
+                    urlHasParams = context.ActionDescriptor.Parameters.Count > 0;
+                }
 
                 if (!urlHasParams)
                 {
