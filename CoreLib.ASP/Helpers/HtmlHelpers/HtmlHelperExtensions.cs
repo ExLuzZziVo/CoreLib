@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace CoreLib.ASP.Helpers.HtmlHelpers
 {
-    public static class HtmlHelperExtensions
+    public static partial class HtmlHelperExtensions
     {
         /// <summary>
         /// Helper that checks if the specified controller action is currently displayed. Is used to add the 'active' css class to target html element
@@ -23,7 +23,7 @@ namespace CoreLib.ASP.Helpers.HtmlHelpers
             object routeValues = null)
         {
             return IsActive(html, controller, action, routeValues) != null &&
-                   string.Equals(area, (string) html.ViewContext.RouteData.Values["area"],
+                   string.Equals(area, (string)html.ViewContext.RouteData.Values["area"],
                        StringComparison.InvariantCultureIgnoreCase)
                 ? "active"
                 : null;
@@ -47,8 +47,8 @@ namespace CoreLib.ASP.Helpers.HtmlHelpers
                 return null;
             }
 
-            var routeAction = (string) routeData.Values["action"];
-            var routeController = (string) routeData.Values["controller"];
+            var routeAction = (string)routeData.Values["action"];
+            var routeController = (string)routeData.Values["controller"];
 
             var returnActive =
                 string.Equals(controller, routeController, StringComparison.InvariantCultureIgnoreCase) &&
@@ -70,7 +70,7 @@ namespace CoreLib.ASP.Helpers.HtmlHelpers
             bool startsWithComparison = false, object routeValues = null)
         {
             return IsPageActive(html, page, startsWithComparison, routeValues) != null &&
-                   string.Equals(area, (string) html.ViewContext.RouteData.Values["area"],
+                   string.Equals(area, (string)html.ViewContext.RouteData.Values["area"],
                        StringComparison.InvariantCultureIgnoreCase)
                 ? "active"
                 : null;
@@ -94,7 +94,7 @@ namespace CoreLib.ASP.Helpers.HtmlHelpers
                 return null;
             }
 
-            var routePage = (string) routeData.Values["page"];
+            var routePage = (string)routeData.Values["page"];
 
             if (routePage == null)
             {

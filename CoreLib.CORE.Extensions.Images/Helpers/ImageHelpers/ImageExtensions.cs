@@ -1,12 +1,24 @@
 ﻿#region
 
+#region
+
+#region
+
 using System;
+using System.IO;
+#if SYSTEM_DRAWING
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
+
+#else
 using SkiaSharp;
+#endif
+
+#endregion
+
+#endregion
 
 #endregion
 
@@ -14,6 +26,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 {
     public static class ImageExtensions
     {
+#if SYSTEM_DRAWING
         /// <summary>
         /// Resizes the image keeping its initial ratio
         /// </summary>
@@ -124,7 +137,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return img.Resize((int)(img.Width * scale), (int)(img.Height * scale), interpolationMode);
         }
-
+#else
         /// <summary>
         /// Resizes the image keeping its initial ratio
         /// </summary>
@@ -238,7 +251,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return img.Resize((int)(img.Width * scale), (int)(img.Height * scale), filterQuality);
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Changes quality of the image
         /// </summary>
@@ -269,7 +283,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 return stream.Position - currentPosition;
             }
         }
-
+#else
         /// <summary>
         /// Changes quality of the image
         /// </summary>
@@ -297,7 +311,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return stream.Position - currentPosition;
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Changes quality of the image
         /// </summary>
@@ -313,7 +328,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return Image.FromStream(ms);
         }
-
+#else
         /// <summary>
         /// Changes quality of the image
         /// </summary>
@@ -331,7 +346,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 return SKImage.FromEncodedData(ms);
             }
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Crops the image to circle
         /// </summary>
@@ -387,7 +403,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return newImage;
         }
-
+#else
         /// <summary>
         /// Crops the image to circle
         /// </summary>
@@ -440,7 +456,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 return SKImage.FromBitmap(newImage);
             }
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Cuts the image
         /// </summary>
@@ -489,7 +506,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return img.Cut(new Rectangle(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight));
         }
-
+#else
         /// <summary>
         /// Cuts the image
         /// </summary>
@@ -534,7 +551,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 return SKImage.FromBitmap(bmpImage);
             }
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Gets width and height of the image
         /// </summary>
@@ -544,7 +562,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         {
             return new ValueTuple<int, int>(img.Width, img.Height);
         }
-
+#else
         /// <summary>
         /// Gets width and height of the image
         /// </summary>
@@ -554,5 +572,6 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         {
             return new ValueTuple<int, int>(img.Width, img.Height);
         }
+#endif
     }
 }

@@ -1,12 +1,16 @@
 ﻿#region
 
 using System;
+using System.IO;
+#if SYSTEM_DRAWING
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
+
+#else
 using SkiaSharp;
+#endif
 
 #endregion
 
@@ -14,6 +18,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 {
     public static class ImageManipulator
     {
+#if SYSTEM_DRAWING
         /// <summary>
         /// Gets width and height of the image
         /// </summary>
@@ -26,20 +31,22 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 return image.GetWidthAndHeight();
             }
         }
-
+#else
         /// <summary>
         /// Gets width and height of the image
         /// </summary>
         /// <param name="pathToImage">Path to the image</param>
         /// <returns>Width and Height of image</returns>
-        public static ValueTuple<int, int> GetImageWidthAndHeightUsingSK(string pathToImage)
+        public static ValueTuple<int, int> GetImageWidthAndHeight(string pathToImage)
         {
             using (var image = SKImage.FromEncodedData(pathToImage))
             {
                 return image.GetWidthAndHeight();
             }
         }
+#endif
 
+#if SYSTEM_DRAWING
         /// <summary>
         /// Resizes the image keeping its initial ratio
         /// </summary>
@@ -96,7 +103,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#else
         /// <summary>
         /// Resizes the image keeping its initial ratio
         /// </summary>
@@ -105,7 +112,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="maxHeight">Maximum resize height</param>
         /// <param name="filterQuality">Resized image filter quality</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
-        public static void ResizeImageUsingSK(string pathToImage, int maxWidth, int maxHeight,
+        public static void ResizeImage(string pathToImage, int maxWidth, int maxHeight,
             SKFilterQuality filterQuality = SKFilterQuality.Medium, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
@@ -129,7 +136,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="scale">Scale</param>
         /// <param name="filterQuality">Resized image filter quality</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
-        public static void ResizeImageUsingSK(string pathToImage, double scale,
+        public static void ResizeImage(string pathToImage, double scale,
             SKFilterQuality filterQuality = SKFilterQuality.Medium, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
@@ -145,7 +152,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Changes quality of the image
         /// </summary>
@@ -171,14 +179,14 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#else
         /// <summary>
         /// Changes quality of the image
         /// </summary>
         /// <param name="pathToImage">Path to the image</param>
         /// <param name="quality">Quality</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
-        public static void ChangeImageQualityUsingSK(string pathToImage, byte quality, string pathToNewImage = null)
+        public static void ChangeImageQuality(string pathToImage, byte quality, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
 
@@ -191,7 +199,9 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
+#endif
 
+#if SYSTEM_DRAWING
         /// <summary>
         /// Crops the image to circle
         /// </summary>
@@ -220,7 +230,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#else
         /// <summary>
         /// Crops the image to circle
         /// </summary>
@@ -230,7 +240,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="y">Y-position of cropping circle center</param>
         /// <param name="radius">Radius of cropping circle</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
-        public static void CropImageToCircleUsingSK(string pathToImage, SKColor background, float x, float y,
+        public static void CropImageToCircle(string pathToImage, SKColor background, float x, float y,
             float radius, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
@@ -255,7 +265,8 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#endif
+#if SYSTEM_DRAWING
         /// <summary>
         /// Cuts the image
         /// </summary>
@@ -286,7 +297,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
-
+#else
         /// <summary>
         /// Cuts the image
         /// </summary>
@@ -296,7 +307,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="rectangleXPosition">X-position of top-left corner of the rectangle. Default value is 0</param>
         /// <param name="rectangleYPosition">Y-position of top-left corner of the rectangle. Default value is 0</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
-        public static void CutImageUsingSK(string pathToImage, int rectangleWidth, int rectangleHeight,
+        public static void CutImage(string pathToImage, int rectangleWidth, int rectangleHeight,
             int rectangleXPosition = 0,
             int rectangleYPosition = 0, string pathToNewImage = null)
         {
@@ -323,7 +334,9 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 }
             }
         }
+#endif
 
+#if SYSTEM_DRAWING
         /// <summary>
         /// Changes the quality and size of the target image until it is less than or equal to the specified file size
         /// </summary>
@@ -440,7 +453,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 image.Dispose();
             }
         }
-
+#else
         /// <summary>
         /// Changes the quality and size of the target image until it is less than or equal to the specified file size
         /// </summary>
@@ -449,7 +462,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
         /// <param name="qualityStep">Quality reduction step. Default value: 20</param>
         /// <param name="scaleStep">Scaling down step. Default value: 0.15</param>
-        public static void ReduceImageFileSizeUsingSK(long targetFileSize, string pathToImage,
+        public static void ReduceImageFileSize(long targetFileSize, string pathToImage,
             string pathToNewImage = null,
             byte qualityStep = 20, double scaleStep = 0.15)
         {
@@ -536,5 +549,6 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             imageEncodedData.Dispose();
         }
+#endif
     }
 }

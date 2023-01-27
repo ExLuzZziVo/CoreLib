@@ -10,9 +10,9 @@ using CoreLib.CORE.Helpers.StringHelpers;
 namespace CoreLib.STANDALONE.Types
 {
     /// <summary>
-    /// Base class of view models that implements <see cref="INotifyPropertyChanged"/> and <see cref="IDataErrorInfo"/> interfaces
+    /// Base class of view models that implements <see cref="INotifyPropertyChanged"/>,<see cref="IDataErrorInfo"/> and <see cref="IValidatableObject"/> interfaces
     /// </summary>
-    public abstract class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo
+    public abstract class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo, IValidatableObject
     {
         /// <summary>
         /// Gets the value of a property by its name
@@ -174,6 +174,16 @@ namespace CoreLib.STANDALONE.Types
             private set => SetValue(value);
         }
 
+        #endregion
+
+        #region Implement IValidatableObject
+        
+        /// <returns><see cref="ValidationResult.Success"/></returns>
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            yield return ValidationResult.Success;
+        }
+        
         #endregion
     }
 }

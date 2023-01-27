@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,8 +62,17 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 {
                     return false;
                 }
-
-                using (new Bitmap(postedFile.OpenReadStream())) { }
+#if SYSTEM_DRAWING
+                using (new System.Drawing.Bitmap(postedFile.OpenReadStream())) { }
+#else
+                using (var image = SkiaSharp.SKImage.FromEncodedData(postedFile.OpenReadStream()))
+                {
+                    if(image == null)
+                    {
+                        return false;
+                    }
+                }
+#endif
             }
             catch (Exception)
             {
