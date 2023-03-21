@@ -17,6 +17,8 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class RequiredIfAttribute : RequiredAttribute
     {
+        private readonly object _instance = new object();
+
         /// <summary>
         /// This validation attribute is used to validate required based on other property value
         /// </summary>
@@ -50,11 +52,13 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Comparison type
         /// </summary>
         public ComparisonType ComparisonType { get; }
-        
+
         /// <summary>
         /// Flag indicating that the target <see cref="string"/> property is a html string and the inner text should be validated
         /// </summary>
         public bool IsStringHtmlText { get; set; }
+
+        public override object TypeId => _instance;
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -149,16 +153,19 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 {
                     if (OtherPropertyValue == null)
                     {
-                        isRequired = CompareToAttribute.CompareValues(str.IsNullOrEmptyOrWhiteSpace(), true, ComparisonType);
+                        isRequired =
+                            CompareToAttribute.CompareValues(str.IsNullOrEmptyOrWhiteSpace(), true, ComparisonType);
                     }
                     else
                     {
-                        isRequired = CompareToAttribute.CompareValues(str, OtherPropertyValue.ToString(), ComparisonType);
+                        isRequired =
+                            CompareToAttribute.CompareValues(str, OtherPropertyValue.ToString(), ComparisonType);
                     }
                 }
                 else
                 {
-                    throw new NotSupportedException($"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(String)}' property");
+                    throw new NotSupportedException(
+                        $"The comparison type '{ComparisonType.ToString("G")}' is not supported for the '{nameof(String)}' property");
                 }
             }
 
@@ -166,7 +173,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             {
                 value = Regex.Replace(val, @"<.*?>|&nbsp;", string.Empty);
             }
-            
+
             return isRequired ? base.IsValid(value, validationContext) : ValidationResult.Success;
         }
 
@@ -190,6 +197,16 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 throw new NotSupportedException(
                     $"The value '{OtherPropertyValue}' must be a string if it compares to {typeof(T)}");
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return _instance.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _instance.GetHashCode();
         }
     }
 }

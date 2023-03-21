@@ -9,7 +9,7 @@ namespace CoreLib.STANDALONE.Types
     /// </summary>
     public class FilterItem<T> : ViewModelBase
     {
-        public bool Enabled
+        public bool IsEnabled
         {
             get => GetValue<bool>();
             set => SetValue(value);

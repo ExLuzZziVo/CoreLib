@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using CoreLib.CORE.Helpers.ObjectHelpers;
-using CoreLib.CORE.Helpers.StringHelpers;
 using CoreLib.CORE.Resources;
 
 namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
@@ -11,42 +10,10 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     /// This validation attribute is used to validate target date or age
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter,
-        AllowMultiple = false)]
+        AllowMultiple = true)]
     public class DateValidationAttribute : ValidationAttribute
     {
-        /// <summary>
-        /// Generates the default error message using <paramref name="comparisonType"/> and <paramref name="isAge"/>
-        /// </summary>
-        /// <param name="comparisonType">Comparison type</param>
-        /// <param name="isAge">Generate default error message for age or date validation</param>
-        private static string GetDefaultErrorMessage(ComparisonType comparisonType, bool isAge = false)
-        {
-            switch (comparisonType)
-            {
-                case ComparisonType.Equal:
-                    return ValidationStrings.ResourceManager.GetString("ValueEqualError");
-                case ComparisonType.NotEqual:
-                    return ValidationStrings.ResourceManager.GetString("ValueNotEqualError");
-                case ComparisonType.Less:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanError")
-                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanError");
-                case ComparisonType.LessOrEqual:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError")
-                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError");
-                case ComparisonType.Greater:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanError")
-                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanError");
-                case ComparisonType.GreaterOrEqual:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError")
-                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError");
-                default:
-                    throw new ArgumentNullException(nameof(comparisonType));
-            }
-        }
+        private readonly object _instance = new object();
 
         /// <summary>
         /// This constructor is used to validate AGE
@@ -75,7 +42,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
 
             DateToCompare = DateTime.Today.AddYears(-years).AddMonths(-months).AddDays(-days);
-            
+
             if (comparisonType == ComparisonType.Equal || comparisonType == ComparisonType.NotEqual)
             {
                 ComparisonType = comparisonType;
@@ -165,10 +132,47 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// </summary>
         public string ErrorMessageDateToCompareFormat { get; set; } = "dd-MM-yyyy";
 
+        public override object TypeId => _instance;
+
+        /// <summary>
+        /// Generates the default error message using <paramref name="comparisonType"/> and <paramref name="isAge"/>
+        /// </summary>
+        /// <param name="comparisonType">Comparison type</param>
+        /// <param name="isAge">Generate default error message for age or date validation</param>
+        private static string GetDefaultErrorMessage(ComparisonType comparisonType, bool isAge = false)
+        {
+            switch (comparisonType)
+            {
+                case ComparisonType.Equal:
+                    return ValidationStrings.ResourceManager.GetString("ValueEqualError");
+                case ComparisonType.NotEqual:
+                    return ValidationStrings.ResourceManager.GetString("ValueNotEqualError");
+                case ComparisonType.Less:
+                    return isAge
+                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanError")
+                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanError");
+                case ComparisonType.LessOrEqual:
+                    return isAge
+                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError")
+                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError");
+                case ComparisonType.Greater:
+                    return isAge
+                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanError")
+                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanError");
+                case ComparisonType.GreaterOrEqual:
+                    return isAge
+                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError")
+                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError");
+                default:
+                    throw new ArgumentNullException(nameof(comparisonType));
+            }
+        }
+
         public override string FormatErrorMessage(string name)
         {
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name,
-                DateToCompare.ToString(ErrorMessageDateToCompareFormat, CultureInfo.CurrentCulture));
+                (IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare).ToString(ErrorMessageDateToCompareFormat,
+                    CultureInfo.CurrentCulture));
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -192,7 +196,8 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 #if NET6_0
             else if (value is DateOnly dateOnly)
             {
-                return CompareToAttribute.CompareValues(dateOnly, DateOnly.FromDateTime(IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare), ComparisonType)
+                return CompareToAttribute.CompareValues(dateOnly,
+                    DateOnly.FromDateTime(IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare), ComparisonType)
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }
@@ -202,6 +207,16 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 throw new NotSupportedException(
                     "This attribute is only valid on types 'System.DateTime' or 'System.DateOnly'");
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return _instance.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _instance.GetHashCode();
         }
     }
 }

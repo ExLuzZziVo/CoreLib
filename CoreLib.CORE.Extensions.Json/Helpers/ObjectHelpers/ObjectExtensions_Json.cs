@@ -19,7 +19,8 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
             ObjectCreationHandling = ObjectCreationHandling.Replace, TypeNameHandling = TypeNameHandling.All,
-            SerializationBinder = new JsonSearchAssembliesBinder(Assembly.GetEntryAssembly(), true)
+            SerializationBinder = new JsonSearchAssembliesBinder(Assembly.GetEntryAssembly(), true),
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
 
         /// <summary>

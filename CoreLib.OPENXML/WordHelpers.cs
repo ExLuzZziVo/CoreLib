@@ -134,11 +134,11 @@ namespace CoreLib.OPENXML
                 replaceWith = string.Empty;
             }
 
-            var texts = element.Descendants<Text>();
+            var texts = element.Descendants<Text>().ToArray();
 
-            for (var t = 0; t < texts.Count(); t++)
+            for (var t = 0; t < texts.Length; t++)
             {
-                var txt = texts.ElementAt(t);
+                var txt = texts[t];
 
                 for (var c = 0; c < txt.Text.Length; c++)
                 {
@@ -157,9 +157,9 @@ namespace CoreLib.OPENXML
                             lines[0] = txt.Text.Substring(0, c) + lines[0];
                         }
 
-                        if (match.EndCharIndex + 1 < texts.ElementAt(match.EndElementIndex).Text.Length)
+                        if (match.EndCharIndex + 1 < texts[match.EndElementIndex].Text.Length)
                         {
-                            lines[lines.Length - 1] = lines[lines.Length - 1] + texts.ElementAt(match.EndElementIndex)
+                            lines[lines.Length - 1] += texts[match.EndElementIndex]
                                 .Text.Substring(match.EndCharIndex + 1);
                         }
 
@@ -170,7 +170,7 @@ namespace CoreLib.OPENXML
 
                         for (var i = t + 1; i <= match.EndElementIndex; i++)
                         {
-                            texts.ElementAt(i).Text = string.Empty;
+                            texts[i].Text = string.Empty;
                         }
 
                         if (replaceWith.IsNullOrEmptyOrWhiteSpace())
@@ -178,7 +178,7 @@ namespace CoreLib.OPENXML
                             txt.Parent.Remove();
                         }
 
-                        if (lines.Count() > 1)
+                        if (lines.Length > 1)
                         {
                             OpenXmlElement currEl = txt;
                             var run = currEl.Parent as Run;
@@ -190,7 +190,7 @@ namespace CoreLib.OPENXML
                             sampleParagraph.RemoveAllChildren<Run>();
                             currEl = paragraph;
 
-                            for (var i = 1; i < lines.Count(); i++)
+                            for (var i = 1; i < lines.Length; i++)
                             {
                                 var paragraphBefore = currEl;
                                 var paragraphAfter = (Paragraph) sampleParagraph.Clone();
@@ -225,15 +225,15 @@ namespace CoreLib.OPENXML
         /// <param name="c">Current index of character of <paramref name="t"/></param>
         /// <param name="find">Text to find</param>
         /// <returns>Search result</returns>
-        private static Match IsMatch(IEnumerable<Text> texts, int t, int c, string find)
+        private static Match IsMatch(Text[] texts, int t, int c, string find)
         {
             var ix = 0;
 
-            for (var i = t; i < texts.Count(); i++)
+            for (var i = t; i < texts.Length; i++)
             {
-                for (var j = c; j < texts.ElementAt(i).Text.Length; j++)
+                for (var j = c; j < texts[i].Text.Length; j++)
                 {
-                    if (find[ix] != texts.ElementAt(i).Text[j])
+                    if (find[ix] != texts[i].Text[j])
                     {
                         return null;
                     }

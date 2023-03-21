@@ -12,10 +12,10 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
     public static class CollectionExtensions
     {
         /// <summary>
-        /// Adds a value or values to the end of the collection
+        /// Appends a value or values to the end of the collection
         /// </summary>
-        /// <param name="enumerable">The sequence to add objects to</param>
-        /// <param name="elements">The sequence of objects to be added</param>
+        /// <param name="enumerable">The sequence to append objects to</param>
+        /// <param name="elements">The sequence of objects to be appended</param>
         /// <returns>Filled with value or values from <paramref name="elements"/> sequence <paramref name="enumerable"/></returns>
         public static IEnumerable<T> Append<T>(this IEnumerable<T> enumerable, params T[] elements)
         {
@@ -23,10 +23,10 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
         }
 
         /// <summary>
-        /// Adds a sequence of objects to the end of collection
+        /// Appends a sequence of objects to the end of collection
         /// </summary>
-        /// <param name="enumerable">The sequence to add objects to</param>
-        /// <param name="appendCollection">The sequence of objects to be added</param>
+        /// <param name="enumerable">The sequence to append objects to</param>
+        /// <param name="appendCollection">The sequence of objects to be appended</param>
         /// <returns>Filled with objects from <paramref name="appendCollection"/> sequence <paramref name="enumerable"/></returns>
         public static IEnumerable<T> AppendRange<T>(this IEnumerable<T> enumerable, IEnumerable<T> appendCollection)
         {
@@ -38,6 +38,34 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
             return appendCollection == null ? enumerable : appendCollection.Aggregate(enumerable, Enumerable.Append);
         }
 
+        /// <summary>
+        /// Adds a value or values to the end of the collection
+        /// </summary>
+        /// <param name="collection">The sequence to add objects to</param>
+        /// <param name="elements">The sequence of objects to be added</param>
+        public static void Add<T>(this ICollection<T> collection, params T[] elements)
+        {
+            collection.AddRange(elements);
+        }
+
+        /// <summary>
+        /// Adds a sequence of objects to the end of collection
+        /// </summary>
+        /// <param name="collection">The sequence to add objects to</param>
+        /// <param name="addCollection">The sequence of objects to be added</param>
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> addCollection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            foreach (var el in addCollection)
+            {
+                collection.Add(el);
+            }
+        }
+        
         /// <summary>
         /// Gets the index of an object of sequence
         /// </summary>

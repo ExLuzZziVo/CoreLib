@@ -1,22 +1,24 @@
 ﻿#region
 
+using System;
+
 #endregion
 
 namespace CoreLib.STANDALONE.Types
 {
     /// <summary>
-    /// A simple object that is used for binding to a string that fires property changed event when it gets changed
+    /// A simple object that is used for binding to simple objects (e.g. int, enum, string, etc.) that fires property changed event when it gets changed
     /// </summary>
-    public class SimpleStringObject : ViewModelBase
+    public class SimpleObservableObject<T> : ViewModelBase where T: IComparable, IConvertible
     {
-        public SimpleStringObject(string simpleString)
+        public SimpleObservableObject(T value)
         {
-            SimpleString = simpleString;
+            Value = value;
         }
 
-        public string SimpleString
+        public T Value
         {
-            get => GetValue<string>();
+            get => GetValue<T>();
             set => SetValue(value);
         }
     }

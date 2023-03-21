@@ -14,30 +14,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class CompareToAttribute : ValidationAttribute
     {
-        /// <summary>
-        /// Generates the default error message using <paramref name="comparisonType"/>
-        /// </summary>
-        /// <param name="comparisonType">Comparison type</param>
-        private static string GetDefaultErrorMessage(ComparisonType comparisonType)
-        {
-            switch (comparisonType)
-            {
-                case ComparisonType.Equal:
-                    return ValidationStrings.ResourceManager.GetString("CompareToEqualError");
-                case ComparisonType.NotEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToNotEqualError");
-                case ComparisonType.Less:
-                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanError");
-                case ComparisonType.LessOrEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanOrEqualError");
-                case ComparisonType.Greater:
-                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanError");
-                case ComparisonType.GreaterOrEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanOrEqualError");
-                default:
-                    throw new ArgumentNullException(nameof(comparisonType));
-            }
-        }
+        private readonly object _instance = new object();
 
         /// <summary>
         /// This validation attribute is used to validate target property value by comparing it with other property value
@@ -68,6 +45,33 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Comparison type
         /// </summary>
         public ComparisonType ComparisonType { get; }
+
+        public override object TypeId => _instance;
+
+        /// <summary>
+        /// Generates the default error message using <paramref name="comparisonType"/>
+        /// </summary>
+        /// <param name="comparisonType">Comparison type</param>
+        private static string GetDefaultErrorMessage(ComparisonType comparisonType)
+        {
+            switch (comparisonType)
+            {
+                case ComparisonType.Equal:
+                    return ValidationStrings.ResourceManager.GetString("CompareToEqualError");
+                case ComparisonType.NotEqual:
+                    return ValidationStrings.ResourceManager.GetString("CompareToNotEqualError");
+                case ComparisonType.Less:
+                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanError");
+                case ComparisonType.LessOrEqual:
+                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanOrEqualError");
+                case ComparisonType.Greater:
+                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanError");
+                case ComparisonType.GreaterOrEqual:
+                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanOrEqualError");
+                default:
+                    throw new ArgumentNullException(nameof(comparisonType));
+            }
+        }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -162,6 +166,16 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             }
 
             return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return _instance.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _instance.GetHashCode();
         }
     }
 }
