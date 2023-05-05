@@ -33,5 +33,15 @@ namespace CoreLib.CORE.Helpers.FileHelpers
         {
             return ext.Any(e => fileName.EndsWith(e, StringComparison.OrdinalIgnoreCase));
         }
+
+        /// <summary>
+        /// Checks if file is used by another process
+        /// </summary>
+        /// <param name="fileName">Filename</param>
+        /// <returns>True if file is used by another process</returns>
+        public static bool IsInUse(string fileName)
+        {
+            return new FileInfo(fileName).IsInUse();
+        }
     }
 }
