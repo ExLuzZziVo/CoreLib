@@ -14,7 +14,8 @@ namespace CoreLib.CORE.Types
     /// </summary>
     public class ExtendedValidationException : Exception
     {
-        private readonly List<string> _validationErrors = new List<string>();
+        private readonly string[] _validationErrors;
+        private readonly ValidationResult[] _validationResults;
 
         /// <summary>
         /// The exception that is thrown on validation errors for all data fields of an object
@@ -22,10 +23,8 @@ namespace CoreLib.CORE.Types
         /// <param name="errors">List of errors as a collection of <see cref="ValidationResult"/></param>
         public ExtendedValidationException(IEnumerable<ValidationResult> errors)
         {
-            foreach (var ve in errors)
-            {
-                _validationErrors.Add(ve.ErrorMessage);
-            }
+            _validationResults = errors.ToArray();
+            _validationErrors = errors.Select(ve => ve.ErrorMessage).ToArray();
         }
 
         /// <summary>
@@ -34,7 +33,8 @@ namespace CoreLib.CORE.Types
         /// <param name="errors">List of errors as a collection of strings</param>
         public ExtendedValidationException(IEnumerable<string> errors)
         {
-            _validationErrors.AddRange(errors);
+            _validationResults = errors.Select(err => new ValidationResult(err)).ToArray();
+            _validationErrors = errors.ToArray();
         }
 
         /// <summary>
@@ -43,13 +43,19 @@ namespace CoreLib.CORE.Types
         /// <param name="message">Error text</param>
         public ExtendedValidationException(string message)
         {
-            _validationErrors.Add(message);
+            _validationResults = new[] { new ValidationResult(message) };
+            _validationErrors = new[] { message };
         }
 
         /// <summary>
         /// List of all validation errors
         /// </summary>
         public IEnumerable<string> ValidationErrors => _validationErrors;
+
+        /// <summary>
+        /// List of all validation results
+        /// </summary>
+        public IEnumerable<ValidationResult> ValidationResults => _validationResults;
 
         public override string Message => string.Join("\n", _validationErrors);
     }

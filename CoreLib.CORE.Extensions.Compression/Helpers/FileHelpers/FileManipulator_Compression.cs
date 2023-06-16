@@ -14,7 +14,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
         /// </summary>
         /// <param name="filePath">Path to file</param>
         /// <param name="zipPath">Path to new zip archive. If null, it creates zip archive in the directory where the specified file is located</param>
-        public static void PackFileToZip(string filePath, string zipPath = null)
+        /// <returns>Path to new zip archive</returns>
+        public static string PackFileToZip(string filePath, string zipPath = null)
         {
             if (filePath.IsNullOrEmptyOrWhiteSpace())
             {
@@ -31,6 +32,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
             {
                 archive.CreateEntryFromFileSafely(filePath);
             }
+
+            return zipPath;
         }
 
         /// <summary>
@@ -38,7 +41,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
         /// </summary>
         /// <param name="filePaths">Paths to files</param>
         /// <param name="zipPath">Path to new zip archive. If null, it creates zip archive in the directory where the first specified file is located</param>
-        public static void PackFilesToZip(IEnumerable<string> filePaths, string zipPath)
+        /// <returns>Path to new zip archive</returns>
+        public static string PackFilesToZip(IEnumerable<string> filePaths, string zipPath)
         {
             if (!filePaths.Any())
             {
@@ -58,6 +62,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
                     archive.CreateEntryFromFileSafely(fPath);
                 }
             }
+
+            return zipPath;
         }
 
         /// <summary>
@@ -65,7 +71,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
         /// </summary>
         /// <param name="directoryPath">Paths to directory</param>
         /// <param name="zipPath">Path to new zip archive. If null, it creates zip archive in the directory where the specified directory is located</param>
-        public static void PackDirectoryToZip(string directoryPath, string zipPath = null)
+        /// <returns>Path to new zip archive</returns>
+        public static string PackDirectoryToZip(string directoryPath, string zipPath = null)
         {
             if (directoryPath.IsNullOrEmptyOrWhiteSpace())
             {
@@ -85,6 +92,8 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
                     archive.CreateEntryFromFileSafely(fPath, directoryPath);
                 }
             }
+
+            return zipPath;
         }
 
         /// <summary>

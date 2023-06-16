@@ -204,6 +204,19 @@ namespace CoreLib.CORE.Types
         }
 
         /// <summary>
+        /// Check if <see cref="SemaphoreSlim"/> with the specified <paramref name="key"/> is busy
+        /// </summary>
+        /// <param name="key">Unique key</param>
+        /// <returns>True if semaphore with the specified <paramref name="key"/> is busy</returns>
+        public static bool IsBusy(object key)
+        {
+            lock (Semaphores)
+            {
+                return Semaphores.TryGetValue(key, out _);
+            }
+        }
+
+        /// <summary>
         /// A helper class to handle the current number of references to the provided <see cref="SemaphoreSlim"/>
         /// </summary>
         private class LockedSemaphore : IDisposable
