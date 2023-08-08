@@ -61,7 +61,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static IDisposable Wait(object key, TimeSpan timeout)
         {
-            return Wait((int)timeout.TotalMilliseconds, CancellationToken.None);
+            return Wait(key, (int)timeout.TotalMilliseconds, CancellationToken.None);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static IDisposable Wait(object key, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            return Wait((int)timeout.TotalMilliseconds, cancellationToken);
+            return Wait(key, (int)timeout.TotalMilliseconds, cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static IDisposable Wait(object key, int millisecondsTimeout)
         {
-            return Wait(millisecondsTimeout, CancellationToken.None);
+            return Wait(key, millisecondsTimeout, CancellationToken.None);
         }
 
         /// <summary>
@@ -115,6 +115,8 @@ namespace CoreLib.CORE.Types
 
             if (!entered)
             {
+                semaphore.Dispose();
+                
                 throw new TimeoutException("The specified semaphore is busy(timed out)");
             }
 
@@ -140,7 +142,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static Task<IDisposable> WaitAsync(object key, TimeSpan timeout)
         {
-            return WaitAsync((int)timeout.TotalMilliseconds, CancellationToken.None);
+            return WaitAsync(key, (int)timeout.TotalMilliseconds, CancellationToken.None);
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static Task<IDisposable> WaitAsync(object key, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            return WaitAsync((int)timeout.TotalMilliseconds, cancellationToken);
+            return WaitAsync(key, (int)timeout.TotalMilliseconds, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +167,7 @@ namespace CoreLib.CORE.Types
         /// <exception cref="TimeoutException">Timeout expired</exception>
         public static Task<IDisposable> WaitAsync(object key, int millisecondsTimeout)
         {
-            return WaitAsync(millisecondsTimeout, CancellationToken.None);
+            return WaitAsync(key, millisecondsTimeout, CancellationToken.None);
         }
 
         /// <summary>
@@ -197,6 +199,8 @@ namespace CoreLib.CORE.Types
 
             if (!entered)
             {
+                semaphore.Dispose();
+                
                 throw new TimeoutException("The specified semaphore is busy(timed out)");
             }
 

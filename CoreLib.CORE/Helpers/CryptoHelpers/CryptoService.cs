@@ -149,29 +149,33 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
                 return Convert.ToBase64String(msEncrypt.ToArray());
             }
         }
-
+        
         public virtual Task<string> DecryptStringAsync(string str)
         {
             return Task.Run(() => DecryptString(str));
         }
 
-        public virtual string DecryptString(string str)
+        public bool TryDecryptString(string str, out string decryptedString)
         {
             try
             {
-                var bytes = Convert.FromBase64String(str);
+                decryptedString = DecryptStringInternal(str);
 
-                using (var msDecrypt = new MemoryStream(bytes))
-                {
-                    using (var csDecrypt =
-                        new CryptoStream(msDecrypt, CreateDecryptor(msDecrypt), CryptoStreamMode.Read))
-                    {
-                        using (var srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            return srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
+                return true;
+            }
+            catch
+            {
+                decryptedString = string.Empty;
+                
+                return false;
+            }
+        }
+        
+        public string DecryptString(string str)
+        {
+            try
+            {
+                return DecryptStringInternal(str);
             }
             catch
             {
@@ -179,6 +183,23 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             }
         }
 
+        protected virtual string DecryptStringInternal(string str)
+        {
+            var bytes = Convert.FromBase64String(str);
+
+            using (var msDecrypt = new MemoryStream(bytes))
+            {
+                using (var csDecrypt =
+                       new CryptoStream(msDecrypt, CreateDecryptor(msDecrypt), CryptoStreamMode.Read))
+                {
+                    using (var srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        return srDecrypt.ReadToEnd();
+                    }
+                }
+            }
+        }
+        
         [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
         public virtual Task EncryptObjectAsync<T>(Stream s, T obj)
         {
