@@ -3,11 +3,11 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CoreLib.CORE.Helpers.CryptoHelpers;
-using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Helpers.StringHelpers;
-using Newtonsoft.Json;
 
 #endregion
 
@@ -16,24 +16,14 @@ namespace CoreLib.STANDALONE.Types
     /// <summary>
     /// A class that can be inherited for use as an application settings file, application data file, etc. Supports creating the backup and encryption using <see cref="CoreLib.CORE.Interfaces.ICryptoService"/>. A class will be serialized using Json
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
     public abstract class ApplicationFile : ViewModelBase
     {
-        [field: NonSerialized] private string _directoryToStore;
-        [field: NonSerialized] private string _backupFolder;
-        [field: NonSerialized] private CryptoService _cryptoService;
-        [field: NonSerialized] private string _fileName;
-        [field: NonSerialized] private string _filePath;
-        [field: NonSerialized] private bool _isBackupEnabled;
-
-        /// <summary>
-        /// The <see cref="JsonSerializerSettings"/> used for serialization
-        /// </summary>
-        [field: NonSerialized]
-        protected readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
-        {
-            ObjectCreationHandling = ObjectCreationHandling.Replace, TypeNameHandling = TypeNameHandling.None, Formatting = Formatting.None
-        };
+        [field: NonSerialized][JsonIgnore] private string _directoryToStore;
+        [field: NonSerialized][JsonIgnore] private string _backupFolder;
+        [field: NonSerialized][JsonIgnore] private CryptoService _cryptoService;
+        [field: NonSerialized][JsonIgnore] private string _fileName;
+        [field: NonSerialized][JsonIgnore] private string _filePath;
+        [field: NonSerialized][JsonIgnore] private bool _isBackupEnabled;
 
         /// <summary>
         /// A class that can be inherited for use as an application settings file, application data file, etc. Supports creating the backup and encryption using <see cref="CoreLib.CORE.Interfaces.ICryptoService"/>
@@ -108,7 +98,7 @@ namespace CoreLib.STANDALONE.Types
                 {
                     using (var sw = new StreamWriter(fs))
                     {
-                        sw.Write(_cryptoService.EncryptString(JsonConvert.SerializeObject(this, DefaultJsonSerializerSettings)));
+                        sw.Write(_cryptoService.EncryptString(JsonSerializer.Serialize(this, GetType())));
                     }
                 }
 
@@ -180,7 +170,7 @@ namespace CoreLib.STANDALONE.Types
                                     throw new ArgumentNullException(nameof(jsonString));
                                 }
 
-                                applicationFile = JsonConvert.DeserializeObject<T>(jsonString);
+                                applicationFile = JsonSerializer.Deserialize<T>(jsonString);
                             }
                         }
                     }
@@ -210,8 +200,8 @@ namespace CoreLib.STANDALONE.Types
                                             throw new ArgumentNullException(nameof(jsonString));
                                         }
 
-                                        applicationFile = JsonConvert
-                                            .DeserializeObject<T>(jsonString);
+                                        applicationFile = JsonSerializer
+                                            .Deserialize<T>(jsonString);
                                     }
 
                                     File.Copy(file.FullName, filePath, true);

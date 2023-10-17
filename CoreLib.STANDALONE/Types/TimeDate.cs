@@ -1,7 +1,7 @@
 ﻿#region
 
 using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 #endregion
 
@@ -10,7 +10,6 @@ namespace CoreLib.STANDALONE.Types
     /// <summary>
     /// An object that is used for binding to datetime with 24-hour time format
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
     public class TimeDate : ViewModelBase
     {
         /// <summary>
@@ -28,12 +27,12 @@ namespace CoreLib.STANDALONE.Types
         /// <summary>
         /// Gets the <see cref="DateTime"/> using <see cref="Date"/>, <see cref="Hours"/> and <see cref="Minutes"/>
         /// </summary>
+        [JsonIgnore]
         public DateTime GetDateTime => new DateTime(Date.Year, Date.Month, Date.Day, Hours, Minutes, 0);
 
         /// <summary>
         /// Hours value from 0 to 23
         /// </summary>
-        [JsonProperty(nameof(Hours))]
         public int Hours
         {
             get => GetValue<int>();
@@ -56,7 +55,6 @@ namespace CoreLib.STANDALONE.Types
         /// <summary>
         /// Minutes value from 0 to 59
         /// </summary>
-        [JsonProperty(nameof(Minutes))]
         public int Minutes
         {
             get => GetValue<int>();
@@ -75,8 +73,7 @@ namespace CoreLib.STANDALONE.Types
                 SetValue(value);
             }
         }
-
-        [JsonProperty(nameof(Date))]
+        
         public DateTime Date
         {
             get => GetValue<DateTime>();

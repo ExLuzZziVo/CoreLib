@@ -1,6 +1,11 @@
+#region
+
 using System;
 using System.Net;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
@@ -9,31 +14,37 @@ namespace CoreLib.CORE.Helpers.Converters
     /// </summary>
     public class IpAddressConverter : JsonConverter<IPAddress>
     {
-        public override void WriteJson(JsonWriter writer, IPAddress value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, IPAddress value, JsonSerializerOptions options)
         {
             if (value == null)
             {
-                writer.WriteNull();
+                writer.WriteNullValue();
             }
             else
             {
-                writer.WriteValue(value.ToString());
+                writer.WriteStringValue(value.ToString());
             }
         }
 
-        public override IPAddress ReadJson(JsonReader reader, Type objectType, IPAddress existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
+        public override IPAddress Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.Value == null)
+            if (reader.TokenType == JsonTokenType.Null)
             {
                 return null;
             }
 
-            if (!IPAddress.TryParse(reader.Value.ToString(), out var ipAddress))
+            var str = reader.GetString();
+
+            if (string.IsNullOrEmpty(str))
             {
                 return null;
             }
-            
+
+            if (!IPAddress.TryParse(str, out var ipAddress))
+            {
+                return null;
+            }
+
             return ipAddress;
         }
     }

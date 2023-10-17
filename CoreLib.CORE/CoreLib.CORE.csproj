@@ -4,7 +4,24 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;</TargetFrameworks>
     <AssemblyName>CoreLib.CORE</AssemblyName>
     <RootNamespace>CoreLib.CORE</RootNamespace>
+    <PackageId>CoreLib.CORE</PackageId>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Khatin S.A.</Authors>    
+    <Description>A bunch of helper classes for development</Description>
+    <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>helpers;types extensions;extension methods;validation attributes</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>

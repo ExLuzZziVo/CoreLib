@@ -1,61 +1,95 @@
+#region
+
 using System;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using CoreLib.CORE.Helpers.ObjectHelpers;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
     /// <summary>
     /// Converts unix timestamp to <see cref="System.DateTime"/> and back
     /// </summary>
-    public class UnixTimestampConverter : JsonConverter<DateTime?>
+    internal class UnixTimestampConverter : JsonConverter<object>
     {
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         private readonly bool _useLocalTime;
-        
+
         /// <summary>
         /// Converts unix timestamp to <see cref="System.DateTime"/> and back
         /// </summary>
-        /// <param name="useLocalTime"></param>
-        public UnixTimestampConverter()
-        { }
-        
+        internal UnixTimestampConverter() { }
+
         /// <summary>
         /// Converts unix timestamp to local <see cref="System.DateTime"/> and back if the <paramref name="useLocalTime"/> is set to true
         /// </summary>
         /// <param name="useLocalTime">If true, the provided unix timestamp will be converted to local time and back</param>
-        public UnixTimestampConverter(bool useLocalTime)
+        internal UnixTimestampConverter(bool useLocalTime)
         {
             _useLocalTime = useLocalTime;
         }
-        
-        public override void WriteJson(JsonWriter writer, DateTime? value, JsonSerializer serializer)
+
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
         {
             if (value == null)
             {
-                writer.WriteNull();
+                writer.WriteNullValue();
+
+                return;
             }
-            else
+
+            if (!(value is DateTime dateTime))
             {
-                writer.WriteValue(((_useLocalTime ? value.Value.ToUniversalTime() : value) - UnixEpoch).Value.TotalMilliseconds + "000");
+                throw new JsonException(
+                    $"Unexpected value when converting date. Expected DateTime but got {value.GetType()}.");
             }
+
+            writer.WriteStringValue(((_useLocalTime ? dateTime.ToUniversalTime() : dateTime) - UnixEpoch)
+                .TotalMilliseconds + "000");
         }
 
-        public override DateTime? ReadJson(JsonReader reader, Type objectType, DateTime? existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
+        public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.Value == null)
+            var isNullable = typeToConvert.IsNullable();
+
+            if (reader.TokenType == JsonTokenType.Null)
             {
+                if (!isNullable)
+                {
+                    throw new JsonException($"Cannot convert null value to {typeToConvert}");
+                }
+
                 return null;
             }
 
-            if (!long.TryParse(reader.Value.ToString(), out var value))
+            if (!(reader.TokenType == JsonTokenType.String || reader.TokenType == JsonTokenType.Number))
             {
-                return null;
+                throw new JsonException($"Cannot convert value with token {reader.TokenType} to {typeToConvert}");
+            }
+
+            if (!reader.TryGetInt64(out var value))
+            {
+                var str = reader.GetString();
+
+                if (isNullable && string.IsNullOrEmpty(str))
+                {
+                    return null;
+                }
+
+                value = long.Parse(str);
             }
 
             var result = UnixEpoch.AddMilliseconds(value);
-            
+
             return _useLocalTime ? result.ToLocalTime() : result;
+        }
+
+        public override bool CanConvert(Type typeToConvert)
+        {
+            return typeToConvert == typeof(DateTime) || typeToConvert == typeof(DateTime?);
         }
     }
 }

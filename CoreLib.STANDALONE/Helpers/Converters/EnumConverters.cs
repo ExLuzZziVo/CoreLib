@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using CoreLib.CORE.Helpers.EnumHelpers;
-using Newtonsoft.Json;
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {
@@ -145,7 +145,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             if (valueType.IsEnum)
             {
                 // I know that it is very bad code, but it works
-                return JsonConvert.DeserializeObject(JsonConvert.SerializeObject(value), targetType);
+                return JsonSerializer.Deserialize(JsonSerializer.Serialize(value), targetType);
             }
 
             return null;

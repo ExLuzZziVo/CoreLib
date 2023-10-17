@@ -1,11 +1,11 @@
 ﻿#region
 
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 #endregion
 
-namespace CoreLib.ASP.Extensions.Json.Helpers.SessionHelpers
+namespace CoreLib.ASP.Helpers.SessionHelpers
 {
     public static class SessionExtensions
     {
@@ -17,7 +17,7 @@ namespace CoreLib.ASP.Extensions.Json.Helpers.SessionHelpers
         /// <param name="value">User data to store</param>
         public static void Set<T>(this ISession session, string key, T value)
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
+            session.SetString(key, JsonSerializer.Serialize(value));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace CoreLib.ASP.Extensions.Json.Helpers.SessionHelpers
         {
             var value = session.GetString(key);
 
-            return value == null ? default : JsonConvert.DeserializeObject<T>(value);
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
         }
     }
 }

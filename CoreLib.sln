@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE", "CoreLib.CORE\CoreLib.CORE.csproj", "{0E2F216A-0EF9-4678-950B-05E2E5A94019}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NameCaseLib", "NameCaseLib\NameCaseLib\NameCaseLib.csproj", "{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.ASP", "CoreLib.ASP\CoreLib.ASP.csproj", "{5F111929-FA24-4024-B109-856FFEE26490}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.STANDALONE", "CoreLib.STANDALONE\CoreLib.STANDALONE.csproj", "{CC774938-2B4A-412E-92E8-296E4CF46F96}"
@@ -25,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Ru.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Compression", "CoreLib.CORE.Extensions.Compression\CoreLib.CORE.Extensions.Compression.csproj", "{2988466F-559D-4A99-B201-E2560946DC2A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Json", "CoreLib.CORE.Extensions.Json\CoreLib.CORE.Extensions.Json.csproj", "{1744B44E-6A7C-4302-9837-F420070FA52D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Json.Newtonsoft", "CoreLib.CORE.Extensions.Json.Newtonsoft\CoreLib.CORE.Extensions.Json.Newtonsoft.csproj", "{1744B44E-6A7C-4302-9837-F420070FA52D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.ASP.Extensions.YouTube", "CoreLib.ASP.Extensions.YouTube\CoreLib.ASP.Extensions.YouTube.csproj", "{ABA4ED79-335F-4E1B-BEC0-A39823F7659C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.ASP.Extensions.Json", "CoreLib.ASP.Extensions.Json\CoreLib.ASP.Extensions.Json.csproj", "{A4FA9EDD-03C5-432D-936D-09461F74A2A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.ASP.Extensions.Identity.Ru", "CoreLib.ASP.Extensions.Identity.Ru\CoreLib.ASP.Extensions.Identity.Ru.csproj", "{D05D00DA-0C6A-4E44-B239-6A125D70C67D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLib.CORE.Extensions.Json", "CoreLib.CORE.Extensions.Json\CoreLib.CORE.Extensions.Json.csproj", "{B62BBB8E-6AE7-4138-B36F-531488F09B7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{0E2F216A-0EF9-4678-950B-05E2E5A94019}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E2F216A-0EF9-4678-950B-05E2E5A94019}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E2F216A-0EF9-4678-950B-05E2E5A94019}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4774D45-C7E2-42DE-BBF6-61CB9C21EBE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F111929-FA24-4024-B109-856FFEE26490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F111929-FA24-4024-B109-856FFEE26490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F111929-FA24-4024-B109-856FFEE26490}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,14 +85,14 @@ Global
 		{ABA4ED79-335F-4E1B-BEC0-A39823F7659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABA4ED79-335F-4E1B-BEC0-A39823F7659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABA4ED79-335F-4E1B-BEC0-A39823F7659C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4FA9EDD-03C5-432D-936D-09461F74A2A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4FA9EDD-03C5-432D-936D-09461F74A2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4FA9EDD-03C5-432D-936D-09461F74A2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4FA9EDD-03C5-432D-936D-09461F74A2A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D05D00DA-0C6A-4E44-B239-6A125D70C67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D05D00DA-0C6A-4E44-B239-6A125D70C67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D05D00DA-0C6A-4E44-B239-6A125D70C67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D05D00DA-0C6A-4E44-B239-6A125D70C67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62BBB8E-6AE7-4138-B36F-531488F09B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62BBB8E-6AE7-4138-B36F-531488F09B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62BBB8E-6AE7-4138-B36F-531488F09B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62BBB8E-6AE7-4138-B36F-531488F09B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

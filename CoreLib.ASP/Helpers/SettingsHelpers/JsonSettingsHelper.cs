@@ -1,15 +1,18 @@
 #region
 
 using System.IO;
-using CoreLib.CORE.Helpers.StringHelpers;
-using Newtonsoft.Json;
+using System.Text.Json;
+using CoreLib.CORE.Helpers.ObjectHelpers;
 
 #endregion
 
-namespace CoreLib.ASP.Extensions.Json.Helpers.SettingsHelpers
+namespace CoreLib.ASP.Helpers.SettingsHelpers
 {
     public static class JsonSettingsHelper
     {
+        private static readonly JsonSerializerOptions IndentedJsonSerializerOptions =
+            new JsonSerializerOptions { WriteIndented = true };
+        
         /// <summary>
         /// Adds or updates a value in the specified json settings file
         /// </summary>
@@ -19,20 +22,11 @@ namespace CoreLib.ASP.Extensions.Json.Helpers.SettingsHelpers
         public static void AddOrUpdateSettingsFile<T>(string settingsFilePath, string key, T value)
         {
             var input = File.ReadAllText(settingsFilePath);
-            dynamic jsonObj = JsonConvert.DeserializeObject(input);
-            var sectionPath = key.Split(':')[0];
-
-            if (!sectionPath.IsNullOrEmptyOrWhiteSpace())
-            {
-                var keyPath = key.Split(':')[1];
-                jsonObj[sectionPath][keyPath] = value;
-            }
-            else
-            {
-                jsonObj[sectionPath] = value;
-            }
-
-            var output = JsonConvert.SerializeObject(jsonObj, Formatting.Indented);
+            var jsonObj = JsonSerializer.Deserialize<object>(input);
+            
+            jsonObj.SetPropertyValueByName(key.Replace(':','.'), value);
+            
+            var output = JsonSerializer.Serialize(jsonObj, IndentedJsonSerializerOptions);
             File.WriteAllText(settingsFilePath, output);
         }
     }

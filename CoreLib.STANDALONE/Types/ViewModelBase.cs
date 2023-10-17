@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Helpers.StringHelpers;
 
@@ -90,12 +91,16 @@ namespace CoreLib.STANDALONE.Types
         /// <summary>
         /// Dictionary for storing backing fields
         /// </summary>
-        [field: NonSerialized] private readonly Dictionary<string, object> _values = new Dictionary<string, object>();
+        [field: NonSerialized]
+        [JsonIgnore]
+        private readonly Dictionary<string, object> _values = new Dictionary<string, object>();
 
+        [JsonIgnore]
         string IDataErrorInfo.Error =>
             throw new NotSupportedException(
                 "IDataErrorInfo.Error is not supported, use IDataErrorInfo.this[propertyName] instead.");
 
+        [JsonIgnore]
         string IDataErrorInfo.this[string propertyName] => OnValidate(propertyName);
 
         /// <summary>
@@ -163,11 +168,13 @@ namespace CoreLib.STANDALONE.Types
         /// <summary>
         /// Returns true if this view model is valid
         /// </summary>
+        [JsonIgnore]
         public bool IsValid => !Validate().Any();
 
         /// <summary>
         /// Validation errors of this view model
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<string> ValidationErrors
         {
             get => GetValue<IEnumerable<string>>();
