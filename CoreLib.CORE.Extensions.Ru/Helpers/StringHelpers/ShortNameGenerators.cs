@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.StringHelpers
 {

@@ -1,9 +1,13 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using CoreLib.CORE.Helpers.StringHelpers;
+
+#endregion
 
 namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
 {
@@ -28,7 +32,7 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
             }
 
             using (var archive = ZipFile.Open(zipPath,
-                File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
+                       File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
             {
                 archive.CreateEntryFromFileSafely(filePath);
             }
@@ -55,7 +59,7 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
             }
 
             using (var archive = ZipFile.Open(zipPath,
-                File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
+                       File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
             {
                 foreach (var fPath in filePaths)
                 {
@@ -85,7 +89,7 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
             }
 
             using (var archive = ZipFile.Open(zipPath,
-                File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
+                       File.Exists(zipPath) ? ZipArchiveMode.Update : ZipArchiveMode.Create))
             {
                 foreach (var fPath in Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories))
                 {
@@ -102,17 +106,19 @@ namespace CoreLib.CORE.Extensions.Compression.Helpers.FileHelpers
         /// <param name="archive">Zip archive</param>
         /// <param name="filePath">Path to the target file</param>
         /// <param name="fileRootDirectoryPath">Path to the root directory of the target file. Is used only to pack a directory with subdirectories</param>
-        private static void CreateEntryFromFileSafely(this ZipArchive archive, string filePath, string fileRootDirectoryPath = null)
+        private static void CreateEntryFromFileSafely(this ZipArchive archive, string filePath,
+            string fileRootDirectoryPath = null)
         {
             var file = new FileInfo(filePath);
             var entryFullName = file.Name;
-            
+
             if (!fileRootDirectoryPath.IsNullOrEmptyOrWhiteSpace())
             {
-                entryFullName = filePath.Replace(fileRootDirectoryPath, string.Empty).TrimStart('\\','/');
+                entryFullName = filePath.Replace(fileRootDirectoryPath, string.Empty).TrimStart('\\', '/');
             }
-            
-            if (archive.Mode == ZipArchiveMode.Update && archive.Entries.Any(e => e.FullName == entryFullName && e.Length == file.Length))
+
+            if (archive.Mode == ZipArchiveMode.Update &&
+                archive.Entries.Any(e => e.FullName == entryFullName && e.Length == file.Length))
             {
                 return;
             }

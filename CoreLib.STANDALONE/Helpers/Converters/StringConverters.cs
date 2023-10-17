@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Globalization;
 using CoreLib.CORE.Helpers.StringHelpers;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {
@@ -80,7 +84,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string s && s.Contains((string) parameter, StringComparison))
+            if (value is string s && s.Contains((string)parameter, StringComparison))
             {
                 return ContainsValue;
             }

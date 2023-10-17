@@ -1,5 +1,8 @@
-using System.Reflection;
+#region
+
 using CoreLib.CORE.Helpers.StringHelpers;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.IntHelpers
 {
@@ -34,10 +37,10 @@ namespace CoreLib.CORE.Helpers.IntHelpers
 
             var arrayString = new[,]
             {
-                {" миллиард", " миллиарда", " миллиардов"},
-                {" миллион", " миллиона", " миллионов"},
-                {" тысяча", " тысячи", " тысяч"},
-                {"", "", ""}
+                { " миллиард", " миллиарда", " миллиардов" },
+                { " миллион", " миллиона", " миллионов" },
+                { " тысяча", " тысячи", " тысяч" },
+                { "", "", "" }
             };
 
             arrayInt[0] = (number - number % 1000000000) / 1000000000;

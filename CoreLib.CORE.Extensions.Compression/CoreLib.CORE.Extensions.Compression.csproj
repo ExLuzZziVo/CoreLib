@@ -4,8 +4,8 @@
         <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;</TargetFrameworks>
         <PackageId>CoreLib.CORE.Extensions.Compression</PackageId>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>    
-        <Description>A bunch of helper classes for development. Compression helpers</Description>
+        <Authors>Khatin S.A.</Authors>
+        <Description>Compression helpers for development</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -14,15 +14,15 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
-    </ItemGroup>   
- 
+        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -125,7 +126,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 
             source = source.TrimWholeString();
             var sb = new StringBuilder(source.ToLower());
-            var symbols = new[] {' ', '-'};
+            var symbols = new[] { ' ', '-' };
 
             if (sb.Length > 0 && char.IsLetter(sb[0]))
             {
@@ -232,8 +233,8 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <returns>True if provided string represents a numeric type</returns>
         public static bool IsNumeric(this string str)
         {
-            return !str.IsNullOrEmptyOrWhiteSpace() && double.TryParse(str, System.Globalization.NumberStyles.Any,
-                System.Globalization.NumberFormatInfo.InvariantInfo, out _);
+            return !str.IsNullOrEmptyOrWhiteSpace() && double.TryParse(str, NumberStyles.Any,
+                NumberFormatInfo.InvariantInfo, out _);
         }
 
         /// <summary>

@@ -1,4 +1,8 @@
+#region
+
 using System;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.DateTimeHelpers
 {
@@ -21,7 +25,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
                 return DayOfWeek.Sunday;
             }
 
-            return (DayOfWeek) index + 1;
+            return (DayOfWeek)index + 1;
         }
     }
 }

@@ -7,8 +7,8 @@
         <DefineConstants Condition="'$(TargetFramework)' == 'net6.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
         <PackageId>CoreLib.CORE.Extensions.Images</PackageId>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>    
-        <Description>A bunch of helper classes for development. Image manipulation helpers</Description>
+        <Authors>Khatin S.A.</Authors>
+        <Description>A bunch of helper classes for cropping, cutting, resizing and compressing images</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -17,12 +17,12 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="2.88.6"/>

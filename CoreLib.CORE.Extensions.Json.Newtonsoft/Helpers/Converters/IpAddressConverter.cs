@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Net;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
@@ -21,7 +25,8 @@ namespace CoreLib.CORE.Helpers.Converters
             }
         }
 
-        public override IPAddress ReadJson(JsonReader reader, Type objectType, IPAddress existingValue, bool hasExistingValue,
+        public override IPAddress ReadJson(JsonReader reader, Type objectType, IPAddress existingValue,
+            bool hasExistingValue,
             JsonSerializer serializer)
         {
             if (reader.Value == null)
@@ -33,7 +38,7 @@ namespace CoreLib.CORE.Helpers.Converters
             {
                 return null;
             }
-            
+
             return ipAddress;
         }
     }

@@ -19,10 +19,9 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
 {
     public class YouTubeChannelService : IYouTubeChannelService
     {
-        private readonly HttpClient _client;
+        private static readonly JsonSerializerOptions WebJsonSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
-        private static readonly JsonSerializerOptions WebJsonSerializerOptions =
-            new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        private readonly HttpClient _client;
 
         public YouTubeChannelService(HttpClient client)
         {
@@ -43,7 +42,8 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
                 {
                     var responseResult = await response.Content.ReadAsStringAsync();
 
-                    youTubeVideoResponseItem = JsonSerializer.Deserialize<YouTubeVideoResponseItem>(responseResult, WebJsonSerializerOptions);
+                    youTubeVideoResponseItem =
+                        JsonSerializer.Deserialize<YouTubeVideoResponseItem>(responseResult, WebJsonSerializerOptions);
                 }
             }
 
@@ -64,7 +64,9 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
                 {
                     var responseResult = await response.Content.ReadAsStringAsync();
 
-                    youTubePlaylistResponseItem = JsonSerializer.Deserialize<YouTubePlaylistResponseItem>(responseResult, WebJsonSerializerOptions);
+                    youTubePlaylistResponseItem =
+                        JsonSerializer.Deserialize<YouTubePlaylistResponseItem>(responseResult,
+                            WebJsonSerializerOptions);
                 }
             }
 
@@ -82,7 +84,9 @@ namespace CoreLib.ASP.Extensions.YouTube.Helpers.YouTubeHelpers
                 {
                     var responseResult = await response.Content.ReadAsStringAsync();
 
-                    youTubeChannelResponseItem = JsonSerializer.Deserialize<YouTubeChannelResponseItem>(responseResult, WebJsonSerializerOptions);
+                    youTubeChannelResponseItem =
+                        JsonSerializer.Deserialize<YouTubeChannelResponseItem>(responseResult,
+                            WebJsonSerializerOptions);
                 }
             }
 

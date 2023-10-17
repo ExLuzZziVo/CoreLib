@@ -10,7 +10,7 @@ namespace CoreLib.CORE.Helpers.Converters
     public class JsonUpperCaseStringEnumConverter : JsonStringEnumConverter
     {
         public JsonUpperCaseStringEnumConverter() : this(true) { }
-        
+
         public JsonUpperCaseStringEnumConverter(bool allowIntegerValues = true) : base(UpperCaseNamingPolicy,
             allowIntegerValues) { }
 

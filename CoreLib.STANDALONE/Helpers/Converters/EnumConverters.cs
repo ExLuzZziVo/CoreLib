@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +8,8 @@ using System.Linq;
 using System.Text.Json;
 using CoreLib.CORE.Helpers.EnumHelpers;
 
+#endregion
+
 namespace CoreLib.STANDALONE.Helpers.Converters
 {
     /// <summary>
@@ -13,9 +17,8 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// </summary>
     public abstract class EnumToDescriptionConverter : IValueConverter
     {
-        private readonly bool _isCacheEnabled;
-
         private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
+        private readonly bool _isCacheEnabled;
 
         /// <summary>
         /// The constructor is used to enable a cache to store <see cref="Enum"/> values and their descriptions
@@ -25,16 +28,16 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         {
             _isCacheEnabled = isCacheEnabled;
         }
-        
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
                 return string.Empty;
             }
-            
+
             var en = (Enum)value;
-            
+
             if (_isCacheEnabled)
             {
                 if (Cache.TryGetValue(en, out var val))
@@ -45,11 +48,11 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 {
                     val = en.GetDescription();
                     Cache.Add(en, val);
-                    
+
                     return val;
                 }
             }
-            
+
             return en.GetDescription();
         }
 
@@ -68,9 +71,8 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     public abstract class EnumToDisplayNameConverter : IValueConverter
 
     {
-        private readonly bool _isCacheEnabled;
-
         private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
+        private readonly bool _isCacheEnabled;
 
         /// <summary>
         /// The constructor is used to enable a cache to store <see cref="Enum"/> values and their display names
@@ -87,9 +89,9 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             {
                 return string.Empty;
             }
-            
+
             var en = (Enum)value;
-            
+
             if (_isCacheEnabled)
             {
                 if (Cache.TryGetValue(en, out var val))
@@ -100,11 +102,11 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 {
                     val = en.GetDisplayName(culture);
                     Cache.Add(en, val);
-                    
+
                     return val;
                 }
             }
-            
+
             return en.GetDisplayName(culture);
         }
 

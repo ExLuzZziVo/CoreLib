@@ -1,4 +1,8 @@
+#region
+
 using Microsoft.AspNetCore.Razor.TagHelpers;
+
+#endregion
 
 namespace CoreLib.ASP.Helpers.TagHelpers
 {
@@ -13,12 +17,12 @@ namespace CoreLib.ASP.Helpers.TagHelpers
 
         [HtmlAttributeName(AttributeName)] public string TextToAppend { get; set; }
 
+        public override int Order => 100;
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             base.Process(context, output);
             output.Content.Append(TextToAppend);
         }
-
-        public override int Order => 100;
     }
 }

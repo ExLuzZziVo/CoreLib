@@ -1,7 +1,11 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.CollectionHelpers
 {
@@ -83,7 +87,7 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
             Func<Expression, Expression, Expression> merge)
         {
             var map = first.Parameters
-                .Select((f, i) => new {f, s = second.Parameters[i]})
+                .Select((f, i) => new { f, s = second.Parameters[i] })
                 .ToDictionary(p => p.s, p => p.f);
 
             var secondBody = new ParameterRebinder(map).Visit(second.Body);

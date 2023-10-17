@@ -1,5 +1,9 @@
+#region
+
 using System;
 using CoreLib.CORE.Types;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.GeoCoordinateHelpers
 {

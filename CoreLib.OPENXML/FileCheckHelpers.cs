@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.IO.Packaging;
 using CoreLib.CORE.Helpers.StringHelpers;
+
+#endregion
 
 namespace CoreLib.OPENXML
 {
@@ -12,14 +16,17 @@ namespace CoreLib.OPENXML
             /// The file is not an OpenXML document
             /// </summary>
             Unknown = 0,
+
             /// <summary>
             /// The file is a Word OpenXML document
             /// </summary>
             Word = 1,
+
             /// <summary>
             /// The file is a Spreadsheet OpenXML document
             /// </summary>
             Spreadsheet = 2,
+
             /// <summary>
             /// The file is a Presentation OpenXML document
             /// </summary>

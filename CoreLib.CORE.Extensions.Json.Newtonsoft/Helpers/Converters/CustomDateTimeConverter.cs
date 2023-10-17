@@ -1,4 +1,8 @@
+#region
+
 using Newtonsoft.Json.Converters;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
@@ -13,7 +17,7 @@ namespace CoreLib.CORE.Helpers.Converters
         /// <param name="dateTimeFormat">DateTime format to convert from and to</param>
         public CustomDateTimeConverter(string dateTimeFormat)
         {
-            base.DateTimeFormat = dateTimeFormat;
+            DateTimeFormat = dateTimeFormat;
         }
     }
 }

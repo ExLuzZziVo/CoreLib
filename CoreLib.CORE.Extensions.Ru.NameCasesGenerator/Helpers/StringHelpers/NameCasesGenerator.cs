@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using NameCaseLib;
 using NameCaseLib.NCL;
 
 #endregion
@@ -44,7 +45,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             name = name.ToUpperAllFirstChars();
             patronymic = patronymic.ToUpperAllFirstChars();
 
-            var nameCaseLibInstance = new NameCaseLib.Ru();
+            var nameCaseLibInstance = new Ru();
             var result = new string[6];
 
             if (gender == Gender.Null)
@@ -101,7 +102,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             surname =
                 surname.ToUpperAllFirstChars();
 
-            var nameCaseLibInstance = new NameCaseLib.Ru();
+            var nameCaseLibInstance = new Ru();
             var result = new string[6];
 
             var shortNameInitials =

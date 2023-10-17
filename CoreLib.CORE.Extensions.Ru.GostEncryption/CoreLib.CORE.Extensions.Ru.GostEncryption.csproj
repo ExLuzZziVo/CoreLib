@@ -6,7 +6,7 @@
         <AssemblyName>CoreLib.CORE.Extensions.Ru.GostEncryption</AssemblyName>
         <PackageId>CoreLib.CORE.Extensions.Ru.GostEncryption</PackageId>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>    
+        <Authors>Khatin S.A.</Authors>
         <Description>Вспомогательный класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015)</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
@@ -16,19 +16,19 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
     <ItemGroup>
-        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OpenGost.Security.Cryptography" Version="0.2.1" />
+        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
     </ItemGroup>
-    
+
+    <ItemGroup>
+        <PackageReference Include="OpenGost.Security.Cryptography" Version="0.2.1"/>
+    </ItemGroup>
+
 </Project>

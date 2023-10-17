@@ -7,8 +7,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using CoreLib.ASP.Helpers.CheckHelpers;
+using CoreLib.ASP.Resources;
 using CoreLib.CORE.Helpers.IntHelpers;
-using CoreLib.CORE.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -46,7 +46,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                 if (!(file.Length > 0) && file.Length > fileSizeLimit)
                 {
                     throw new ValidationException(
-                        string.Format(Resources.ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
+                        string.Format(ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
                             fileSizeLimit.ToFileSize(IntExtensions.SizeUnits.MB)));
                 }
 
@@ -89,7 +89,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                 if (!(file.Length > 0) && file.Length > fileSizeLimit)
                 {
                     throw new ValidationException(string.Format(
-                        Resources.ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
+                        ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
                         fileSizeLimit.ToFileSize(IntExtensions.SizeUnits.MB)));
                 }
 
@@ -130,14 +130,14 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                 if (!(imageFile.Length > 0) && imageFile.Length > imageFileSizeLimit)
                 {
                     throw new ArgumentOutOfRangeException(
-                        string.Format(Resources.ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
+                        string.Format(ValidationStrings.ResourceManager.GetString("UploadFileSizeError"),
                             imageFileSizeLimit.ToFileSize(IntExtensions.SizeUnits.MB)));
                 }
 
                 if (!imageFile.IsImage())
                 {
                     throw new FormatException(
-                        Resources.ValidationStrings.ResourceManager.GetString("UploadFileFormatError"));
+                        ValidationStrings.ResourceManager.GetString("UploadFileFormatError"));
                 }
 
                 var fullSaveFilePath = RootDirectory + saveImageFilePath;
@@ -163,7 +163,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                 }
                 else
                 {
-                    message = ValidationStrings.ResourceManager.GetString("SomethingWentWrong");
+                    message = CORE.Resources.ValidationStrings.ResourceManager.GetString("SomethingWentWrong");
                 }
 
                 _logger.Log(LogLevel.Error, ex, ex.Message);
@@ -171,7 +171,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                 return new BadRequestObjectResult(message);
             }
 
-            return new OkObjectResult(new {saveImageFilePath});
+            return new OkObjectResult(new { saveImageFilePath });
         }
     }
 }

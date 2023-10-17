@@ -1,5 +1,9 @@
+#region
+
 using CoreLib.ASP.Helpers.CheckHelpers;
 using Microsoft.AspNetCore.Mvc.Filters;
+
+#endregion
 
 namespace CoreLib.ASP.Filters
 {
@@ -11,9 +15,9 @@ namespace CoreLib.ASP.Filters
     /// </remarks>
     public class GoogleReCaptchaValidationActionFilterAttribute : ActionFilterAttribute
     {
-        private readonly float? _requiredScore;
         private readonly string _actionName;
         private readonly bool _invisible;
+        private readonly float? _requiredScore;
 
         /// <summary>
         /// This constructor is used for ReCaptchaV2
@@ -37,7 +41,9 @@ namespace CoreLib.ASP.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(filterContext, _invisible, _requiredScore, _actionName).Wait();
+            CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(filterContext, _invisible, _requiredScore, _actionName)
+                .Wait();
+
             base.OnActionExecuting(filterContext);
         }
     }

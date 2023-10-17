@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
+#endregion
 
 namespace CoreLib.CORE.Types
 {
@@ -116,7 +120,7 @@ namespace CoreLib.CORE.Types
             if (!entered)
             {
                 semaphore.Dispose();
-                
+
                 throw new TimeoutException("The specified semaphore is busy(timed out)");
             }
 
@@ -200,7 +204,7 @@ namespace CoreLib.CORE.Types
             if (!entered)
             {
                 semaphore.Dispose();
-                
+
                 throw new TimeoutException("The specified semaphore is busy(timed out)");
             }
 

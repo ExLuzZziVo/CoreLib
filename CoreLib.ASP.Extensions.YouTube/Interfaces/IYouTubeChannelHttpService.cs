@@ -12,7 +12,7 @@ using CoreLib.ASP.Extensions.YouTube.Types.YouTube.Videos;
 
 namespace CoreLib.ASP.Extensions.YouTube.Interfaces
 {
-    public interface IYouTubeChannelService: IDisposable
+    public interface IYouTubeChannelService : IDisposable
     {
         Task<YouTubeVideoResponseItem> YouTubeSearchVideosByChannelId(string key, string channelId, int maxResults,
             string pageToken);

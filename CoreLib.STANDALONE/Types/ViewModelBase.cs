@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +10,8 @@ using System.Text.Json.Serialization;
 using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Helpers.StringHelpers;
 
+#endregion
+
 namespace CoreLib.STANDALONE.Types
 {
     /// <summary>
@@ -15,6 +19,16 @@ namespace CoreLib.STANDALONE.Types
     /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo, IValidatableObject
     {
+        #region Implement IValidatableObject
+
+        /// <returns><see cref="ValidationResult.Success"/></returns>
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            yield return ValidationResult.Success;
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets the value of a property by its name
         /// </summary>
@@ -34,7 +48,7 @@ namespace CoreLib.STANDALONE.Types
                 _values.Add(propertyName, value);
             }
 
-            return (T) value;
+            return (T)value;
         }
 
         /// <summary>
@@ -91,17 +105,14 @@ namespace CoreLib.STANDALONE.Types
         /// <summary>
         /// Dictionary for storing backing fields
         /// </summary>
-        [field: NonSerialized]
-        [JsonIgnore]
-        private readonly Dictionary<string, object> _values = new Dictionary<string, object>();
+        [field: NonSerialized] [JsonIgnore] private readonly Dictionary<string, object> _values = new Dictionary<string, object>();
 
         [JsonIgnore]
         string IDataErrorInfo.Error =>
             throw new NotSupportedException(
                 "IDataErrorInfo.Error is not supported, use IDataErrorInfo.this[propertyName] instead.");
 
-        [JsonIgnore]
-        string IDataErrorInfo.this[string propertyName] => OnValidate(propertyName);
+        [JsonIgnore] string IDataErrorInfo.this[string propertyName] => OnValidate(propertyName);
 
         /// <summary>
         /// Validates a property by its name
@@ -181,16 +192,6 @@ namespace CoreLib.STANDALONE.Types
             private set => SetValue(value);
         }
 
-        #endregion
-
-        #region Implement IValidatableObject
-        
-        /// <returns><see cref="ValidationResult.Success"/></returns>
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield return ValidationResult.Success;
-        }
-        
         #endregion
     }
 }

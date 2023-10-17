@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoreLib.CORE.Helpers.IntHelpers;
@@ -125,7 +124,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             {
                 result = processSymbolPairs(result, '«', '»');
             }
-            
+
             if (result.Contains("(") || result.Contains(")"))
             {
                 result = processSymbolPairs(result, '(', ')');
@@ -160,7 +159,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
             {
                 result = processQuotes(result, '`');
             }
-            
+
             return result.TrimWholeString();
         }
     }

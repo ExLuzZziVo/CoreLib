@@ -33,47 +33,11 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// HEX
         /// </summary>
         public const string HexPattern = @"(?!00)([a-fA-F0-9]{2})*";
-        
+
         /// <summary>
         /// GTIN
         /// </summary>
         public const string GTINPattern = @"^((\d{8})|(\d{12,14}))$";
-
-        /// <summary>
-        /// Positive and negative fractional numbers
-        /// </summary>
-        public static readonly string PositiveAndNegativeFractionalNumberPattern =
-            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
-
-        /// <summary>
-        /// Positive negative fractional numbers
-        /// </summary>
-        public static readonly string PositiveFractionalNumberPattern =
-            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
-
-        /// <summary>
-        /// Positive and negative percents
-        /// </summary>
-        public static readonly string PositiveAndNegativePercentPattern =
-            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
-
-        /// <summary>
-        /// Positive percents
-        /// </summary>
-        public static readonly string PositivePercentPattern =
-            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
-
-        /// <summary>
-        /// Positive and negative decimals
-        /// </summary>
-        public static readonly string PositiveAndNegativeMoneyPattern =
-            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
-
-        /// <summary>
-        /// Positive decimals
-        /// </summary>
-        public static readonly string PositiveMoneyPattern =
-            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
 
         /// <summary>
         /// EAN8
@@ -150,16 +114,17 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <summary>
         /// IPv6-address
         /// </summary>
+
         //  https://stackoverflow.com/questions/32368008/regular-expression-that-matches-all-valid-format-ipv6-addresses
         public const string IpV6AddressPattern =
             @"(?:^|(?<=\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){6,6}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}(?::((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))?|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)(?::((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))?|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$)";
-        
+
         /// <summary>
         /// IP-address with port
         /// </summary>
         public const string IpAddressWithPortPattern =
             @"^(0[0-7]{10,11}|0(x|X)[0-9a-fA-F]{8}|(\b4\d{8}[0-5]\b|\b[1-3]?\d{8}\d?\b)|((2[0-5][0-5]|1\d{2}|[1-9]\d?)|(0(x|X)[0-9a-fA-F]{2})|(0[0-7]{3}))(\.((2[0-5][0-5]|1\d{2}|\d\d?)|(0(x|X)[0-9a-fA-F]{2})|(0[0-7]{3}))){3}):([1-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
-        
+
         /// <summary>
         /// Email address
         /// </summary>
@@ -169,6 +134,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// <summary>
         /// Url
         /// </summary>
+
         // ToDo Punycode?: ^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)+(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})(\/.*)?$
         public const string UrlPattern =
             @"^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$";
@@ -177,7 +143,43 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// Base64
         /// </summary>
         public const string Base64Pattern = @"^(?:[A-Za-z\d+/]{4})*(?:[A-Za-z\d+/]{3}=|[A-Za-z\d+/]{2}==)?$";
-        
+
+        /// <summary>
+        /// Positive and negative fractional numbers
+        /// </summary>
+        public static readonly string PositiveAndNegativeFractionalNumberPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive negative fractional numbers
+        /// </summary>
+        public static readonly string PositiveFractionalNumberPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive and negative percents
+        /// </summary>
+        public static readonly string PositiveAndNegativePercentPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive percents
+        /// </summary>
+        public static readonly string PositivePercentPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive and negative decimals
+        /// </summary>
+        public static readonly string PositiveAndNegativeMoneyPattern =
+            $"^-?[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
+
+        /// <summary>
+        /// Positive decimals
+        /// </summary>
+        public static readonly string PositiveMoneyPattern =
+            $"^[0-9{CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}]+$";
+
         /// <summary>
         /// Checks if provided string is email address
         /// </summary>

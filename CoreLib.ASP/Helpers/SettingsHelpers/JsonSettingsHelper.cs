@@ -10,9 +10,8 @@ namespace CoreLib.ASP.Helpers.SettingsHelpers
 {
     public static class JsonSettingsHelper
     {
-        private static readonly JsonSerializerOptions IndentedJsonSerializerOptions =
-            new JsonSerializerOptions { WriteIndented = true };
-        
+        private static readonly JsonSerializerOptions IndentedJsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+
         /// <summary>
         /// Adds or updates a value in the specified json settings file
         /// </summary>
@@ -23,9 +22,9 @@ namespace CoreLib.ASP.Helpers.SettingsHelpers
         {
             var input = File.ReadAllText(settingsFilePath);
             var jsonObj = JsonSerializer.Deserialize<object>(input);
-            
-            jsonObj.SetPropertyValueByName(key.Replace(':','.'), value);
-            
+
+            jsonObj.SetPropertyValueByName(key.Replace(':', '.'), value);
+
             var output = JsonSerializer.Serialize(jsonObj, IndentedJsonSerializerOptions);
             File.WriteAllText(settingsFilePath, output);
         }

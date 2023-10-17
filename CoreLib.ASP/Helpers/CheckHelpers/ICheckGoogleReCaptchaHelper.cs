@@ -1,9 +1,13 @@
+#region
+
 using System;
 using System.Threading.Tasks;
 
+#endregion
+
 namespace CoreLib.ASP.Helpers.CheckHelpers
 {
-    public interface ICheckGoogleReCaptchaHelper: IDisposable
+    public interface ICheckGoogleReCaptchaHelper : IDisposable
     {
         /// <summary>
         /// Asynchronously validates Google's RecaptchaV2
@@ -21,6 +25,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         /// <param name="actionName">RecaptchaV3 action name</param>
         /// <param name="requiredScore">Required ReCaptchaV3 score to pass the validation</param>
         /// <returns>A task that represents the asynchronous validation of ReCaptchaV3. If the validation is passed, the result of the task will be true</returns>
-        public Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName, float requiredScore);
+        public Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName,
+            float requiredScore);
     }
 }

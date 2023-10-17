@@ -28,23 +28,23 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
             foreach (var field in type.GetFields())
             {
                 if (Attribute.GetCustomAttribute(field,
-                    typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+                        typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
                 {
                     if (attribute.Description == description)
                     {
-                        return (T) field.GetValue(null);
+                        return (T)field.GetValue(null);
                     }
                 }
                 else
                 {
                     if (field.Name == description)
                     {
-                        return (T) field.GetValue(null);
+                        return (T)field.GetValue(null);
                     }
                 }
             }
 
-            return (T) Enum.ToObject(typeof(T), 0);
+            return (T)Enum.ToObject(typeof(T), 0);
         }
     }
 }

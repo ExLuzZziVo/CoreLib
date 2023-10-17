@@ -61,7 +61,7 @@ namespace CoreLib.CORE.Helpers.AssemblyHelpers
                 }
             }
 
-            _assemblyNames = new List<AssemblyName> {currentAssembly.GetName()};
+            _assemblyNames = new List<AssemblyName> { currentAssembly.GetName() };
 
             if (searchInDlls)
             {

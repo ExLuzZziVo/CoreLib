@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -5,6 +7,8 @@ using System.Linq;
 using CoreLib.ASP.Resources;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Http;
+
+#endregion
 
 namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
 {
@@ -22,7 +26,7 @@ namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
             base(ValidationStrings.ResourceManager.GetString("FileFormatError"))
         {
             ArgumentNullException.ThrowIfNull(allowedFileTypes);
-            
+
             if (allowedFileTypes.Length < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(allowedFileTypes));

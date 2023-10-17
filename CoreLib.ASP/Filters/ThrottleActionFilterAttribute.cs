@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
 using CoreLib.CORE.Helpers.StringHelpers;
 using CoreLib.CORE.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace CoreLib.ASP.Filters
 {
@@ -13,6 +17,27 @@ namespace CoreLib.ASP.Filters
     /// </summary>
     public class ThrottleActionFilterAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Type of the limitation
+        /// </summary>
+        public enum ThrottlingType : byte
+        {
+            /// <summary>
+            /// Limits requests by clients Ip address
+            /// </summary>
+            ByIp,
+
+            /// <summary>
+            /// Limits requests by identity user name
+            /// </summary>
+            ByUser,
+
+            /// <summary>
+            /// Limits all requests
+            /// </summary>
+            All
+        }
+
         /// <summary>
         /// An unique key that is used to store the connection info in <see cref="IMemoryCache"/>
         /// </summary>
@@ -112,27 +137,6 @@ namespace CoreLib.ASP.Filters
             }
 
             base.OnActionExecuting(context);
-        }
-
-        /// <summary>
-        /// Type of the limitation
-        /// </summary>
-        public enum ThrottlingType : byte
-        {
-            /// <summary>
-            /// Limits requests by clients Ip address
-            /// </summary>
-            ByIp,
-
-            /// <summary>
-            /// Limits requests by identity user name
-            /// </summary>
-            ByUser,
-
-            /// <summary>
-            /// Limits all requests
-            /// </summary>
-            All
         }
     }
 }

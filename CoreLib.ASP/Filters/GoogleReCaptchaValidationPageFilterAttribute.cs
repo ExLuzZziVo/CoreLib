@@ -1,9 +1,13 @@
+#region
+
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CoreLib.ASP.Helpers.CheckHelpers;
 using Microsoft.AspNetCore.Mvc.Filters;
+
+#endregion
 
 namespace CoreLib.ASP.Filters
 {
@@ -15,14 +19,9 @@ namespace CoreLib.ASP.Filters
     /// </remarks>
     public class GoogleReCaptchaValidationPageFilterAttribute : Attribute, IAsyncPageFilter
     {
-        private readonly float? _requiredScore;
         private readonly string _actionName;
         private readonly bool _invisible;
-
-        /// <summary>
-        /// Names of page handlers to validate. If empty, only POST handlers are validated
-        /// </summary>
-        public string[] HandlerNames { get; set; } = new string[0];
+        private readonly float? _requiredScore;
 
         /// <summary>
         /// This constructor is used for ReCaptchaV2
@@ -44,6 +43,11 @@ namespace CoreLib.ASP.Filters
             _requiredScore = requiredScore;
         }
 
+        /// <summary>
+        /// Names of page handlers to validate. If empty, only POST handlers are validated
+        /// </summary>
+        public string[] HandlerNames { get; set; } = new string[0];
+
         public Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
         {
             return next();
@@ -55,7 +59,8 @@ namespace CoreLib.ASP.Filters
             {
                 return string.Equals(context.HandlerMethod?.HttpMethod, HttpMethod.Post.Method,
                     StringComparison.OrdinalIgnoreCase)
-                    ? CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(context, _invisible, _requiredScore, _actionName)
+                    ? CheckGoogleReCaptchaHelper.CheckGoogleReCaptchaAsync(context, _invisible, _requiredScore,
+                        _actionName)
                     : Task.CompletedTask;
             }
 

@@ -1,8 +1,12 @@
+#region
+
 using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using OpenGost.Security.Cryptography;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.CryptoHelpers
 {
@@ -58,12 +62,12 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             using (var hash = Streebog512.Create())
             {
                 var keyBytes = Encoding.Unicode.GetBytes(Key);
-                
+
                 var keyWithSalt = new byte[Salt.Length + keyBytes.Length];
-                
+
                 Salt.CopyTo(keyWithSalt, 0);
                 keyBytes.CopyTo(keyWithSalt, Salt.Length);
-                
+
                 var gostKey = new byte[keySize];
                 Buffer.BlockCopy(hash.ComputeHash(keyWithSalt), 0, gostKey, 0, keySize);
 

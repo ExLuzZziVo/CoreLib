@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Globalization;
 using System.Linq;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {
@@ -132,13 +136,13 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     {
         public object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
         {
-            return !(bool) value;
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
-            return !(bool) value;
+            return !(bool)value;
         }
     }
 
@@ -171,11 +175,11 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.All(o => (bool) o))
+            if (values.All(o => (bool)o))
             {
                 return AllTrueValue;
             }
-            else if (values.All(o => !(bool) o))
+            else if (values.All(o => !(bool)o))
             {
                 return AllFalseValue;
             }

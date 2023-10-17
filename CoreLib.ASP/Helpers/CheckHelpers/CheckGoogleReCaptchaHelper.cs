@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using CoreLib.ASP.Resources;
 using CoreLib.ASP.Types;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,23 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         {
             _httpClient = httpClient;
         }
-        
+
+        public Task<bool> CheckV2Async(string reCaptchaResponse, string reCaptchaSecret)
+        {
+            return CheckAsync(reCaptchaResponse, reCaptchaSecret);
+        }
+
+        public Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName,
+            float requiredScore)
+        {
+            return CheckAsync(reCaptchaResponse, reCaptchaSecret, actionName, requiredScore);
+        }
+
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
+        }
+
         /// <summary>
         /// Asynchronously validates Google's Recaptcha
         /// </summary>
@@ -76,7 +93,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
             if (reCaptchaV3)
             {
                 if (!await checkGoogleReCaptchaHelper.CheckV3Async(reCaptchaResponse, reCaptchaSecret, actionName,
-                    requiredScore.Value))
+                        requiredScore.Value))
                 {
                     AddReCaptchaValidationError(filterContext);
                 }
@@ -97,18 +114,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         private static void AddReCaptchaValidationError(ActionContext filterContext)
         {
             filterContext.ModelState.AddModelError(string.Empty,
-                Resources.ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"));
-        }
-
-        public Task<bool> CheckV2Async(string reCaptchaResponse, string reCaptchaSecret)
-        {
-            return CheckAsync(reCaptchaResponse, reCaptchaSecret);
-        }
-
-        public Task<bool> CheckV3Async(string reCaptchaResponse, string reCaptchaSecret, string actionName,
-            float requiredScore)
-        {
-            return CheckAsync(reCaptchaResponse, reCaptchaSecret, actionName, requiredScore);
+                ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"));
         }
 
         /// <summary>
@@ -140,8 +146,8 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
             string jsonResponse;
 
             using (var response = await _httpClient
-                .GetAsync(
-                    $"https://www.google.com/recaptcha/api/siteverify?secret={reCaptchaSecret}&response={reCaptchaResponse}"))
+                       .GetAsync(
+                           $"https://www.google.com/recaptcha/api/siteverify?secret={reCaptchaSecret}&response={reCaptchaResponse}"))
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -150,10 +156,10 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
 
                 jsonResponse = await response.Content.ReadAsStringAsync();
             }
-            
+
             var reCaptchaResponseResult = JsonSerializer.Deserialize<GoogleReCaptchaResponse>(jsonResponse,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
-            
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
             if (requiredScore != null)
             {
                 if (!reCaptchaResponseResult.Success)
@@ -170,11 +176,6 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
             }
 
             return reCaptchaResponseResult.Success;
-        }
-
-        public void Dispose()
-        {
-            _httpClient?.Dispose();
         }
     }
 }

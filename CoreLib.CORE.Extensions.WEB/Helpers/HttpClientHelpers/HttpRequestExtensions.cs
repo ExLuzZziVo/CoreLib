@@ -10,7 +10,8 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
     public static class HttpRequestExtensions
     {
 #if NET6_0
-        private static readonly HttpRequestOptionsKey<TimeSpan?> TimeoutPropertyKey = new HttpRequestOptionsKey<TimeSpan?>("RequestTimeout");
+        private static readonly HttpRequestOptionsKey<TimeSpan?> TimeoutPropertyKey =
+ new HttpRequestOptionsKey<TimeSpan?>("RequestTimeout");
 #else
         private const string TimeoutPropertyKey = "RequestTimeout";
 #endif

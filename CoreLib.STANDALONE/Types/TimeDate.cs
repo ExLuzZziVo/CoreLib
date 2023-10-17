@@ -73,7 +73,7 @@ namespace CoreLib.STANDALONE.Types
                 SetValue(value);
             }
         }
-        
+
         public DateTime Date
         {
             get => GetValue<DateTime>();

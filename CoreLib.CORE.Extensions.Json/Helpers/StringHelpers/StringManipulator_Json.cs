@@ -10,11 +10,10 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 {
     public static class StringManipulator_Json
     {
-        private static readonly JsonSerializerOptions IndentedJsonSerializerOptions = new
-            JsonSerializerOptions
-            {
-                WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
+        private static readonly JsonSerializerOptions IndentedJsonSerializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
 
         /// <summary>
         /// Beautifies the provided Json string

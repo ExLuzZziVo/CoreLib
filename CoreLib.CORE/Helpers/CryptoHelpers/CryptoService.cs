@@ -65,6 +65,76 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             Key = key;
         }
 
+        public Task<string> EncryptStringAsync(string str)
+        {
+            return Task.Run(() => EncryptString(str));
+        }
+
+        public virtual string EncryptString(string str)
+        {
+            using (var msEncrypt = new MemoryStream())
+            {
+                using (var csEncrypt =
+                       new CryptoStream(msEncrypt, CreateEncryptor(msEncrypt), CryptoStreamMode.Write))
+                {
+                    using (var swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(str);
+                    }
+                }
+
+                return Convert.ToBase64String(msEncrypt.ToArray());
+            }
+        }
+
+        public virtual Task<string> DecryptStringAsync(string str)
+        {
+            return Task.Run(() => DecryptString(str));
+        }
+
+        public string DecryptString(string str)
+        {
+            try
+            {
+                return DecryptStringInternal(str);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
+        public virtual Task EncryptObjectAsync<T>(Stream s, T obj)
+        {
+            return Task.Run(() => EncryptObject(s, obj));
+        }
+
+        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
+        public virtual void EncryptObject<T>(Stream s, T obj)
+        {
+            using (var cs = new CryptoStream(s, CreateEncryptor(s), CryptoStreamMode.Write))
+            {
+                new BinaryFormatter().Serialize(cs, obj);
+            }
+        }
+
+        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
+        public virtual Task<T> DecryptObjectAsync<T>(Stream s)
+        {
+            return Task.Run(() => DecryptObject<T>(s));
+        }
+
+        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
+        public virtual T DecryptObject<T>(Stream s)
+        {
+            using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))
+            {
+                return (T)new BinaryFormatter
+                    { Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true) }.Deserialize(cs);
+            }
+        }
+
         /// <summary>
         /// Method that creates AES encryptor
         /// </summary>
@@ -128,33 +198,6 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             return buffer;
         }
 
-        public Task<string> EncryptStringAsync(string str)
-        {
-            return Task.Run(() => EncryptString(str));
-        }
-
-        public virtual string EncryptString(string str)
-        {
-            using (var msEncrypt = new MemoryStream())
-            {
-                using (var csEncrypt =
-                    new CryptoStream(msEncrypt, CreateEncryptor(msEncrypt), CryptoStreamMode.Write))
-                {
-                    using (var swEncrypt = new StreamWriter(csEncrypt))
-                    {
-                        swEncrypt.Write(str);
-                    }
-                }
-
-                return Convert.ToBase64String(msEncrypt.ToArray());
-            }
-        }
-        
-        public virtual Task<string> DecryptStringAsync(string str)
-        {
-            return Task.Run(() => DecryptString(str));
-        }
-
         public bool TryDecryptString(string str, out string decryptedString)
         {
             try
@@ -166,20 +209,8 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             catch
             {
                 decryptedString = string.Empty;
-                
+
                 return false;
-            }
-        }
-        
-        public string DecryptString(string str)
-        {
-            try
-            {
-                return DecryptStringInternal(str);
-            }
-            catch
-            {
-                return string.Empty;
             }
         }
 
@@ -197,37 +228,6 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
                         return srDecrypt.ReadToEnd();
                     }
                 }
-            }
-        }
-        
-        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
-        public virtual Task EncryptObjectAsync<T>(Stream s, T obj)
-        {
-            return Task.Run(() => EncryptObject(s, obj));
-        }
-
-        [Obsolete("Uses BinaryFormatter which is unsafe for object serialization")]
-        public virtual void EncryptObject<T>(Stream s, T obj)
-        {
-            using (var cs = new CryptoStream(s, CreateEncryptor(s), CryptoStreamMode.Write))
-            {
-                new BinaryFormatter().Serialize(cs, obj);
-            }
-        }
-
-        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
-        public virtual Task<T> DecryptObjectAsync<T>(Stream s)
-        {
-            return Task.Run(() => DecryptObject<T>(s));
-        }
-
-        [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
-        public virtual T DecryptObject<T>(Stream s)
-        {
-            using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))
-            {
-                return (T) new BinaryFormatter
-                    {Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true)}.Deserialize(cs);
             }
         }
     }

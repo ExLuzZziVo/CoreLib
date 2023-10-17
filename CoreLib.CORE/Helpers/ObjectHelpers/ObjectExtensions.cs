@@ -20,6 +20,23 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 {
     public static class ObjectExtensions
     {
+        // https://stackoverflow.com/a/24343727/48700
+        /// <summary>
+        /// Hex string lookup table
+        /// </summary>
+        private static readonly Lazy<uint[]> HexStringTable = new Lazy<uint[]>(() =>
+        {
+            var result = new uint[256];
+
+            for (var i = 0; i < 256; i++)
+            {
+                var s = i.ToString("X2");
+                result[i] = s[0] + ((uint)s[1] << 16);
+            }
+
+            return result;
+        });
+
         /// <summary>
         /// Sets property value by its name
         /// </summary>
@@ -114,7 +131,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             }
             catch
             {
-                value = default(T);
+                value = default;
 
                 return false;
             }
@@ -359,23 +376,6 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
             return Comparer<T>.Default.Compare(value, value1) >= 0 && Comparer<T>.Default.Compare(value, value2) <= 0;
         }
-
-        // https://stackoverflow.com/a/24343727/48700
-        /// <summary>
-        /// Hex string lookup table
-        /// </summary>
-        private static readonly Lazy<uint[]> HexStringTable = new Lazy<uint[]>(() =>
-        {
-            var result = new uint[256];
-
-            for (var i = 0; i < 256; i++)
-            {
-                var s = i.ToString("X2");
-                result[i] = s[0] + ((uint)s[1] << 16);
-            }
-
-            return result;
-        });
 
         /// <summary>
         /// Converts a byte array to a hex string

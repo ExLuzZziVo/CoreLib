@@ -63,7 +63,7 @@ namespace CoreLib.ASP.ModelBinders
                 var valueAsString = valueProviderResult.FirstValue;
 
                 if (double.TryParse(valueAsString, NumberStyles.Any,
-                    CultureInfo.InvariantCulture, out var result))
+                        CultureInfo.InvariantCulture, out var result))
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);
 

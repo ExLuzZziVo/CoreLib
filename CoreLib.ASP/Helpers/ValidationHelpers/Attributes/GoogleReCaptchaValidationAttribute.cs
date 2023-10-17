@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using CoreLib.ASP.Helpers.CheckHelpers;
+using CoreLib.ASP.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,8 +30,8 @@ namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var errorResult = new Lazy<ValidationResult>(() =>
-                new ValidationResult(Resources.ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"),
-                    new[] {validationContext.MemberName}));
+                new ValidationResult(ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"),
+                    new[] { validationContext.MemberName }));
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {

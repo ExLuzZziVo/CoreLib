@@ -16,8 +16,7 @@ namespace CoreLib.STANDALONE.Types.ObservableDictionary
     public class ObservableDictionary<TKey, TValue> : ObservableCollection<ObservableKeyValuePair<TKey, TValue>>,
         IDictionary<TKey, TValue>, IDictionary
     {
-        private readonly KeyedObservableKeyValuePairCollection<TKey, TValue> _internalDictionary =
-            new KeyedObservableKeyValuePairCollection<TKey, TValue>();
+        private readonly KeyedObservableKeyValuePairCollection<TKey, TValue> _internalDictionary = new KeyedObservableKeyValuePairCollection<TKey, TValue>();
 
         public ObservableDictionary() : base() { }
 
@@ -193,12 +192,12 @@ namespace CoreLib.STANDALONE.Types.ObservableDictionary
 
         bool IDictionary.Contains(object key)
         {
-            return ContainsKey((TKey) key);
+            return ContainsKey((TKey)key);
         }
 
         void IDictionary.Add(object key, object value)
         {
-            Add((TKey) key, (TValue) value);
+            Add((TKey)key, (TValue)value);
         }
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
@@ -208,13 +207,13 @@ namespace CoreLib.STANDALONE.Types.ObservableDictionary
 
         void IDictionary.Remove(object key)
         {
-            Remove((TKey) key);
+            Remove((TKey)key);
         }
 
         object IDictionary.this[object key]
         {
-            get => this[(TKey) key];
-            set => this[(TKey) key] = (TValue) value;
+            get => this[(TKey)key];
+            set => this[(TKey)key] = (TValue)value;
         }
 
         #endregion

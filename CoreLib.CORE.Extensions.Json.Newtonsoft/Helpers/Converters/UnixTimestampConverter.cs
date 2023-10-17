@@ -1,5 +1,9 @@
+#region
+
 using System;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
@@ -11,13 +15,12 @@ namespace CoreLib.CORE.Helpers.Converters
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         private readonly bool _useLocalTime;
-        
+
         /// <summary>
         /// Converts unix timestamp to <see cref="System.DateTime"/> and back
         /// </summary>
-        public UnixTimestampConverter()
-        { }
-        
+        public UnixTimestampConverter() { }
+
         /// <summary>
         /// Converts unix timestamp to local <see cref="System.DateTime"/> and back if the <paramref name="useLocalTime"/> is set to true
         /// </summary>
@@ -26,7 +29,7 @@ namespace CoreLib.CORE.Helpers.Converters
         {
             _useLocalTime = useLocalTime;
         }
-        
+
         public override void WriteJson(JsonWriter writer, DateTime? value, JsonSerializer serializer)
         {
             if (value == null)
@@ -35,11 +38,13 @@ namespace CoreLib.CORE.Helpers.Converters
             }
             else
             {
-                writer.WriteValue(((_useLocalTime ? value.Value.ToUniversalTime() : value) - UnixEpoch).Value.TotalMilliseconds + "000");
+                writer.WriteValue(((_useLocalTime ? value.Value.ToUniversalTime() : value) - UnixEpoch).Value
+                    .TotalMilliseconds + "000");
             }
         }
 
-        public override DateTime? ReadJson(JsonReader reader, Type objectType, DateTime? existingValue, bool hasExistingValue,
+        public override DateTime? ReadJson(JsonReader reader, Type objectType, DateTime? existingValue,
+            bool hasExistingValue,
             JsonSerializer serializer)
         {
             if (reader.Value == null)
@@ -53,7 +58,7 @@ namespace CoreLib.CORE.Helpers.Converters
             }
 
             var result = UnixEpoch.AddMilliseconds(value);
-            
+
             return _useLocalTime ? result.ToLocalTime() : result;
         }
     }

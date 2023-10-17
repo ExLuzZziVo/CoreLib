@@ -1,227 +1,232 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
-		Microsoft ResX Schema
+    <!-- 
+        Microsoft ResX Schema
 
-		Version 1.3
+        Version 1.3
 
-		The primary goals of this format is to allow a simple XML format 
-		that is mostly human readable. The generation and parsing of the 
-		various data types are done through the TypeConverter classes 
-		associated with the data types.
+        The primary goals of this format is to allow a simple XML format 
+        that is mostly human readable. The generation and parsing of the 
+        various data types are done through the TypeConverter classes 
+        associated with the data types.
 
-		Example:
+        Example:
 
-		... ado.net/XML headers & schema ...
-		<resheader name="resmimetype">text/microsoft-resx</resheader>
-		<resheader name="version">1.3</resheader>
-		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-		<data name="Name1">this is my long string</data>
-		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-			[base64 mime encoded serialized .NET Framework object]
-		</data>
-		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-			[base64 mime encoded string representing a byte array form of the .NET Framework object]
-		</data>
+        ... ado.net/XML headers & schema ...
+        <resheader name="resmimetype">text/microsoft-resx</resheader>
+        <resheader name="version">1.3</resheader>
+        <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+        <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+        <data name="Name1">this is my long string</data>
+        <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+        <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+            [base64 mime encoded serialized .NET Framework object]
+        </data>
+        <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+            [base64 mime encoded string representing a byte array form of the .NET Framework object]
+        </data>
 
-		There are any number of "resheader" rows that contain simple 
-		name/value pairs.
+        There are any number of "resheader" rows that contain simple 
+        name/value pairs.
 
-		Each data row contains a name, and value. The row also contains a 
-		type or mimetype. Type corresponds to a .NET class that support 
-		text/value conversion through the TypeConverter architecture. 
-		Classes that don't support this are serialized and stored with the 
-		mimetype set.
+        Each data row contains a name, and value. The row also contains a 
+        type or mimetype. Type corresponds to a .NET class that support 
+        text/value conversion through the TypeConverter architecture. 
+        Classes that don't support this are serialized and stored with the 
+        mimetype set.
 
-		The mimetype is used for serialized objects, and tells the 
-		ResXResourceReader how to depersist the object. This is currently not 
-		extensible. For a given mimetype the value must be set accordingly:
+        The mimetype is used for serialized objects, and tells the 
+        ResXResourceReader how to depersist the object. This is currently not 
+        extensible. For a given mimetype the value must be set accordingly:
 
-		Note - application/x-microsoft.net.object.binary.base64 is the format 
-		that the ResXResourceWriter will generate, however the reader can 
-		read any of the formats listed below.
+        Note - application/x-microsoft.net.object.binary.base64 is the format 
+        that the ResXResourceWriter will generate, however the reader can 
+        read any of the formats listed below.
 
-		mimetype: application/x-microsoft.net.object.binary.base64
-		value   : The object must be serialized with 
-			: System.Serialization.Formatters.Binary.BinaryFormatter
-			: and then encoded with base64 encoding.
+        mimetype: application/x-microsoft.net.object.binary.base64
+        value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
 
-		mimetype: application/x-microsoft.net.object.soap.base64
-		value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-			: and then encoded with base64 encoding.
+        mimetype: application/x-microsoft.net.object.soap.base64
+        value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
 
-		mimetype: application/x-microsoft.net.object.bytearray.base64
-		value   : The object must be serialized into a byte array 
-			: using a System.ComponentModel.TypeConverter
-			: and then encoded with base64 encoding.
-	-->
-	
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>1.3</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="ComplexObjectCollectionValidationError_ContainsNull" xml:space="preserve">
+        mimetype: application/x-microsoft.net.object.bytearray.base64
+        value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+                xmlns="">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="ComplexObjectCollectionValidationError_ContainsNull" xml:space="preserve">
 		<value>Can't be null</value>
 	</data>
-	<data name="ComplexObjectCollectionValidationError_Index" xml:space="preserve">
+    <data name="ComplexObjectCollectionValidationError_Index" xml:space="preserve">
 		<value>Element {0}: </value>
 	</data>
-	<data name="ComplexObjectCollectionValidationError" xml:space="preserve">
+    <data name="ComplexObjectCollectionValidationError" xml:space="preserve">
 		<value>The sequence '{0}' contains elements with following errors</value>
 	</data>
-	<data name="SomethingWentWrong" xml:space="preserve">
+    <data name="SomethingWentWrong" xml:space="preserve">
 		<value>Something went wrong:(</value>
 	</data>
-	<data name="StringFormatError" xml:space="preserve">
+    <data name="StringFormatError" xml:space="preserve">
 		<value>Field '{0}' has wrong format</value>
 	</data>
-	<data name="StringMaxLengthError" xml:space="preserve">
+    <data name="StringMaxLengthError" xml:space="preserve">
 		<value>Field '{0}' must contain no more than {1} characters</value>
 	</data>
-	<data name="StringMinLengthError" xml:space="preserve">
+    <data name="StringMinLengthError" xml:space="preserve">
 		<value>Field '{0}' must contain at least {1} characters</value>
 	</data>
-	<data name="StringRangeLengthError" xml:space="preserve">
+    <data name="StringRangeLengthError" xml:space="preserve">
 		<value>Field '{0}' must contain at least {1} and no more than {2} characters</value>
 	</data>
-	<data name="RequiredError" xml:space="preserve">
+    <data name="RequiredError" xml:space="preserve">
 		<value>Field '{0}' is required</value>
 	</data>
-	<data name="NotFoundError" xml:space="preserve">
+    <data name="NotFoundError" xml:space="preserve">
 		<value>Object not found</value>
 	</data>
-	<data name="NoIdError" xml:space="preserve">
+    <data name="NoIdError" xml:space="preserve">
 		<value>Object ID not found</value>
 	</data>
-	<data name="InvalidPhoneFormatError" xml:space="preserve">
+    <data name="InvalidPhoneFormatError" xml:space="preserve">
 		<value>Invalid phone number</value>
 	</data>
-	<data name="InvalidEmailAddressFormatError" xml:space="preserve">
+    <data name="InvalidEmailAddressFormatError" xml:space="preserve">
 		<value>Invalid e-mail address</value>
 	</data>
-	<data name="CollectionMinLengthError" xml:space="preserve">
+    <data name="CollectionMinLengthError" xml:space="preserve">
 		<value>The sequence '{0}' must contain at least {1} elements</value>
 	</data>
-	<data name="CompareError" xml:space="preserve">
+    <data name="CompareError" xml:space="preserve">
 		<value>Fields '{0}' and '{1}' must match</value>
 	</data>
-	<data name="CompareToGreaterThanError" xml:space="preserve">
+    <data name="CompareToGreaterThanError" xml:space="preserve">
 		<value>The value of the field '{0}' must be greater than the value of the field '{1}'</value>
 	</data>
-	<data name="CompareToGreaterThanOrEqualError" xml:space="preserve">
+    <data name="CompareToGreaterThanOrEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be greater than or equal to the value of the field '{1}'</value>
 	</data>
-	<data name="CompareToSmallerThanError" xml:space="preserve">
+    <data name="CompareToSmallerThanError" xml:space="preserve">
 		<value>The value of the field '{0}' must be less than the value of the field '{1}'</value>
 	</data>
-	<data name="CompareToSmallerThanOrEqualError" xml:space="preserve">
+    <data name="CompareToSmallerThanOrEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be less than or equal to the value of the field '{1}'</value>
 	</data>
-	<data name="ComplexObjectValidationError" xml:space="preserve">
+    <data name="ComplexObjectValidationError" xml:space="preserve">
 		<value>Field '{0}' has the following errors</value>
 	</data>
-	<data name="DateTimeError" xml:space="preserve">
+    <data name="DateTimeError" xml:space="preserve">
 		<value>Date in field '{0}' must be in the range {1} - {2}</value>
 	</data>
-	<data name="DigitRangeValuesError" xml:space="preserve">
+    <data name="DigitRangeValuesError" xml:space="preserve">
 		<value>Field '{0}' must have a value of at least {1} and no more than {2}</value>
 	</data>
-	<data name="DuplicateNameError" xml:space="preserve">
+    <data name="DuplicateNameError" xml:space="preserve">
 		<value>An object with the same name already exists</value>
 	</data>
-	<data name="FileNotFoundError" xml:space="preserve">
+    <data name="FileNotFoundError" xml:space="preserve">
 		<value>One or more files not found</value>
 	</data>
-	<data name="FileParseByLineError" xml:space="preserve">
+    <data name="FileParseByLineError" xml:space="preserve">
 		<value>An error occurred while processing the file at line: {0}</value>
 	</data>
-	<data name="InvalidFilePathError" xml:space="preserve">
+    <data name="InvalidFilePathError" xml:space="preserve">
 		<value>One or more files have an invalid save path</value>
 	</data>
-	<data name="CollectionMaxLengthError" xml:space="preserve">
+    <data name="CollectionMaxLengthError" xml:space="preserve">
 		<value>The sequence '{0}' must contain no more than {1}</value>
 	</data>
-	<data name="CollectionRangeLengthError" xml:space="preserve">
+    <data name="CollectionRangeLengthError" xml:space="preserve">
 		<value>The sequence '{0}' must contain at least {1} and no more than {2} elements</value>
 	</data>
-	<data name="CompareToNotEqualError" xml:space="preserve">
+    <data name="CompareToNotEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must not be equal to the value of the field '{1}'</value>
 	</data>
-	<data name="CompareToEqualError" xml:space="preserve">
+    <data name="CompareToEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be equal to the value of the field '{1}'</value>
 	</data>
-	<data name="ValueNotEqualError" xml:space="preserve">
+    <data name="ValueNotEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must not be equal to '{1}'</value>
 	</data>
-	<data name="ValueEqualError" xml:space="preserve">
+    <data name="ValueEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be equal to '{1}'</value>
 	</data>
-	<data name="ValueGreaterThanError" xml:space="preserve">
+    <data name="ValueGreaterThanError" xml:space="preserve">
 		<value>The value of the field '{0}' must be greater than '{1}'</value>
 	</data>
-	<data name="ValueGreaterThanOrEqualError" xml:space="preserve">
+    <data name="ValueGreaterThanOrEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be greater than or equal to '{1}'</value>
 	</data>
-	<data name="ValueSmallerThanError" xml:space="preserve">
+    <data name="ValueSmallerThanError" xml:space="preserve">
 		<value>The value of the field '{0}' must be less than '{1}'</value>
 	</data>
-	<data name="ValueSmallerThanOrEqualError" xml:space="preserve">
+    <data name="ValueSmallerThanOrEqualError" xml:space="preserve">
 		<value>The value of the field '{0}' must be less than or equal to '{1}'</value>
 	</data>
-	<data name="FileRangeSizeError" xml:space="preserve">
+    <data name="FileRangeSizeError" xml:space="preserve">
 		<value>The size of file '{0}' must be at least {1} and not more than {2}</value>
 	</data>
-	<data name="FileMinSizeError" xml:space="preserve">
+    <data name="FileMinSizeError" xml:space="preserve">
 		<value>The size of file '{0}' must be more than {1}</value>
 	</data>
-	<data name="FileMaxSizeError" xml:space="preserve">
+    <data name="FileMaxSizeError" xml:space="preserve">
 		<value>The size of file '{0}' must be less than {1}</value>
 	</data>
-	<data name="ErrorOccurred" xml:space="preserve">
+    <data name="ErrorOccurred" xml:space="preserve">
 		<value>An error occurred: {0}</value>
 	</data>
-	<data name="CollectionHasDuplicatesError" xml:space="preserve">
+    <data name="CollectionHasDuplicatesError" xml:space="preserve">
 		<value>The sequence '{0}' contains duplicated items</value>
 	</data>
-	<data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
+    <data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
 		<value>One or more objects in sequence '{0}' not found</value>
 	</data>
 </root>

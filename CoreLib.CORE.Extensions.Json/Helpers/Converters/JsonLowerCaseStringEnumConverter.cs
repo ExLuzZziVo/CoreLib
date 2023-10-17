@@ -10,7 +10,7 @@ namespace CoreLib.CORE.Helpers.Converters
     public class JsonLowerCaseStringEnumConverter : JsonStringEnumConverter
     {
         public JsonLowerCaseStringEnumConverter() : this(true) { }
-        
+
         public JsonLowerCaseStringEnumConverter(bool allowIntegerValues = true) : base(LowerCaseNamingPolicy,
             allowIntegerValues) { }
 

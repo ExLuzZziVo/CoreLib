@@ -18,12 +18,12 @@ namespace CoreLib.STANDALONE.Types
     /// </summary>
     public abstract class ApplicationFile : ViewModelBase
     {
-        [field: NonSerialized][JsonIgnore] private string _directoryToStore;
-        [field: NonSerialized][JsonIgnore] private string _backupFolder;
-        [field: NonSerialized][JsonIgnore] private CryptoService _cryptoService;
-        [field: NonSerialized][JsonIgnore] private string _fileName;
-        [field: NonSerialized][JsonIgnore] private string _filePath;
-        [field: NonSerialized][JsonIgnore] private bool _isBackupEnabled;
+        [field: NonSerialized] [JsonIgnore] private string _backupFolder;
+        [field: NonSerialized] [JsonIgnore] private CryptoService _cryptoService;
+        [field: NonSerialized] [JsonIgnore] private string _directoryToStore;
+        [field: NonSerialized] [JsonIgnore] private string _fileName;
+        [field: NonSerialized] [JsonIgnore] private string _filePath;
+        [field: NonSerialized] [JsonIgnore] private bool _isBackupEnabled;
 
         /// <summary>
         /// A class that can be inherited for use as an application settings file, application data file, etc. Supports creating the backup and encryption using <see cref="CoreLib.CORE.Interfaces.ICryptoService"/>
@@ -128,8 +128,8 @@ namespace CoreLib.STANDALONE.Types
                 if (Directory.Exists(backupFolder))
                 {
                     foreach (var file in new DirectoryInfo(backupFolder)
-                        .GetFiles($"{fileName}*").Where(f =>
-                            clearBeforeDate == null || f.LastWriteTime < clearBeforeDate))
+                                 .GetFiles($"{fileName}*").Where(f =>
+                                     clearBeforeDate == null || f.LastWriteTime < clearBeforeDate))
                     {
                         file.Delete();
                     }
@@ -184,12 +184,12 @@ namespace CoreLib.STANDALONE.Types
                         }
 
                         foreach (var file in new DirectoryInfo(backupFolder).GetFiles($"{fileName}*")
-                            .OrderByDescending(f => f.LastWriteTime))
+                                     .OrderByDescending(f => f.LastWriteTime))
                         {
                             try
                             {
                                 using (var fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read,
-                                    FileShare.Read))
+                                           FileShare.Read))
                                 {
                                     using (var sr = new StreamReader(fs))
                                     {

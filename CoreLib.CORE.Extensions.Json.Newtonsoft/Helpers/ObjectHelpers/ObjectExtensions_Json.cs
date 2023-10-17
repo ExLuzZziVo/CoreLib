@@ -16,7 +16,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         /// <summary>
         /// The default <see cref="JsonSerializerSettings"/> value that is used for <see cref="SerializeToJson(object)"/> and <see cref="DeserializeFromJson{T}(string)"/> methods
         /// </summary>
-        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             ObjectCreationHandling = ObjectCreationHandling.Replace, TypeNameHandling = TypeNameHandling.All,
             SerializationBinder = new JsonSearchAssembliesBinder(Assembly.GetEntryAssembly(), true),

@@ -25,7 +25,7 @@ namespace CoreLib.OPENXML
             var currentCount = 0;
 
             foreach (var cell in
-                row.Descendants<Cell>())
+                     row.Descendants<Cell>())
             {
                 var columnName = GetColumnName(cell.CellReference);
 
@@ -73,7 +73,7 @@ namespace CoreLib.OPENXML
             Array.Reverse(colLetters);
 
             return colLetters.Select((letter, i) => i == 0 ? letter - 65 : letter - 64)
-                .Select((current, i) => current * (int) Math.Pow(26, i)).Sum();
+                .Select((current, i) => current * (int)Math.Pow(26, i)).Sum();
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace CoreLib.OPENXML
                 var col = new Column
                 {
                     BestFit = true,
-                    Min = (uint) (item.Key + 1),
-                    Max = (uint) (item.Key + 1),
+                    Min = (uint)(item.Key + 1),
+                    Max = (uint)(item.Key + 1),
                     CustomWidth = true,
                     Width = width
                 };
@@ -133,7 +133,7 @@ namespace CoreLib.OPENXML
             var maxColWidth = new Dictionary<int, int>();
             var rows = sheetData.Elements<Row>();
             uint[] numberStyles = { }; //styles that will add extra chars
-            uint[] boldStyles = {2}; //styles that will bold
+            uint[] boldStyles = { 2 }; //styles that will bold
 
             foreach (var r in rows)
             {
@@ -145,18 +145,18 @@ namespace CoreLib.OPENXML
                     var cellValue = cell.CellValue == null ? string.Empty : cell.CellValue.InnerText;
                     var cellTextLength = cellValue.Length;
 
-                    if (cell.StyleIndex != null && ((IList) numberStyles).Contains(cell.StyleIndex))
+                    if (cell.StyleIndex != null && ((IList)numberStyles).Contains(cell.StyleIndex))
                     {
-                        var thousandCount = (int) Math.Truncate((double) cellTextLength / 4);
+                        var thousandCount = (int)Math.Truncate((double)cellTextLength / 4);
                         cellTextLength += 3 + thousandCount;
                     }
 
-                    if (cell.StyleIndex != null && ((IList) boldStyles).Contains(cell.StyleIndex))
+                    if (cell.StyleIndex != null && ((IList)boldStyles).Contains(cell.StyleIndex))
                     {
                         cellTextLength += 1;
                     }
 
-                    cellTextLength += (int) Math.Round(cellValue.UppercaseCharactersCount() * 0.5, 0,
+                    cellTextLength += (int)Math.Round(cellValue.UppercaseCharactersCount() * 0.5, 0,
                         MidpointRounding.AwayFromZero);
 
                     if (maxColWidth.ContainsKey(i))
@@ -204,30 +204,30 @@ namespace CoreLib.OPENXML
         {
             var fonts = new Fonts(
                 new Font(
-                    new FontSize {Val = 12},
-                    new FontName {Val = "Times New Roman"}
+                    new FontSize { Val = 12 },
+                    new FontName { Val = "Times New Roman" }
                 ),
                 new Font(
-                    new FontSize {Val = 12},
+                    new FontSize { Val = 12 },
                     new Bold(),
-                    new Color {Rgb = "FFFFFF"},
-                    new FontName {Val = "Times New Roman"}
+                    new Color { Rgb = "FFFFFF" },
+                    new FontName { Val = "Times New Roman" }
                 ));
 
             var fills = new Fills(
-                new Fill(new PatternFill {PatternType = PatternValues.None}),
-                new Fill(new PatternFill {PatternType = PatternValues.Gray125}),
-                new Fill(new PatternFill(new ForegroundColor {Rgb = new HexBinaryValue {Value = "66666666"}})
-                    {PatternType = PatternValues.Solid})
+                new Fill(new PatternFill { PatternType = PatternValues.None }),
+                new Fill(new PatternFill { PatternType = PatternValues.Gray125 }),
+                new Fill(new PatternFill(new ForegroundColor { Rgb = new HexBinaryValue { Value = "66666666" } })
+                    { PatternType = PatternValues.Solid })
             );
 
             var borders = new Borders(
                 new Border(),
                 new Border(
-                    new LeftBorder(new Color {Auto = true}) {Style = BorderStyleValues.Thin},
-                    new RightBorder(new Color {Auto = true}) {Style = BorderStyleValues.Thin},
-                    new TopBorder(new Color {Auto = true}) {Style = BorderStyleValues.Thin},
-                    new BottomBorder(new Color {Auto = true}) {Style = BorderStyleValues.Thin},
+                    new LeftBorder(new Color { Auto = true }) { Style = BorderStyleValues.Thin },
+                    new RightBorder(new Color { Auto = true }) { Style = BorderStyleValues.Thin },
+                    new TopBorder(new Color { Auto = true }) { Style = BorderStyleValues.Thin },
+                    new BottomBorder(new Color { Auto = true }) { Style = BorderStyleValues.Thin },
                     new DiagonalBorder())
             );
 
@@ -269,7 +269,7 @@ namespace CoreLib.OPENXML
                     FillId = 0,
                     BorderId = 0,
                     Alignment = new Alignment
-                        {Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center},
+                        { Horizontal = HorizontalAlignmentValues.Center, Vertical = VerticalAlignmentValues.Center },
                     ApplyFill = true,
                     ApplyBorder = true,
                     ApplyAlignment = true,
@@ -292,11 +292,11 @@ namespace CoreLib.OPENXML
                     FontId = 0,
                     FillId = 0,
                     BorderId = 1,
-                    Alignment = new Alignment 
-                        { 
-                            Horizontal = HorizontalAlignmentValues.Left, Vertical = VerticalAlignmentValues.Center,
-                            Indent = 1
-                        },
+                    Alignment = new Alignment
+                    {
+                        Horizontal = HorizontalAlignmentValues.Left, Vertical = VerticalAlignmentValues.Center,
+                        Indent = 1
+                    },
                     ApplyFill = true,
                     ApplyBorder = true,
                     ApplyAlignment = true,

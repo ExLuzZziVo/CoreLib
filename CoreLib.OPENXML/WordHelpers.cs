@@ -29,8 +29,8 @@ namespace CoreLib.OPENXML
             }
 
             using (var wordDoc = WordprocessingDocument.Open(
-                docFullPath,
-                true))
+                       docFullPath,
+                       true))
             {
                 var body = wordDoc.MainDocumentPart.Document.Body;
                 var elements = new List<OpenXmlCompositeElement>();
@@ -60,8 +60,8 @@ namespace CoreLib.OPENXML
             }
 
             using (var wordDoc = WordprocessingDocument.Open(
-                docFullPath,
-                true))
+                       docFullPath,
+                       true))
             {
                 var body = wordDoc.MainDocumentPart.Document.Body;
                 var elements = new List<OpenXmlCompositeElement>();
@@ -94,11 +94,11 @@ namespace CoreLib.OPENXML
                     if (txt.Text.Contains(text) && txt.Text != text)
                     {
                         var indexOfText = txt.Text.IndexOf(text);
-                        var runBefore = (Run) run.Clone();
+                        var runBefore = (Run)run.Clone();
                         var runBeforeText = runBefore.GetFirstChild<Text>();
                         runBeforeText.Space = SpaceProcessingModeValues.Preserve;
                         runBeforeText.Text = txt.Text.Substring(0, indexOfText == 0 ? 0 : indexOfText);
-                        var runAfter = (Run) run.Clone();
+                        var runAfter = (Run)run.Clone();
                         var runAfterText = runAfter.GetFirstChild<Text>();
                         runAfterText.Space = SpaceProcessingModeValues.Preserve;
                         runAfterText.Text = txt.Text.Substring(indexOfText + text.Length);
@@ -182,21 +182,21 @@ namespace CoreLib.OPENXML
                         {
                             OpenXmlElement currEl = txt;
                             var run = currEl.Parent as Run;
-                            var sampleRun = (Run) run.Clone();
-                            var sampleRunProperties = (RunProperties) sampleRun.GetFirstChild<RunProperties>().Clone();
-                            var sampleTxt = (Text) sampleRun.GetFirstChild<Text>().Clone();
+                            var sampleRun = (Run)run.Clone();
+                            var sampleRunProperties = (RunProperties)sampleRun.GetFirstChild<RunProperties>().Clone();
+                            var sampleTxt = (Text)sampleRun.GetFirstChild<Text>().Clone();
                             var paragraph = run.Parent as Paragraph;
-                            var sampleParagraph = (Paragraph) paragraph.Clone();
+                            var sampleParagraph = (Paragraph)paragraph.Clone();
                             sampleParagraph.RemoveAllChildren<Run>();
                             currEl = paragraph;
 
                             for (var i = 1; i < lines.Length; i++)
                             {
                                 var paragraphBefore = currEl;
-                                var paragraphAfter = (Paragraph) sampleParagraph.Clone();
+                                var paragraphAfter = (Paragraph)sampleParagraph.Clone();
                                 var newRun = new Run();
-                                var newRunProperties = (RunProperties) sampleRunProperties.Clone();
-                                var newTxt = (Text) sampleTxt.Clone();
+                                var newRunProperties = (RunProperties)sampleRunProperties.Clone();
+                                var newTxt = (Text)sampleTxt.Clone();
                                 newTxt.Space = SpaceProcessingModeValues.Preserve;
                                 newTxt.Text = lines[i];
                                 paragraphAfter.InsertAfter(newRun, paragraphAfter.LastChild);
@@ -242,7 +242,7 @@ namespace CoreLib.OPENXML
 
                     if (ix == find.Length)
                     {
-                        return new Match {EndElementIndex = i, EndCharIndex = j};
+                        return new Match { EndElementIndex = i, EndCharIndex = j };
                     }
                 }
 

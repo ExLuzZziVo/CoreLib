@@ -31,7 +31,7 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
 
                 if (attrs.Length > 0)
                 {
-                    return ((DescriptionAttribute) attrs[0]).Description;
+                    return ((DescriptionAttribute)attrs[0]).Description;
                 }
             }
 
@@ -92,7 +92,7 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
         /// </summary>
         /// <param name="type">A type of the <see cref="Enum"/> to process</param>
         /// <returns></returns>
-        public static T[] ToArray<T>(Type type) where T: Enum
+        public static T[] ToArray<T>(Type type) where T : Enum
         {
             return Enum.GetValues(type).Cast<T>().ToArray();
         }

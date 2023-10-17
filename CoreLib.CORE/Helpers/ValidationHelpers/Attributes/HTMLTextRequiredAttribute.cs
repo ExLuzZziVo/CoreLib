@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 {

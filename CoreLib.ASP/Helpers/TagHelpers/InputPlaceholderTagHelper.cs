@@ -1,7 +1,11 @@
+#region
+
 using System.ComponentModel;
 using CoreLib.CORE.Helpers.StringHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+
+#endregion
 
 namespace CoreLib.ASP.Helpers.TagHelpers
 {

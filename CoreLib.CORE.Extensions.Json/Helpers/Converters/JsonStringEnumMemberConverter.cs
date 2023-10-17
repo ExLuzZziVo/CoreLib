@@ -1,35 +1,59 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CoreLib.CORE.Helpers.ObjectHelpers;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.Converters
 {
     // https://github.com/dotnet/runtime/issues/31081#issuecomment-848697673
-    public class JsonStringEnumMemberConverter: JsonConverter<object>
+    public class JsonStringEnumMemberConverter : JsonConverter<object>
     {
         private readonly Dictionary<Enum, string> _enumToString = new Dictionary<Enum, string>();
         private readonly Dictionary<string, Enum> _stringToEnum = new Dictionary<string, Enum>();
 
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+
+                return;
+            }
+
+            writer.WriteStringValue(_enumToString[(Enum)value]);
+        }
+
         public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var stringValue = reader.GetString();
+            var isNullable = typeToConvert.IsNullable();
 
-            if (_stringToEnum.TryGetValue(stringValue, out var enumValue))
+            if (reader.TokenType == JsonTokenType.Null)
             {
-                return enumValue;
+                if (!isNullable)
+                {
+                    throw new JsonException($"Cannot convert null value to {typeToConvert}");
+                }
+
+                return null;
+            }
+
+            var str = reader.GetString();
+
+            if (_stringToEnum.TryGetValue(str, out var value))
+            {
+                return value;
             }
 
             return default;
         }
 
-        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(_enumToString[(Enum)value]);
-        }
-        
         public sealed override bool CanConvert(Type typeToConvert)
         {
             if (typeToConvert.IsEnum)
@@ -57,7 +81,7 @@ namespace CoreLib.CORE.Helpers.Converters
                     }
                 }
             }
-            
+
             return typeToConvert.IsEnum;
         }
     }

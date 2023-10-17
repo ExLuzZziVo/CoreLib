@@ -1,8 +1,12 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Types.ObservableDictionary
 {
@@ -68,7 +72,7 @@ namespace CoreLib.STANDALONE.Types.ObservableDictionary
         {
             if (e.PropertyName == "Key")
             {
-                var item = (ObservableKeyValuePair<TKey, TValue>) sender;
+                var item = (ObservableKeyValuePair<TKey, TValue>)sender;
                 var index = IndexOf(item);
 
                 if (Dictionary.ContainsKey(item.Key))

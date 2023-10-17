@@ -1,5 +1,9 @@
+#region
+
 using System.IO;
 using System.Threading.Tasks;
+
+#endregion
 
 namespace CoreLib.CORE.Interfaces
 {

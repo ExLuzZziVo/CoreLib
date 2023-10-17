@@ -1,5 +1,9 @@
+#region
+
 using System;
 using System.Globalization;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {

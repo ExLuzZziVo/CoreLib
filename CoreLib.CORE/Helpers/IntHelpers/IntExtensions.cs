@@ -42,8 +42,7 @@ namespace CoreLib.CORE.Helpers.IntHelpers
         /// <returns>String that represents size of the <paramref name="value"/> in specified <paramref name="unit"/>s</returns>
         public static string ToFileSize(this long value, SizeUnits unit)
         {
-            return (value / Math.Pow(1024, (long) unit)).ToString("0.00") + unit;
+            return (value / Math.Pow(1024, (long)unit)).ToString("0.00") + unit;
         }
-
     }
 }

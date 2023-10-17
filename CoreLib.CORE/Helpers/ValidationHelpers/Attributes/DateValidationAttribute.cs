@@ -1,8 +1,12 @@
+#region
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Resources;
+
+#endregion
 
 namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
 {

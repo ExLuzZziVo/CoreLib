@@ -26,7 +26,7 @@ namespace CoreLib.CORE.Helpers.FileHelpers.Generators
             }
 
             if (!Directory.Exists(
-                $"{pathToNewFolderRoot}"))
+                    $"{pathToNewFolderRoot}"))
             {
                 Directory.CreateDirectory(
                     $"{pathToNewFolderRoot}");
@@ -70,7 +70,7 @@ namespace CoreLib.CORE.Helpers.FileHelpers.Generators
             }
 
             if (!Directory.Exists(
-                $"{pathToNewFileRoot}"))
+                    $"{pathToNewFileRoot}"))
             {
                 Directory.CreateDirectory(
                     $"{pathToNewFileRoot}");

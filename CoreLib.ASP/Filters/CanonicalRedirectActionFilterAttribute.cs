@@ -58,14 +58,14 @@ namespace CoreLib.ASP.Filters
             var queryString = context.HttpContext.Request.QueryString.Value;
             var urlHasParams = false;
             var isQueryStringValid = true;
-            
+
             if (!queryString.IsNullOrEmptyOrWhiteSpace())
             {
                 if (context.ActionDescriptor is CompiledPageActionDescriptor cpad)
                 {
                     // Get handler name from query string, because RouteData doesn't contain it
                     context.HttpContext.Request.Query.TryGetValue("handler", out var handlerName);
-                    
+
                     urlHasParams = cpad.HandlerMethods.Any(hmd =>
                         string.Equals(hmd.Name, handlerName, StringComparison.OrdinalIgnoreCase) &&
                         string.Equals(hmd.HttpMethod, context.HttpContext.Request.Method,

@@ -1,7 +1,11 @@
+#region
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Types.ObservableDictionary
 {

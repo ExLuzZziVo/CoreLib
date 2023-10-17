@@ -6,29 +6,29 @@
         <AssemblyName>CoreLib.CORE.Extensions.NameCasesGenerator</AssemblyName>
         <PackageId>CoreLib.CORE.Extensions.NameCasesGenerator</PackageId>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>    
-        <Description>A bunch of helper classes for development</Description>
+        <Authors>Khatin S.A.</Authors>
+        <Description>Вспомогательные методы для склонения и форматирования ФИО</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>helpers;types extensions;extension methods;validation attributes</PackageTags>
+        <PackageTags>склонение;склонение имен;склонение фамилий;склонение фио</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="NameCaseLib.Core" Version="9.0.0" />
+        <PackageReference Include="NameCaseLib.Core" Version="9.0.1" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
     </ItemGroup>
-    
+
 </Project>

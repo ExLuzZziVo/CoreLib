@@ -13,7 +13,7 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
     {
         public override IdentityError DefaultError()
         {
-            return new IdentityError {Code = nameof(DefaultError), Description = "Произошла неизвестная ошибка"};
+            return new IdentityError { Code = nameof(DefaultError), Description = "Произошла неизвестная ошибка" };
         }
 
         public override IdentityError ConcurrencyFailure()
@@ -27,18 +27,18 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
 
         public override IdentityError PasswordMismatch()
         {
-            return new IdentityError {Code = nameof(PasswordMismatch), Description = "Некорретный пароль"};
+            return new IdentityError { Code = nameof(PasswordMismatch), Description = "Некорретный пароль" };
         }
 
         public override IdentityError InvalidToken()
         {
-            return new IdentityError {Code = nameof(InvalidToken), Description = "Недействительный токен"};
+            return new IdentityError { Code = nameof(InvalidToken), Description = "Недействительный токен" };
         }
 
         public override IdentityError LoginAlreadyAssociated()
         {
             return new IdentityError
-                {Code = nameof(LoginAlreadyAssociated), Description = "Пользователь с таким логином уже существует"};
+                { Code = nameof(LoginAlreadyAssociated), Description = "Пользователь с таким логином уже существует" };
         }
 
         public override IdentityError InvalidUserName(string userName)
@@ -52,52 +52,56 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
 
         public override IdentityError InvalidEmail(string email)
         {
-            return new IdentityError {Code = nameof(InvalidEmail), Description = $"Email '{email}' некорректен"};
+            return new IdentityError { Code = nameof(InvalidEmail), Description = $"Email '{email}' некорректен" };
         }
 
         public override IdentityError DuplicateUserName(string userName)
         {
             return new IdentityError
-                {Code = nameof(DuplicateUserName), Description = $"Пользователь с именем '{userName}' уже существует"};
+            {
+                Code = nameof(DuplicateUserName), Description = $"Пользователь с именем '{userName}' уже существует"
+            };
         }
 
         public override IdentityError DuplicateEmail(string email)
         {
-            return new IdentityError {Code = nameof(DuplicateEmail), Description = $"Email '{email}' уже используется"};
+            return new IdentityError
+                { Code = nameof(DuplicateEmail), Description = $"Email '{email}' уже используется" };
         }
 
         public override IdentityError InvalidRoleName(string role)
         {
-            return new IdentityError {Code = nameof(InvalidRoleName), Description = $"Имя роли '{role}' некорректно"};
+            return new IdentityError { Code = nameof(InvalidRoleName), Description = $"Имя роли '{role}' некорректно" };
         }
 
         public override IdentityError DuplicateRoleName(string role)
         {
             return new IdentityError
-                {Code = nameof(DuplicateRoleName), Description = $"Имя роли '{role}' уже используется"};
+                { Code = nameof(DuplicateRoleName), Description = $"Имя роли '{role}' уже используется" };
         }
 
         public override IdentityError UserAlreadyHasPassword()
         {
             return new IdentityError
-                {Code = nameof(UserAlreadyHasPassword), Description = "Пользователь уже установил пароль"};
+                { Code = nameof(UserAlreadyHasPassword), Description = "Пользователь уже установил пароль" };
         }
 
         public override IdentityError UserLockoutNotEnabled()
         {
             return new IdentityError
-                {Code = nameof(UserLockoutNotEnabled), Description = "Блокировка недоступна для этого пользователя"};
+                { Code = nameof(UserLockoutNotEnabled), Description = "Блокировка недоступна для этого пользователя" };
         }
 
         public override IdentityError UserAlreadyInRole(string role)
         {
             return new IdentityError
-                {Code = nameof(UserAlreadyInRole), Description = $"Пользователю уже присвоена роль '{role}'."};
+                { Code = nameof(UserAlreadyInRole), Description = $"Пользователю уже присвоена роль '{role}'." };
         }
 
         public override IdentityError UserNotInRole(string role)
         {
-            return new IdentityError {Code = nameof(UserNotInRole), Description = $"У пользователя нет роли '{role}'."};
+            return new IdentityError
+                { Code = nameof(UserNotInRole), Description = $"У пользователя нет роли '{role}'." };
         }
 
         public override IdentityError PasswordTooShort(int length)

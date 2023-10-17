@@ -1,9 +1,5 @@
 ﻿#region
 
-#region
-
-#region
-
 using System;
 using System.IO;
 #if SYSTEM_DRAWING
@@ -11,14 +7,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
-
 #else
 using SkiaSharp;
 #endif
-
-#endregion
-
-#endregion
 
 #endregion
 

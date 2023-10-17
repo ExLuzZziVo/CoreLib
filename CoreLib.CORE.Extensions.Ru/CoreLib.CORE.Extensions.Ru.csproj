@@ -6,25 +6,25 @@
         <AssemblyName>CoreLib.CORE.Extensions.Ru</AssemblyName>
         <PackageId>CoreLib.CORE.Extensions.Ru</PackageId>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>    
+        <Authors>Khatin S.A.</Authors>
         <Description>Специфичные для русскоязычных приложений вспомогательные классы и методы расширения типов</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>helpers;types extensions;extension methods;validation attributes</PackageTags>
+        <PackageTags>helpers;types extensions;extension methods;</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-    
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj" />
+        <None Include="..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
     </ItemGroup>
 
 </Project>

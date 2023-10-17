@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Globalization;
 using CoreLib.CORE.Helpers.ObjectHelpers;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {

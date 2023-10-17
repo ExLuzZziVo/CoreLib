@@ -1,7 +1,11 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {

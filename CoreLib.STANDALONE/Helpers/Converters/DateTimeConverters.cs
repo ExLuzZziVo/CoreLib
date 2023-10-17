@@ -1,6 +1,10 @@
+#region
+
 using System;
 using System.Globalization;
 using CoreLib.CORE.Helpers.DateTimeHelpers;
+
+#endregion
 
 namespace CoreLib.STANDALONE.Helpers.Converters
 {
@@ -21,7 +25,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTime = (DateTime?) value;
+            var dateTime = (DateTime?)value;
             var result = dateTime.IsNullOrNewDateTime();
 
             if (bool.TryParse(parameter?.ToString(), out var par))
