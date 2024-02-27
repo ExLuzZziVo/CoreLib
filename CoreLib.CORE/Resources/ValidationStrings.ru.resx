@@ -248,4 +248,10 @@
     <data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
     <value>Один или несколько элементов последовательности '{0}' не найдены</value>
   </data>
+    <data name="SpecifiedObjectNotFoundError" xml:space="preserve">
+      <value>Объект '{0}' не найден</value>
+    </data>
+    <data name="ValueRangeValuesError" xml:space="preserve">
+      <value>Значение поля '{0}' должно лежать в интервале '{1}' - '{2}'</value>
+    </data>
 </root>

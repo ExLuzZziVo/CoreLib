@@ -197,6 +197,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             return null;
         }
 
+#if !NET6_0_OR_GREATER
         /// <summary>
         /// Converts an object to byte array
         /// </summary>
@@ -257,6 +258,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 return (T)obj;
             }
         }
+#endif
 
         /// <summary>
         /// Changes type of object

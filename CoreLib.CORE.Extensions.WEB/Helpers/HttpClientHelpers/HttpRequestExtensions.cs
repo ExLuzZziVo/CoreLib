@@ -9,7 +9,7 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
 {
     public static class HttpRequestExtensions
     {
-#if NET6_0
+#if NET6_0_OR_GREATER
         private static readonly HttpRequestOptionsKey<TimeSpan?> TimeoutPropertyKey =
  new HttpRequestOptionsKey<TimeSpan?>("RequestTimeout");
 #else
@@ -27,7 +27,7 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
             {
                 throw new ArgumentNullException(nameof(request));
             }
-#if NET6_0
+#if NET6_0_OR_GREATER
             request.Options.Set(TimeoutPropertyKey, timeout);
 #else
             request.Properties[TimeoutPropertyKey] = timeout;
@@ -46,7 +46,7 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
                 throw new ArgumentNullException(nameof(request));
             }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
             return request.Options.TryGetValue(TimeoutPropertyKey, out var value) ? value : null;
 #else
             if (request.Properties.TryGetValue(TimeoutPropertyKey, out var value) && value is TimeSpan timeout)

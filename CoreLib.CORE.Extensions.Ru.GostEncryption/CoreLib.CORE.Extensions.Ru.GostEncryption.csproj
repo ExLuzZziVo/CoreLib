@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
         <RootNamespace>CoreLib.CORE</RootNamespace>
         <AssemblyName>CoreLib.CORE.Extensions.Ru.GostEncryption</AssemblyName>
         <PackageId>CoreLib.CORE.Extensions.Ru.GostEncryption</PackageId>
-        <VersionPrefix>1.0.0</VersionPrefix>
+        <VersionPrefix>1.0.1</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>Вспомогательный класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015)</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

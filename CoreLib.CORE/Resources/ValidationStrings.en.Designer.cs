@@ -348,6 +348,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The object &apos;{0}&apos; not found.
+        /// </summary>
+        public static string SpecifiedObjectNotFoundError {
+            get {
+                return ResourceManager.GetString("SpecifiedObjectNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field &apos;{0}&apos; has wrong format.
         /// </summary>
         public static string StringFormatError {
@@ -416,6 +425,15 @@ namespace CoreLib.CORE.Resources {
         public static string ValueNotEqualError {
             get {
                 return ResourceManager.GetString("ValueNotEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of the field &apos;{0}&apos; must belong to the interval from {1} to {2}.
+        /// </summary>
+        public static string ValueRangeValuesError {
+            get {
+                return ResourceManager.GetString("ValueRangeValuesError", resourceCulture);
             }
         }
         

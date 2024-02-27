@@ -69,7 +69,6 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// Converts an enum to its <see cref="DisplayNameAttribute"/> value and back
     /// </summary>
     public abstract class EnumToDisplayNameConverter : IValueConverter
-
     {
         private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
         private readonly bool _isCacheEnabled;
@@ -123,7 +122,6 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// Converts an enum to a target type
     /// </summary>
     public abstract class EnumCastConverter : IValueConverter
-
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

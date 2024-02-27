@@ -107,13 +107,15 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         }
 
         /// <summary>
-        /// This constructor is used to compare DATE with <see cref="DateTime.Today"/>
+        /// This constructor is used to compare DATE with <see cref="DateTime.Today"/> or DATETIME with <see cref="DateTime.Now"/>
         /// </summary>
         /// <param name="comparisonType">Comparison type</param>
-        public DateValidationAttribute(ComparisonType comparisonType) : base(GetDefaultErrorMessage(comparisonType))
+        /// <param name="isTimePartIncluded">Include time part to compare DATETIME. Only works when comparing <see cref="DateTime"/>. Default value: false</param>
+        public DateValidationAttribute(ComparisonType comparisonType, bool isTimePartIncluded = false) : base(GetDefaultErrorMessage(comparisonType))
         {
             ComparisonType = comparisonType;
             IsDateTimeTodayToCompare = true;
+            IsTimePartIncluded = isTimePartIncluded;
         }
 
         /// <summary>
@@ -125,6 +127,14 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Flag indicating that <see cref="DateTime.Today"/> will be used instead of <see cref="DateToCompare"/>
         /// </summary>
         public bool IsDateTimeTodayToCompare { get; } = false;
+        
+        /// <summary>
+        /// Flag indicating that <see cref="DateTime.Now"/> will be used instead of <see cref="DateTime.Today"/> if <see cref="IsDateTimeTodayToCompare"/> is set to true
+        /// </summary>
+        /// <remarks>
+        /// Only works when comparing <see cref="DateTime"/>
+        /// </remarks>
+        public bool IsTimePartIncluded { get; } = false;
 
         /// <summary>
         /// Comparison type
@@ -175,7 +185,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         public override string FormatErrorMessage(string name)
         {
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name,
-                (IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare).ToString(ErrorMessageDateToCompareFormat,
+                (IsDateTimeTodayToCompare ? (IsTimePartIncluded ? DateTime.Now : DateTime.Today) : DateToCompare).ToString(ErrorMessageDateToCompareFormat,
                     CultureInfo.CurrentCulture));
         }
 
@@ -193,11 +203,11 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             else if (value is DateTime dateTime)
             {
                 return CompareToAttribute.CompareValues(dateTime,
-                    IsDateTimeTodayToCompare ? DateTime.Today : DateToCompare, ComparisonType)
+                    IsDateTimeTodayToCompare ? (IsTimePartIncluded ? DateTime.Now : DateTime.Today) : DateToCompare, ComparisonType)
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }
-#if NET6_0
+#if NET6_0_OR_GREATER
             else if (value is DateOnly dateOnly)
             {
                 return CompareToAttribute.CompareValues(dateOnly,

@@ -348,6 +348,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Объект &apos;{0}&apos; не найден.
+        /// </summary>
+        public static string SpecifiedObjectNotFoundError {
+            get {
+                return ResourceManager.GetString("SpecifiedObjectNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Поле &apos;{0}&apos; имеет неверный формат.
         /// </summary>
         public static string StringFormatError {
@@ -416,6 +425,15 @@ namespace CoreLib.CORE.Resources {
         public static string ValueNotEqualError {
             get {
                 return ResourceManager.GetString("ValueNotEqualError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значение поля &apos;{0}&apos; должно лежать в интервале &apos;{1}&apos; - &apos;{2}&apos;.
+        /// </summary>
+        public static string ValueRangeValuesError {
+            get {
+                return ResourceManager.GetString("ValueRangeValuesError", resourceCulture);
             }
         }
         

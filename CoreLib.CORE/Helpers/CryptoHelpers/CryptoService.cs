@@ -128,11 +128,29 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         [Obsolete("Uses BinaryFormatter which is unsafe for object deserialization")]
         public virtual T DecryptObject<T>(Stream s)
         {
-            using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))
+// SYSLIB0041 Temp Solution to migrate
+#if NET7_0_OR_GREATER
+            try
             {
-                return (T)new BinaryFormatter
-                    { Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true) }.Deserialize(cs);
+#endif
+                using (var cs = new CryptoStream(s, CreateDecryptor(s), CryptoStreamMode.Read))
+                {
+                    return (T)new BinaryFormatter
+                        { Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true) }.Deserialize(cs);
+                }
+
+// SYSLIB0041 Temp Solution to migrate
+#if NET7_0_OR_GREATER
             }
+            catch
+            {
+                using (var cs = new CryptoStream(s, CreateLegacyDecryptor(s), CryptoStreamMode.Read))
+                {
+                    return (T)new BinaryFormatter
+                        { Binder = new SearchAssembliesBinder(Assembly.GetEntryAssembly(), true) }.Deserialize(cs);
+                }
+            }
+#endif
         }
 
         /// <summary>
@@ -142,8 +160,13 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>AES encryptor</returns>
         protected virtual ICryptoTransform CreateEncryptor(Stream s)
         {
+#if NET7_0_OR_GREATER
+            using (var key = new Rfc2898DeriveBytes(Key, Salt, 4096, HashAlgorithmName.SHA512))
+            {
+#else
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
+#endif
                 using (var aesAlg = Aes.Create())
                 {
                     aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
@@ -162,7 +185,30 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>AES decryptor</returns>
         protected virtual ICryptoTransform CreateDecryptor(Stream s)
         {
+#if NET7_0_OR_GREATER
+            using (var key = new Rfc2898DeriveBytes(Key, Salt, 4096, HashAlgorithmName.SHA512))
+            {
+#else
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
+            {
+#endif
+                using (var aesAlg = Aes.Create())
+                {
+                    aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+                    aesAlg.IV = ReadByteArray(s);
+
+                    return aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                }
+            }
+        }
+
+// SYSLIB0041 Temp Solution to migrate
+#if NET7_0_OR_GREATER
+        private ICryptoTransform CreateLegacyDecryptor(Stream s)
+        {
+#pragma warning disable SYSLIB0041
+            using (var key = new Rfc2898DeriveBytes(Key, Salt))
+#pragma warning restore SYSLIB0041
             {
                 using (var aesAlg = Aes.Create())
                 {
@@ -173,6 +219,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
                 }
             }
         }
+#endif
 
         /// <summary>
         /// A helper method that reads the IV from data stream
@@ -218,17 +265,41 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         {
             var bytes = Convert.FromBase64String(str);
 
-            using (var msDecrypt = new MemoryStream(bytes))
+// SYSLIB0041 Temp Solution to migrate
+#if NET7_0_OR_GREATER
+            try
             {
-                using (var csDecrypt =
-                       new CryptoStream(msDecrypt, CreateDecryptor(msDecrypt), CryptoStreamMode.Read))
+#endif
+                using (var msDecrypt = new MemoryStream(bytes))
                 {
-                    using (var srDecrypt = new StreamReader(csDecrypt))
+                    using (var csDecrypt =
+                           new CryptoStream(msDecrypt, CreateDecryptor(msDecrypt), CryptoStreamMode.Read))
                     {
-                        return srDecrypt.ReadToEnd();
+                        using (var srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+
+// SYSLIB0041 Temp Solution to migrate
+#if NET7_0_OR_GREATER
+            }
+            catch
+            {
+                using (var msDecrypt = new MemoryStream(bytes))
+                {
+                    using (var csDecrypt =
+                           new CryptoStream(msDecrypt, CreateLegacyDecryptor(msDecrypt), CryptoStreamMode.Read))
+                    {
+                        using (var srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
+#endif
         }
     }
 }

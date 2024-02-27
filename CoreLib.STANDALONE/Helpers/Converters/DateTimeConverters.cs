@@ -25,8 +25,38 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTime = (DateTime?)value;
-            var result = dateTime.IsNullOrNewDateTime();
+            var result = false;
+
+            switch (value)
+            {
+                case DateTime dateTime:
+                {
+                    result = dateTime == new DateTime();
+
+                    break;
+                }
+#if NET6_0_OR_GREATER
+                case DateOnly dateOnly:
+                {
+                    result = dateOnly == new DateOnly();
+
+                    break;
+                }
+                case TimeOnly timeOnly:
+                {
+                    result = timeOnly == new TimeOnly();
+
+                    break;
+                }
+#endif
+                default:
+                {
+                    result = true;
+                    
+                    break;
+                }
+            }
+
 
             if (bool.TryParse(parameter?.ToString(), out var par))
             {

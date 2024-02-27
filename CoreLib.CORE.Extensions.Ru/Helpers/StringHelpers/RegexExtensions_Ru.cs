@@ -111,6 +111,29 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         public const string RussianResidencePermitPattern = @"^\d{2}\s\d{7}$";
 
         /// <summary>
+        /// Сильный пароль:
+        /// <list type="bullet">
+        /// <item>
+        /// Минимум 8 символов
+        /// </item>
+        /// <item>
+        /// Минимум 1 заглавная буква
+        /// </item>
+        /// <item>
+        /// Минимум 1 маленькая буква
+        /// </item>
+        /// <item>
+        /// Минимум 1 цифра
+        /// </item>
+        /// <item>
+        /// Минимум 1 спецсимвол: #?!@$%^&amp;*-
+        /// </item>
+        /// </list>
+        /// </summary>
+        public const string StrongPasswordPattern =
+            @"^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+        
+        /// <summary>
         /// Проверяет, является ли значение строки российским номером телефона
         /// </summary>
         /// <param name="source">Строка для проверки</param>

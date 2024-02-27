@@ -149,4 +149,10 @@
     <data name="OneOrMoreObjectsInCollectionNotFoundError" xml:space="preserve">
         <value>One or more objects in sequence '{0}' not found</value>
     </data>
+    <data name="SpecifiedObjectNotFoundError" xml:space="preserve">
+        <value>The object '{0}' not found</value>
+    </data>
+    <data name="ValueRangeValuesError" xml:space="preserve">
+        <value>The value of the field '{0}' must belong to the interval from {1} to {2}</value>
+    </data>
 </root>
