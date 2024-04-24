@@ -316,12 +316,12 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
 
             foreach (var e in AddressLongNamesDictionary)
             {
-#if NETSTANDARD2_1_OR_GREATER
-                source = source.Replace(e.Key, e.Value, StringComparison.OrdinalIgnoreCase);
-                source = source.Replace(e.Key.Remove(0, 1), e.Value.Remove(0, 1), StringComparison.OrdinalIgnoreCase);
-#else
+#if NETSTANDARD2_0
                 source = Regex.Replace(source, e.Key, e.Value, RegexOptions.IgnoreCase);
                 source = Regex.Replace(source, e.Key.Remove(0, 1), e.Value.Remove(0, 1), RegexOptions.IgnoreCase);
+#else
+                source = source.Replace(e.Key, e.Value, StringComparison.OrdinalIgnoreCase);
+                source = source.Replace(e.Key.Remove(0, 1), e.Value.Remove(0, 1), StringComparison.OrdinalIgnoreCase);
 #endif
             }
 

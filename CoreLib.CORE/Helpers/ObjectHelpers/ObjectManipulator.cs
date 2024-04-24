@@ -35,15 +35,15 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
         /// <summary>
         /// Gets all <see cref="DescriptionAttribute"/> values of properties from the specified object
         /// </summary>
-        /// <returns>List of <see cref="DescriptionAttribute"/> values</returns>
-        public static IEnumerable<string> GetPropertyDescriptions<T>()
+        /// <returns>Array of <see cref="DescriptionAttribute"/> values</returns>
+        public static string[] GetPropertyDescriptions<T>()
         {
             var attributes = typeof(T).GetMembers()
                 .SelectMany(member =>
                     member.GetCustomAttributes(typeof(DescriptionAttribute), true).Cast<DescriptionAttribute>())
                 .ToArray();
 
-            return attributes.Select(x => x.Description);
+            return attributes.Select(x => x.Description).ToArray();
         }
 
         /// <summary>

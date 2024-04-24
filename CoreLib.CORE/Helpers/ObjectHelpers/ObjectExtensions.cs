@@ -53,13 +53,13 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
                 if (array.Length < 2)
                 {
-                    throw new ArgumentOutOfRangeException(propertyName, $"Wrong format of property: {propertyName}");
+                    throw new ArgumentOutOfRangeException(propertyName, $"Invalid format of property name: {propertyName}");
                 }
 
-                var x = type.GetProperty(array[0]);
-                var y = x.GetValue(obj, null);
+                var propertyInfo = type.GetProperty(array[0]);
+                var propertyObject = propertyInfo.GetValue(obj, null);
 
-                y.SetPropertyValueByName(string.Join(".", array.Skip(1).ToArray()), value);
+                propertyObject.SetPropertyValueByName(string.Join(".", array.Skip(1).ToArray()), value);
             }
             else
             {
@@ -93,14 +93,33 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 return obj;
             }
 
-            var propertyDescriptor = TypeDescriptor.GetProperties(obj.GetType()).Find(propertyName, false);
-
-            if (propertyDescriptor == null)
+            var type = obj.GetType();
+            
+            if (propertyName.Contains("."))
             {
-                throw new ArgumentOutOfRangeException(propertyName);
-            }
+                var array = propertyName.Split('.');
 
-            return propertyDescriptor.GetValue(obj);
+                if (array.Length < 2)
+                {
+                    throw new ArgumentOutOfRangeException(propertyName, $"Invalid format of property name: {propertyName}");
+                }
+
+                var propertyInfo = type.GetProperty(array[0]);
+                var propertyObject = propertyInfo.GetValue(obj, null);
+
+                return propertyObject.GetPropertyValueByName(string.Join(".", array.Skip(1).ToArray()));
+            }
+            else
+            {
+                var propertyDescriptor = type.GetProperty(propertyName);
+
+                if (propertyDescriptor == null)
+                {
+                    throw new ArgumentOutOfRangeException(propertyName);
+                }
+
+                return propertyDescriptor.GetValue(obj);
+            }
         }
 
         /// <summary>

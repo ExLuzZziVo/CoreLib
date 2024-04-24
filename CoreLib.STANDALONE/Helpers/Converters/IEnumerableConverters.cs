@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -41,48 +42,60 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            switch (value)
             {
-                return NullValue;
+                case null:
+                {
+                    return NullValue;
+                }
+                // For dictionaries
+                case ICollection collection:
+                {
+                    return GetValue(collection.Count, parameter);
+                }
+                case IEnumerable<object> enumerable:
+                {
+                    return GetValue(enumerable.Count(), parameter);
+                }
+                default:
+                {
+                    throw new NotSupportedException();
+                }
             }
-
-            if (value is IEnumerable<object> objects)
-            {
-                var val = objects.Count();
-
-                var result = false;
-
-                if (GreaterThanValue != null && LessThenValue != null &&
-                    val > GreaterThanValue && val < LessThenValue)
-                {
-                    result = true;
-                }
-                else if (GreaterThanValue != null && val > GreaterThanValue)
-                {
-                    result = true;
-                }
-                else if (LessThenValue != null && val < LessThenValue.Value)
-                {
-                    result = true;
-                }
-
-                if (bool.TryParse(parameter?.ToString(), out var par))
-                {
-                    if (par)
-                    {
-                        result = !result;
-                    }
-                }
-
-                return result ? TrueValue : FalseValue;
-            }
-
-            throw new NotSupportedException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
+        }
+        
+        private T GetValue(int count, object parameter)
+        {
+            var result = false;
+
+            if (GreaterThanValue != null && LessThenValue != null &&
+                count > GreaterThanValue && count < LessThenValue)
+            {
+                result = true;
+            }
+            else if (GreaterThanValue != null && count > GreaterThanValue)
+            {
+                result = true;
+            }
+            else if (LessThenValue != null && count < LessThenValue.Value)
+            {
+                result = true;
+            }
+
+            if (bool.TryParse(parameter?.ToString(), out var par))
+            {
+                if (par)
+                {
+                    result = !result;
+                }
+            }
+
+            return result ? TrueValue : FalseValue;
         }
     }
 
@@ -118,17 +131,31 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         {
             var result = false;
 
-            if (value == null)
+            switch (value)
             {
-                result = false;
-            }
-            else if (value is IEnumerable<object> objects)
-            {
-                result = objects.Any();
-            }
-            else
-            {
-                throw new NotSupportedException();
+                case null:
+                {
+                    result = false;
+
+                    break;
+                }
+                // For dictionaries
+                case ICollection collection:
+                {
+                    result = collection.Count > 0;
+
+                    break;
+                }
+                case IEnumerable<object> enumerable:
+                {
+                    result = enumerable.Any();
+
+                    break;
+                }
+                default:
+                {
+                    throw new NotSupportedException();
+                }
             }
 
             if (bool.TryParse(parameter?.ToString(), out var par))
