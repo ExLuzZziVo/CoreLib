@@ -5,7 +5,7 @@
         <RootNamespace>CoreLib.ASP</RootNamespace>
         <AssemblyName>CoreLib.ASP.Extensions.Identity.Ru</AssemblyName>
         <PackageId>CoreLib.ASP.Extensions.Identity.Ru</PackageId>
-        <VersionPrefix>1.0.1</VersionPrefix>
+        <VersionPrefix>1.0.2</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>Локализация текстов ошибок пакета Identity.UI на русский</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

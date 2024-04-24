@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
         <PackageId>CoreLib.OPENXML</PackageId>
-        <VersionPrefix>1.0.1</VersionPrefix>
+        <VersionPrefix>1.0.2</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>A bunch of helper classes for OpenXml documents</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

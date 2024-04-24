@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
         <PackageId>CoreLib.ASP.Extensions.YouTube</PackageId>
-        <VersionPrefix>1.0.1</VersionPrefix>
+        <VersionPrefix>1.0.2</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>This library allows to get various info about videos from YouTube channels</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
