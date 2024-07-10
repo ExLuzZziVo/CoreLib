@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
         <PackageId>CoreLib.STANDALONE</PackageId>
-        <VersionPrefix>1.0.2</VersionPrefix>
+        <VersionPrefix>1.0.3</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>A bunch of helper classes for standalone applications development</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="8.0.3"/>
+        <PackageReference Include="System.Text.Json" Version="8.0.4"/>
     </ItemGroup>
 
     <ItemGroup>

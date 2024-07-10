@@ -5,7 +5,7 @@
         <RootNamespace>CoreLib.CORE</RootNamespace>
         <AssemblyName>CoreLib.CORE.Extensions.NameCasesGenerator</AssemblyName>
         <PackageId>CoreLib.CORE.Extensions.NameCasesGenerator</PackageId>
-        <VersionPrefix>1.0.2</VersionPrefix>
+        <VersionPrefix>1.0.3</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>Вспомогательные методы для склонения и форматирования ФИО</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

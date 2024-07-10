@@ -5,7 +5,7 @@
         <AssemblyName>CoreLib.CORE</AssemblyName>
         <RootNamespace>CoreLib.CORE</RootNamespace>
         <PackageId>CoreLib.CORE</PackageId>
-        <VersionPrefix>1.0.2</VersionPrefix>
+        <VersionPrefix>1.0.3</VersionPrefix>
         <Authors>Khatin S.A.</Authors>
         <Description>A bunch of helper classes for development</Description>
         <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

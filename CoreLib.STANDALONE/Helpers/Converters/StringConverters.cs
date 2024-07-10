@@ -109,4 +109,72 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             NotContainsValue = false;
         }
     }
+
+    /// <summary>
+    /// Converts string to the specified casing
+    /// </summary>
+    public abstract class TextCaseConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string s && !s.IsNullOrEmptyOrWhiteSpace())
+            {
+                if (parameter is TextCase stringCase)
+                {
+                    switch (stringCase)
+                    {
+                        case TextCase.Upper:
+                        {
+                            return s.ToUpper();
+                        }
+                        case TextCase.Lower:
+                        {
+                            return s.ToLower();
+                        }
+                        case TextCase.Title:
+                        {
+                            return culture.TextInfo.ToTitleCase(s);
+                        }
+                        default:
+                        {
+                            return value;
+                        }
+                    }
+                }
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+    /// <summary>
+    /// Text character casing types. Used for <see cref="TextCaseConverter"/> as a ConverterParameter
+    /// </summary>
+    public enum TextCase : byte
+    {
+        /// <summary>
+        /// All text characters remain unchanged
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// All text characters become uppercase
+        /// </summary>
+        Upper,
+
+        /// <summary>
+        /// All text characters become lowercase
+        /// </summary>
+        Lower,
+
+        /// <summary>
+        /// All text becomes title case
+        /// </summary>
+        Title
+    }
 }

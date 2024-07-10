@@ -263,9 +263,9 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 .FirstOrDefault(enc => enc.FormatID == img.RawFormat.Guid);
 
             using (var qualityEncoderParameters = new EncoderParameters(1)
-                   {
-                       Param = { [0] = new EncoderParameter(Encoder.Quality, (long)quality) }
-                   })
+            {
+                Param = { [0] = new EncoderParameter(Encoder.Quality, (long)quality) }
+            })
             {
                 var currentPosition = stream.Position;
 

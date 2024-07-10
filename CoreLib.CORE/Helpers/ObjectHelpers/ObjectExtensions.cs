@@ -94,7 +94,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             }
 
             var type = obj.GetType();
-            
+
             if (propertyName.Contains("."))
             {
                 var array = propertyName.Split('.');
@@ -367,12 +367,12 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             var typeSrc = source.GetType();
 
             var results = from srcProp in typeSrc.GetProperties()
-                let targetProperty = typeDest.GetProperty(srcProp.Name)
-                where srcProp.CanRead && targetProperty?.GetSetMethod(true) != null &&
-                      !targetProperty.GetSetMethod(true).IsPrivate &&
-                      (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
-                      targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
-                select new { sourceProperty = srcProp, targetProperty };
+                          let targetProperty = typeDest.GetProperty(srcProp.Name)
+                          where srcProp.CanRead && targetProperty?.GetSetMethod(true) != null &&
+                                !targetProperty.GetSetMethod(true).IsPrivate &&
+                                (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
+                                targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
+                          select new { sourceProperty = srcProp, targetProperty };
 
             foreach (var props in results)
             {

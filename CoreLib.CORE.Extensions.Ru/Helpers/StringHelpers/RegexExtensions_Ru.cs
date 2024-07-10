@@ -132,7 +132,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         /// </summary>
         public const string StrongPasswordPattern =
             @"^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
-        
+
         /// <summary>
         /// Проверяет, является ли значение строки российским номером телефона
         /// </summary>

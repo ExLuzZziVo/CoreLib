@@ -382,7 +382,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
         {
             return DateOnly.FromDateTime(dateTime);
         }
-        
+
         /// <summary>
         /// Converts a nullable <see cref="DateTime"/> to the nullable <see cref="DateOnly"/>
         /// </summary>
@@ -394,7 +394,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             {
                 return null;
             }
-            
+
             return DateOnly.FromDateTime(dateTime.Value);
         }
 #endif
