@@ -1,34 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
-        <RootNamespace>CoreLib.CORE</RootNamespace>
-        <AssemblyName>CoreLib.CORE.Extensions.Ru.GostEncryption</AssemblyName>
-        <PackageId>CoreLib.CORE.Extensions.Ru.GostEncryption</PackageId>
-        <VersionPrefix>1.0.3</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>
-        <Description>Вспомогательный класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015)</Description>
-        <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>gost;gost encryption;grasshopper;ГОСТ;шифрование ГОСТ;кузнечик</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
+		<RootNamespace>CoreLib.CORE</RootNamespace>
+		<AssemblyName>CoreLib.CORE.Extensions.Ru.GostEncryption</AssemblyName>
+		<PackageId>CoreLib.CORE.Extensions.Ru.GostEncryption</PackageId>
+		<VersionPrefix>1.0.4</VersionPrefix>
+		<Authors>Khatin S.A.</Authors>
+		<Description>Вспомогательный класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015)</Description>
+		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageTags>gost;gost encryption;grasshopper;ГОСТ;шифрование ГОСТ;кузнечик</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="OpenGost.Security.Cryptography" Version="0.2.2"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="OpenGost.Security.Cryptography" Version="0.2.1"/>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

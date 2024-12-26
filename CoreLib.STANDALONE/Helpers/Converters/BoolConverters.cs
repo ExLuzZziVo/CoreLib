@@ -11,7 +11,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts a boolean value to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class BoolToValueConverter<T> : IValueConverter
+    public abstract class BoolToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// Object value representing a false boolean value
@@ -23,7 +23,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T TrueValue { get; set; }
 
-        public object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
         {
             var result = false;
 
@@ -47,7 +47,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return result ? TrueValue : FalseValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
+        public override object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             var result = false;
@@ -76,7 +76,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an object of type <typeparamref name="T"/> to a boolean value
     /// </summary>
-    public abstract class ValueToBoolConverter<T> : IValueConverter
+    public abstract class ValueToBoolConverter<T> : ConverterBase
     {
         /// <summary>
         /// Object value representing a false boolean value
@@ -88,7 +88,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T TrueValue { get; set; }
 
-        public object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
         {
             var result = value.Equals(TrueValue);
 
@@ -103,7 +103,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return result;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
+        public override object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             var result = false;
@@ -132,14 +132,14 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converter that inverts boolean value
     /// </summary>
-    public abstract class InvertBoolConverter : IValueConverter
+    public abstract class InvertBoolConverter : ConverterBase
     {
-        public object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetValue, object parameter, CultureInfo culture)
         {
             return !(bool)value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
+        public override object ConvertBack(object value, Type targetType, object parameter,
             CultureInfo culture)
         {
             return !(bool)value;

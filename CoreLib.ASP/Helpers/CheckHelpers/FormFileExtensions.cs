@@ -27,7 +27,8 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 postedFile.ContentType.ToLower() != "image/pjpeg" &&
                 postedFile.ContentType.ToLower() != "image/gif" &&
                 postedFile.ContentType.ToLower() != "image/x-png" &&
-                postedFile.ContentType.ToLower() != "image/png")
+                postedFile.ContentType.ToLower() != "image/png" &&
+                postedFile.ContentType.ToLower() != "image/webp")
             {
                 return false;
             }
@@ -35,7 +36,8 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
             if (Path.GetExtension(postedFile.FileName).ToLower() != ".jpg"
                 && Path.GetExtension(postedFile.FileName).ToLower() != ".png"
                 && Path.GetExtension(postedFile.FileName).ToLower() != ".gif"
-                && Path.GetExtension(postedFile.FileName).ToLower() != ".jpeg")
+                && Path.GetExtension(postedFile.FileName).ToLower() != ".jpeg"
+                && Path.GetExtension(postedFile.FileName).ToLower() != ".webp")
             {
                 return false;
             }
@@ -74,7 +76,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 }
 #endif
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }

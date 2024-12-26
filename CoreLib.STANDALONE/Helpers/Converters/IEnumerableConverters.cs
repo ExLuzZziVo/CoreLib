@@ -13,7 +13,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts a number of elements in the sequence to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class CollectionCountToValueConverter<T> : IValueConverter
+    public abstract class CollectionCountToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// An object value that is returned if the number of elements of the supplied sequence is greater than <see cref="GreaterThanValue"/> or less than <see cref="LessThenValue"/>
@@ -40,7 +40,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public int? LessThenValue { get; set; } = null;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             switch (value)
             {
@@ -64,7 +64,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
@@ -115,7 +115,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts a sequence emptiness to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class CollectionIsEmptyToValueConverter<T> : IValueConverter
+    public abstract class CollectionIsEmptyToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// An object value that is returned if the supplied sequence is empty
@@ -127,7 +127,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T NotEmptyValue { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var result = false;
 
@@ -171,7 +171,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 : EmptyValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

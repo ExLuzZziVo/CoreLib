@@ -1,32 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net8.0-windows;</TargetFrameworks>
-        <RootNamespace>CoreLib.CORE</RootNamespace>
-        <AssemblyName>CoreLib.CORE.Extensions.Images</AssemblyName>
-        <DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
-        <PackageId>CoreLib.CORE.Extensions.Images</PackageId>
-        <VersionPrefix>1.0.3</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>
-        <Description>A bunch of helper classes for cropping, cutting, resizing and compressing images</Description>
-        <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>images;resize images;compress images;crop to circle;crop images;cut images</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net8.0-windows;</TargetFrameworks>
+		<RootNamespace>CoreLib.CORE</RootNamespace>
+		<AssemblyName>CoreLib.CORE.Extensions.Images</AssemblyName>
+		<DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
+		<PackageId>CoreLib.CORE.Extensions.Images</PackageId>
+		<VersionPrefix>1.0.4</VersionPrefix>
+		<Authors>Khatin S.A.</Authors>
+		<Description>A bunch of helper classes for cropping, cutting, resizing and compressing images</Description>
+		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageTags>images;resize images;compress images;crop to circle;crop images;cut images</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.116.1"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.11"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="2.88.8"/>
-        <PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.7"/>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

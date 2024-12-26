@@ -28,7 +28,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an object equality to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class ObjectEqualsToValueConverter<T> : IValueConverter
+    public abstract class ObjectEqualsToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// An object value that is returned if the supplied objects are equal
@@ -40,7 +40,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T NotEqualsValue { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -50,7 +50,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return value.Equals(parameter) ? EqualsValue : NotEqualsValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
@@ -71,7 +71,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an object is null to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class ObjectIsNullToValueConverter<T> : IValueConverter
+    public abstract class ObjectIsNullToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// A value that is returned if the supplied object is null
@@ -83,7 +83,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T NotNullValue { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var result = value == null;
 
@@ -98,7 +98,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return result ? NullValue : NotNullValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

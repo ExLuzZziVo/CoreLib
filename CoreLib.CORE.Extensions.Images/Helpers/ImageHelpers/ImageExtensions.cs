@@ -136,12 +136,12 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="stream">Stream where the new image will be saved</param>
         /// <param name="maxWidth">Maximum resize width</param>
         /// <param name="maxHeight">Maximum resize height</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <param name="quality">Resized image quality</param>
         /// <returns>Size of the new image in bytes</returns>
         /// <exception cref="ArgumentOutOfRangeException">Throws if <paramref name="maxWidth"/> or <paramref name="maxHeight"/> is less than 1</exception>
         public static long Resize(this SKImage img, Stream stream, int maxWidth, int maxHeight,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium, byte quality = 100)
+            SKSamplingOptions sampling = default, byte quality = 100)
         {
             if (maxWidth < 1)
             {
@@ -168,7 +168,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             using (var newImage = SKImage.Create(imageInfo))
             {
-                img.ScalePixels(newImage.PeekPixels(), filterQuality);
+                img.ScalePixels(newImage.PeekPixels(), sampling);
 
                 using (var encoderInfo = SKCodec.Create(img.EncodedData))
                 {
@@ -188,14 +188,14 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="img">Image to resize</param>
         /// <param name="maxWidth">Maximum resize width</param>
         /// <param name="maxHeight">Maximum resize height</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <returns>Resized image</returns>
         public static SKImage Resize(this SKImage img, int maxWidth, int maxHeight,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium)
+            SKSamplingOptions sampling = default)
         {
             using (var ms = new MemoryStream())
             {
-                img.Resize(ms, maxWidth, maxHeight, filterQuality);
+                img.Resize(ms, maxWidth, maxHeight, sampling);
 
                 ms.Position = 0;
 
@@ -209,19 +209,19 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="img">Image to resize</param>
         /// <param name="stream">Stream where the new image will be saved</param>
         /// <param name="scale">Scale</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <param name="quality">Resized image quality</param>
         /// <returns>Size of the new image in bytes</returns>-
         /// <exception cref="ArgumentOutOfRangeException">Throws if <paramref name="scale"/> is less or equals 0</exception>
         public static long Resize(this SKImage img, Stream stream, double scale,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium, byte quality = 100)
+            SKSamplingOptions sampling = default, byte quality = 100)
         {
             if (scale <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(scale));
             }
 
-            return img.Resize(stream, (int)(img.Width * scale), (int)(img.Height * scale), filterQuality, quality);
+            return img.Resize(stream, (int)(img.Width * scale), (int)(img.Height * scale), sampling, quality);
         }
 
         /// <summary>
@@ -229,18 +229,18 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// </summary>
         /// <param name="img">Image to resize</param>
         /// <param name="scale">Scale</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <returns>Resized image</returns>
         /// <exception cref="ArgumentOutOfRangeException">Throws if <paramref name="scale"/> is less or equals 0</exception>
         public static SKImage Resize(this SKImage img, double scale,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium)
+            SKSamplingOptions sampling = default)
         {
             if (scale <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(scale));
             }
 
-            return img.Resize((int)(img.Width * scale), (int)(img.Height * scale), filterQuality);
+            return img.Resize((int)(img.Width * scale), (int)(img.Height * scale), sampling);
         }
 #endif
 #if SYSTEM_DRAWING

@@ -73,7 +73,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 index++;
             }
 
-            return validationResults.Any()
+            return validationResults.Count > 0
                 ? new ValidationResult(string.Format(ErrorMessageString, validationContext.DisplayName) +
                                        validationResults.Aggregate(string.Empty,
                                            (current, c) => current + "\n\t" + c.ErrorMessage.Replace("\n\t", "\n\t\t")))

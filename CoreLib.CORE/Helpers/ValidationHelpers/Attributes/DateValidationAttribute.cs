@@ -207,6 +207,13 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }
+            else if (value is DateTimeOffset dateTimeOffset)
+            {
+                return CompareToAttribute.CompareValues(dateTimeOffset,
+                    IsDateTimeTodayToCompare ? (IsTimePartIncluded ? new DateTimeOffset(DateTime.Now) : new DateTimeOffset(DateTime.Today)) : new DateTimeOffset(DateToCompare), ComparisonType)
+                    ? ValidationResult.Success
+                    : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
+            }
 #if NET6_0_OR_GREATER
             else if (value is DateOnly dateOnly)
             {
@@ -219,7 +226,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
             else
             {
                 throw new NotSupportedException(
-                    "This attribute is only valid on types 'System.DateTime' or 'System.DateOnly'");
+                    "This attribute is only valid on types 'System.DateTime', 'System.DateTimeOffset' or 'System.DateOnly'");
             }
         }
 

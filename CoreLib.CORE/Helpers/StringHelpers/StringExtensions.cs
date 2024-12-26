@@ -268,7 +268,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 
             return new string(str.Select(x =>
                 random.Next() % 2 == 0
-                    ? char.IsUpper(x) ? x.ToString().ToLower().First() : x.ToString().ToUpper().First()
+                    ? char.IsUpper(x) ? x.ToString().ToLower()[0] : x.ToString().ToUpper()[0]
                     : x).ToArray());
         }
 

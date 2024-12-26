@@ -106,7 +106,7 @@ namespace CoreLib.CORE.Helpers.AssemblyHelpers
                         genericTypes.Add(objectType);
                     }
 
-                    if (!genericTypes.Any())
+                    if (genericTypes.Count == 0)
                     {
                         continue;
                     }

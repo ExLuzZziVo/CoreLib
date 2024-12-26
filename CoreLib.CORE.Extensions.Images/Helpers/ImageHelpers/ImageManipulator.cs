@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 #if SYSTEM_DRAWING
 using System.Drawing;
@@ -109,10 +110,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="pathToImage">Path to the image</param>
         /// <param name="maxWidth">Maximum resize width</param>
         /// <param name="maxHeight">Maximum resize height</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
         public static void ResizeImage(string pathToImage, int maxWidth, int maxHeight,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium, string pathToNewImage = null)
+            SKSamplingOptions sampling = default, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
 
@@ -123,7 +124,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                            FileMode.Create))
                 {
                     // Encoding quality?
-                    image.Resize(fs, maxWidth, maxHeight, filterQuality, 60);
+                    image.Resize(fs, maxWidth, maxHeight, sampling, 60);
                 }
             }
         }
@@ -133,10 +134,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// </summary>
         /// <param name="pathToImage">Path to the image</param>
         /// <param name="scale">Scale</param>
-        /// <param name="filterQuality">Resized image filter quality</param>
+        /// <param name="sampling">Resized image sampling options</param>
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
         public static void ResizeImage(string pathToImage, double scale,
-            SKFilterQuality filterQuality = SKFilterQuality.Medium, string pathToNewImage = null)
+            SKSamplingOptions sampling = default, string pathToNewImage = null)
         {
             var imageData = File.ReadAllBytes(pathToImage);
 
@@ -147,7 +148,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                            FileMode.Create))
                 {
                     // Encoding quality?
-                    image.Resize(fs, scale, filterQuality, 60);
+                    image.Resize(fs, scale, sampling, 60);
                 }
             }
         }
@@ -461,9 +462,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
         /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
         /// <param name="qualityStep">Quality reduction step. Default value: 20</param>
         /// <param name="scaleStep">Scaling down step. Default value: 0.15</param>
+        /// <param name="sampling">Resized image sampling options</param>
         public static void ReduceImageFileSize(long targetFileSize, string pathToImage,
             string pathToNewImage = null,
-            byte qualityStep = 20, double scaleStep = 0.15)
+            byte qualityStep = 20, double scaleStep = 0.15, SKSamplingOptions sampling = default)
         {
             if (targetFileSize <= 0)
             {
@@ -493,7 +495,10 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
             {
                 imageEncodedData.Dispose();
 
-                if (quality <= 60 && scale >= 0.1)
+                if ((quality <= 60 && scale >= 0.1) ||
+                    encoderInfo.EncodedFormat == SKEncodedImageFormat.Png ||
+                    encoderInfo.EncodedFormat == SKEncodedImageFormat.Bmp ||
+                    encoderInfo.EncodedFormat == SKEncodedImageFormat.Gif)
                 {
                     if (scaleStep >= scale)
                     {
@@ -506,7 +511,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
                     using (var ms = new MemoryStream())
                     {
-                        image.Resize(ms, (int)(imageWidth * scale), (int)(imageHeight * scale), SKFilterQuality.Medium,
+                        image.Resize(ms, (int)(imageWidth * scale), (int)(imageHeight * scale), sampling,
                             quality);
 
                         ms.Position = 0;
@@ -549,5 +554,37 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
             imageEncodedData.Dispose();
         }
 #endif
+
+        /// <summary>
+        /// Checks if a byte array is an image
+        /// </summary>
+        /// <param name="data">Data to check</param>
+        /// <returns>True if the provided data is an image</returns>
+        public static bool IsImage(this byte[] data)
+        {
+            try
+            {
+#if SYSTEM_DRAWING
+                using (var ms = new MemoryStream(data))
+                {
+                    using (new Bitmap(ms)) { }
+                }
+#else
+                using (var image = SKImage.FromEncodedData(data))
+                {
+                    if (image == null)
+                    {
+                        return false;
+                    }
+                }
+#endif
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

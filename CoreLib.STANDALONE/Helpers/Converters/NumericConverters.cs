@@ -11,7 +11,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an object of type <typeparamref name="T1"/> that is struct and implements <see cref="IComparable"/> interface (e.g. <see cref="int"/>, <see cref="double"/>...) to an object of type <typeparamref name="T2"/>
     /// </summary>
-    public abstract class StructToValueConverter<T1, T2> : IValueConverter where T1 : struct, IComparable
+    public abstract class StructToValueConverter<T1, T2> : ConverterBase where T1 : struct, IComparable
     {
         /// <summary>
         /// An object value that is returned if the supplied value is greater than <see cref="GreaterThanValue"/> or less than <see cref="LessThenValue"/>
@@ -38,7 +38,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T1? LessThenValue { get; set; } = null;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -88,7 +88,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return result ? TrueValue : FalseValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

@@ -179,7 +179,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                         str.StartsWith("'") ||
                         str.StartsWith("«"))
                     {
-                        firstQuoteChar = str.First();
+                        firstQuoteChar = str[0];
                         str = str.Substring(1).ToUpperFirstChar();
                     }
                 }

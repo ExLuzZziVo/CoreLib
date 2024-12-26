@@ -1,33 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
-        <RootNamespace>CoreLib.CORE</RootNamespace>
-        <PackageId>CoreLib.CORE.Extensions.Json</PackageId>
-        <VersionPrefix>1.0.3</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>
-        <Description>System.Text.Json converters and helpers</Description>
-        <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>json;json converters;json helpers</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
+		<RootNamespace>CoreLib.CORE</RootNamespace>
+		<PackageId>CoreLib.CORE.Extensions.Json</PackageId>
+		<VersionPrefix>1.0.4</VersionPrefix>
+		<Authors>Khatin S.A.</Authors>
+		<Description>System.Text.Json converters and helpers</Description>
+		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageTags>json;json converters;json helpers</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="8.0.4"/>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Text.Json" Version="8.0.5"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

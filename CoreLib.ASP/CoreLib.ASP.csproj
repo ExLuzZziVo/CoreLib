@@ -1,59 +1,59 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net8.0;net8.0-windows;</TargetFrameworks>
-        <DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
-        <PackageId>CoreLib.ASP</PackageId>
-        <VersionPrefix>1.0.3</VersionPrefix>
-        <Authors>Khatin S.A.</Authors>
-        <Description>A bunch of helper classes for web applications development</Description>
-        <PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageTags>asp action filters;asp helpers;recaptcha;recaptcha action filter;throttle action filter;validation attributes;modelbinders</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net8.0-windows;</TargetFrameworks>
+		<DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
+		<PackageId>CoreLib.ASP</PackageId>
+		<VersionPrefix>1.0.4</VersionPrefix>
+		<Authors>Khatin S.A.</Authors>
+		<Description>A bunch of helper classes for web applications development</Description>
+		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageTags>asp action filters;asp helpers;recaptcha;recaptcha action filter;throttle action filter;validation attributes;modelbinders</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\README.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
-    </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="2.88.8"/>
-        <PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.7"/>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.116.1"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.11"/>
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\CoreLib.CORE\CoreLib.CORE.csproj"/>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-    <ItemGroup>
-        <Compile Update="Resources\ValidationStrings.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>ValidationStrings.resx</DependentUpon>
-        </Compile>
-    </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\ValidationStrings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ValidationStrings.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Update="Resources\ValidationStrings.en.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Resources\ValidationStrings.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>ValidationStrings.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Resources\ValidationStrings.ru.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
-    </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\ValidationStrings.en.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ValidationStrings.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ValidationStrings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ValidationStrings.ru.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an enum to its <see cref="DescriptionAttribute"/> value and back
     /// </summary>
-    public abstract class EnumToDescriptionConverter : IValueConverter
+    public abstract class EnumToDescriptionConverter : ConverterBase
     {
         private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
         private readonly bool _isCacheEnabled;
@@ -29,7 +29,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             _isCacheEnabled = isCacheEnabled;
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -56,7 +56,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return en.GetDescription();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value == null
                 ? null
@@ -68,7 +68,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an enum to its <see cref="DisplayNameAttribute"/> value and back
     /// </summary>
-    public abstract class EnumToDisplayNameConverter : IValueConverter
+    public abstract class EnumToDisplayNameConverter : ConverterBase
     {
         private static readonly Dictionary<Enum, string> Cache = new Dictionary<Enum, string>();
         private readonly bool _isCacheEnabled;
@@ -82,7 +82,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             _isCacheEnabled = isCacheEnabled;
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -109,7 +109,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return en.GetDisplayName(culture);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value == null
                 ? null
@@ -121,9 +121,9 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts an enum to a target type
     /// </summary>
-    public abstract class EnumCastConverter : IValueConverter
+    public abstract class EnumCastConverter : ConverterBase
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -151,7 +151,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Convert(value, targetType, parameter, culture);
         }

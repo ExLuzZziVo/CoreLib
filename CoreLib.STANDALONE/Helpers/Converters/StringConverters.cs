@@ -11,7 +11,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts string is null or empty or white space value to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class StringIsNullOrEmptyOrWhiteSpaceToValueConverter<T> : IValueConverter
+    public abstract class StringIsNullOrEmptyOrWhiteSpaceToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// A value that is returned if the supplied string is null or empty or white space
@@ -23,7 +23,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </summary>
         public T NotEmptyValue { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var result = (value as string).IsNullOrEmptyOrWhiteSpace();
 
@@ -40,7 +40,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 : NotEmptyValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
@@ -62,7 +62,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts string containing the provided value to an object of type <typeparamref name="T"/>
     /// </summary>
-    public abstract class StringContainsToValueConverter<T> : IValueConverter
+    public abstract class StringContainsToValueConverter<T> : ConverterBase
     {
         /// <summary>
         /// A value that is returned if the supplied string contains provided value
@@ -82,7 +82,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
         /// </remarks>
         public StringComparison StringComparison { get; set; } = StringComparison.Ordinal;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string s && s.Contains((string)parameter, StringComparison))
             {
@@ -92,7 +92,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return NotContainsValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
@@ -113,9 +113,9 @@ namespace CoreLib.STANDALONE.Helpers.Converters
     /// <summary>
     /// Converts string to the specified casing
     /// </summary>
-    public abstract class TextCaseConverter : IValueConverter
+    public abstract class TextCaseConverter : ConverterBase
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string s && !s.IsNullOrEmptyOrWhiteSpace())
             {
@@ -146,7 +146,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

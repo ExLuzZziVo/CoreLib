@@ -37,8 +37,8 @@ namespace CoreLib.ASP.Helpers.FileHelpers
         /// <param name="file">Uploaded file</param>
         /// <param name="encoding">Encoding of the uploaded file</param>
         /// <param name="fileSizeLimit">Maximum size of the uploaded file. Default value: 2MB</param>
-        /// <returns>A task that represents the asynchronous parsing of the uploaded file line by line. If the operation is successful, it returns a sequence of strings</returns>
-        public async Task<IEnumerable<string>> UploadAndParseTextFileByLine(IFormFile file, Encoding encoding,
+        /// <returns>A task that represents the asynchronous parsing of the uploaded file line by line. If the operation is successful, it returns an array of strings</returns>
+        public async Task<string[]> UploadAndParseTextFileByLine(IFormFile file, Encoding encoding,
             long fileSizeLimit = 2048000)
         {
             try
@@ -65,11 +65,11 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                     }
                 }
 
-                return result;
+                return result.ToArray();
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Error, ex, ex.Message);
+                _logger.LogError(ex, "An error has occured while uploading and parsing text file.");
 
                 throw;
             }
@@ -109,7 +109,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Error, ex, ex.Message);
+                _logger.LogError(ex, "An error has occured while uploading the text file.");
 
                 throw;
             }
@@ -166,7 +166,7 @@ namespace CoreLib.ASP.Helpers.FileHelpers
                     message = CORE.Resources.ValidationStrings.ResourceManager.GetString("SomethingWentWrong");
                 }
 
-                _logger.Log(LogLevel.Error, ex, ex.Message);
+                _logger.LogError(ex, "An error has occured while uploading the image.");
 
                 return new BadRequestObjectResult(message);
             }

@@ -44,9 +44,9 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
         /// </summary>
         /// <param name="type">A type of the <see cref="Enum"/> to process</param>
         /// <returns>All description attribute values from provided type of <see cref="Enum"/></returns>
-        public static IEnumerable<string> GetDescriptions(Type type)
+        public static string[] GetDescriptions(Type type)
         {
-            return from Enum en in Enum.GetValues(type) select en.GetDescription();
+            return Enum.GetValues(type).Cast<Enum>().Select(en => en.GetDescription()).ToArray();
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
         /// </summary>
         /// <param name="type">A type of the <see cref="Enum"/> to process</param>
         /// <returns>All display attribute values from provided type of <see cref="Enum"/></returns>
-        public static IEnumerable<string> GetDisplayNames(Type type)
+        public static string[] GetDisplayNames(Type type)
         {
             return GetDisplayNames(type, CultureInfo.CurrentCulture);
         }
@@ -123,9 +123,9 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
         /// <param name="type">A type of the <see cref="Enum"/> to process</param>
         /// <param name="cultureInfo">Culture info</param>
         /// <returns>All display attribute values from provided type of <see cref="Enum"/></returns>
-        public static IEnumerable<string> GetDisplayNames(Type type, CultureInfo cultureInfo)
+        public static string[] GetDisplayNames(Type type, CultureInfo cultureInfo)
         {
-            return from Enum en in Enum.GetValues(type) select en.GetDisplayName(cultureInfo);
+            return Enum.GetValues(type).Cast<Enum>().Select(en => en.GetDisplayName(cultureInfo)).ToArray();
         }
 
         /// <summary>
