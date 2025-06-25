@@ -364,7 +364,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
             }
 
             byte quality = 100;
-            var scale = 1d;
+            var scale = 1 - scaleStep;
             var imageData = File.ReadAllBytes(pathToImage);
 
             using (var fs = new MemoryStream())
@@ -393,15 +393,18 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                         ms.SetLength(0);
                         ms.Capacity = 0;
 
-                        if (quality <= 60 && scale >= 0.1)
+                        if (quality <= 60 ||
+                            image.RawFormat.Equals(ImageFormat.Png) ||
+                            image.RawFormat.Equals(ImageFormat.Bmp) ||
+                            image.RawFormat.Equals(ImageFormat.Gif))
                         {
-                            if (scaleStep >= scale)
+                            imageWidth = Convert.ToInt32(Math.Round(imageWidth * scale, 0, MidpointRounding.AwayFromZero));
+                            imageHeight = Convert.ToInt32(Math.Round(imageHeight * scale, 0, MidpointRounding.AwayFromZero));
+
+                            if (imageWidth <= 1 || imageHeight <= 1)
                             {
-                                scale = 0.1;
-                            }
-                            else
-                            {
-                                scale -= scaleStep;
+                                imageWidth = imageWidth < 1 ? 1 : imageWidth;
+                                imageHeight = imageHeight < 1 ? 1 : imageHeight;
                             }
 
                             image.Resize(ms, (int)(imageWidth * scale), (int)(imageHeight * scale),
@@ -438,7 +441,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
                         image = Image.FromStream(fs);
 
-                        if (quality == 0 && scale <= 0.1)
+                        if (quality == 0 || imageWidth <= 1 || imageHeight <= 1)
                         {
                             break;
                         }
@@ -483,7 +486,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
             }
 
             byte quality = 100;
-            var scale = 1d;
+            var scale = 1 - scaleStep;
 
             var imageData = File.ReadAllBytes(pathToImage);
             var image = SKImage.FromEncodedData(imageData);
@@ -495,24 +498,23 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
             {
                 imageEncodedData.Dispose();
 
-                if ((quality <= 60 && scale >= 0.1) ||
+                if (quality <= 60 ||
                     encoderInfo.EncodedFormat == SKEncodedImageFormat.Png ||
                     encoderInfo.EncodedFormat == SKEncodedImageFormat.Bmp ||
                     encoderInfo.EncodedFormat == SKEncodedImageFormat.Gif)
                 {
-                    if (scaleStep >= scale)
+                    imageWidth = Convert.ToInt32(Math.Round(imageWidth * scale, 0, MidpointRounding.AwayFromZero));
+                    imageHeight = Convert.ToInt32(Math.Round(imageHeight * scale, 0, MidpointRounding.AwayFromZero));
+
+                    if (imageWidth <= 1 || imageHeight <= 1)
                     {
-                        scale = 0.1;
-                    }
-                    else
-                    {
-                        scale -= scaleStep;
+                        imageWidth = imageWidth < 1 ? 1 : imageWidth;
+                        imageHeight = imageHeight < 1 ? 1 : imageHeight;
                     }
 
                     using (var ms = new MemoryStream())
                     {
-                        image.Resize(ms, (int)(imageWidth * scale), (int)(imageHeight * scale), sampling,
-                            quality);
+                        image.Resize(ms, imageWidth, imageHeight, sampling, quality);
 
                         ms.Position = 0;
 
@@ -539,7 +541,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
                 imageEncodedData = image.EncodedData;
 
-                if (quality == 0 && scale <= 0.1)
+                if (quality == 0 || imageWidth <= 1 || imageHeight <= 1)
                 {
                     break;
                 }

@@ -30,7 +30,7 @@ namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var errorResult = new Lazy<ValidationResult>(() =>
-                new ValidationResult(ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"),
+                new ValidationResult(ValidationStrings.ResourceManager.GetString("CaptchaValidationError"),
                     new[] { validationContext.MemberName }));
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))

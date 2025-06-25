@@ -22,22 +22,26 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         /// <returns>True if uploaded file is an image</returns>
         public static bool IsImage(this IFormFile postedFile)
         {
-            if (postedFile.ContentType.ToLower() != "image/jpg" &&
-                postedFile.ContentType.ToLower() != "image/jpeg" &&
-                postedFile.ContentType.ToLower() != "image/pjpeg" &&
-                postedFile.ContentType.ToLower() != "image/gif" &&
-                postedFile.ContentType.ToLower() != "image/x-png" &&
-                postedFile.ContentType.ToLower() != "image/png" &&
-                postedFile.ContentType.ToLower() != "image/webp")
+            if (!postedFile.ContentType.Equals("image/jpg", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/jpeg", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/pjpeg", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/gif", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/x-png", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/png", StringComparison.CurrentCultureIgnoreCase) &&
+                !postedFile.ContentType.Equals("image/webp", StringComparison.CurrentCultureIgnoreCase))
             {
                 return false;
             }
 
-            if (Path.GetExtension(postedFile.FileName).ToLower() != ".jpg"
-                && Path.GetExtension(postedFile.FileName).ToLower() != ".png"
-                && Path.GetExtension(postedFile.FileName).ToLower() != ".gif"
-                && Path.GetExtension(postedFile.FileName).ToLower() != ".jpeg"
-                && Path.GetExtension(postedFile.FileName).ToLower() != ".webp")
+            if (!Path.GetExtension(postedFile.FileName).Equals(".jpg"
+, StringComparison.CurrentCultureIgnoreCase)
+                && !Path.GetExtension(postedFile.FileName).Equals(".png"
+, StringComparison.CurrentCultureIgnoreCase)
+                && !Path.GetExtension(postedFile.FileName).Equals(".gif"
+, StringComparison.CurrentCultureIgnoreCase)
+                && !Path.GetExtension(postedFile.FileName).Equals(".jpeg"
+, StringComparison.CurrentCultureIgnoreCase)
+                && !Path.GetExtension(postedFile.FileName).Equals(".webp", StringComparison.CurrentCultureIgnoreCase))
             {
                 return false;
             }

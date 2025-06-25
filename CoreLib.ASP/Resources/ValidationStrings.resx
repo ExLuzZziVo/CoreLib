@@ -135,7 +135,7 @@
     <value>
 The size of the uploaded file '{0}' must not exceed {1}</value>
   </data>
-    <data name="ReCaptchaValidationError" xml:space="preserve">
+    <data name="CaptchaValidationError" xml:space="preserve">
     <value>Please complete the captcha</value>
   </data>
     <data name="FileFormatError" xml:space="preserve">

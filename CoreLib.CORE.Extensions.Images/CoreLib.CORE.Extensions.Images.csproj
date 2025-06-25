@@ -6,7 +6,7 @@
 		<AssemblyName>CoreLib.CORE.Extensions.Images</AssemblyName>
 		<DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
 		<PackageId>CoreLib.CORE.Extensions.Images</PackageId>
-		<VersionPrefix>1.0.4</VersionPrefix>
+		<VersionPrefix>1.0.5</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>A bunch of helper classes for cropping, cutting, resizing and compressing images</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
@@ -18,8 +18,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.116.1"/>
-		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.11"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.119.0"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.17"/>
 	</ItemGroup>
 
 	<ItemGroup>

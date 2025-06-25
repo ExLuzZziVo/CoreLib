@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace CoreLib.ASP.Filters
 {
     /// <summary>
-    /// Google's ReCaptcha validation page filter attribute
+    /// Google ReCaptcha validation page filter attribute
     /// </summary>
     /// <remarks>
-    /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
+    /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also, the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
     /// </remarks>
     public class GoogleReCaptchaValidationPageFilterAttribute : Attribute, IAsyncPageFilter
     {

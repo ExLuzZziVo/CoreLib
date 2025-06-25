@@ -164,5 +164,25 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
         {
             return enumerable.GroupBy(keySelector).Any(gr => gr.Count() > 1);
         }
+
+        /// <summary>
+        /// Splits the target sequence into slices of the specified length
+        /// </summary>
+        /// <param name="enumerable">Target sequence</param>
+        /// <param name="length">Slice length</param>
+        /// <typeparam name="T">The type of the elements of source</typeparam>
+        /// <returns>An array of target sequence slices of the specified length</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if <paramref name="length"/> is less than 1</exception>
+        public static T[][] Slice<T>(this IEnumerable<T> enumerable, int length)
+        {
+            if (length < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            var i = 0;
+
+            return enumerable.GroupBy(s => i++ / length).Select(g => g.ToArray()).ToArray();
+        }
     }
 }

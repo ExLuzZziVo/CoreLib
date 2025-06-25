@@ -17,6 +17,8 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
 {
     public class CheckGoogleReCaptchaHelper : ICheckGoogleReCaptchaHelper
     {
+        private static readonly JsonSerializerOptions ResponseJsonSerializerOptions = new JsonSerializerOptions
+            { PropertyNameCaseInsensitive = true };
         private readonly HttpClient _httpClient;
 
         [ActivatorUtilitiesConstructor]
@@ -50,7 +52,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         /// <param name="actionName">RecaptchaV3 action name</param>
         /// <returns>A task that represents the asynchronous validation of ReCaptcha. If validation was failed, it adds a model error to <see cref="filterContext"/> model state</returns>
         /// <remarks>
-        /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
+        /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also, the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
         /// </remarks>
         internal static async Task CheckGoogleReCaptchaAsync(ActionContext filterContext, bool invisibleV2 = false,
             float? requiredScore = null, string actionName = null)
@@ -114,7 +116,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
         private static void AddReCaptchaValidationError(ActionContext filterContext)
         {
             filterContext.ModelState.AddModelError(string.Empty,
-                ValidationStrings.ResourceManager.GetString("ReCaptchaValidationError"));
+                ValidationStrings.ResourceManager.GetString("CaptchaValidationError"));
         }
 
         /// <summary>
@@ -157,8 +159,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 jsonResponse = await response.Content.ReadAsStringAsync();
             }
 
-            var reCaptchaResponseResult = JsonSerializer.Deserialize<GoogleReCaptchaResponse>(jsonResponse,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var reCaptchaResponseResult = JsonSerializer.Deserialize<GoogleReCaptchaResponse>(jsonResponse, ResponseJsonSerializerOptions);
 
             if (requiredScore != null)
             {

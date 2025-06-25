@@ -103,7 +103,7 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="ReCaptchaValidationError" xml:space="preserve">
+    <data name="CaptchaValidationError" xml:space="preserve">
 		<value>Please complete the captcha</value>
 	</data>
     <data name="UploadFileCountError" xml:space="preserve">

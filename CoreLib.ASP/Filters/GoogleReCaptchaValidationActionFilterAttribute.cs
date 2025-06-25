@@ -11,7 +11,7 @@ namespace CoreLib.ASP.Filters
     /// Google ReCaptcha validation action filter attribute
     /// </summary>
     /// <remarks>
-    /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
+    /// The form sent to the server must contain the key 'g-recaptcha-response' or 'g-recaptcha-response-v3'. Also, the application configuration file must contain the values 'GoogleReCaptchaV2', 'GoogleReCaptchaV2Invisible' or 'GoogleReCaptchaV3' with a secret key
     /// </remarks>
     public class GoogleReCaptchaValidationActionFilterAttribute : ActionFilterAttribute
     {

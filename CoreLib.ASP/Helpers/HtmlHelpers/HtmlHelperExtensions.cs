@@ -109,13 +109,13 @@ namespace CoreLib.ASP.Helpers.HtmlHelpers
                     : null;
             }
 
-            return routePage.ToUpperInvariant().StartsWith(page.ToUpperInvariant())
+            return routePage.StartsWith(page, StringComparison.InvariantCultureIgnoreCase)
                 ? "active"
                 : null;
         }
 
         /// <summary>
-        /// Checks if the provided route values and route data values are equal 
+        /// Checks if the provided route values and route data values are equal
         /// </summary>
         /// <param name="html">Html helper</param>
         /// <param name="routeData">Route data</param>
