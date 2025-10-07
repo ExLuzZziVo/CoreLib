@@ -94,8 +94,7 @@ namespace CoreLib.CORE.Helpers.EnumHelpers
         {
             var displayAttr = en
                 .GetType()
-                .GetMember(en.ToString())
-                .First()
+                .GetMember(en.ToString())[0]
                 .GetCustomAttribute<DisplayAttribute>();
 
             var resourceManager =

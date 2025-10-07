@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
 		<AssemblyName>CoreLib.CORE.Extensions.WEB</AssemblyName>
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<PackageId>CoreLib.CORE.Extensions.WEB</PackageId>
-		<VersionPrefix>1.0.5</VersionPrefix>
+		<VersionPrefix>1.0.6</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>HttpRequest extension methods and helpers</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

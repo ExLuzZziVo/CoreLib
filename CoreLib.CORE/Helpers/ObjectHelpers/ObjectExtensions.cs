@@ -167,8 +167,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             {
                 try
                 {
-                    return ((DescriptionAttribute)propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                        .First()).Description;
+                    return ((DescriptionAttribute)propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description;
                 }
                 catch
                 {

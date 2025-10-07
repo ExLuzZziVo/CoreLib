@@ -155,4 +155,10 @@
     <data name="ValueRangeValuesError" xml:space="preserve">
         <value>The value of the field '{0}' must belong to the interval from {1} to {2}</value>
     </data>
+    <data name="FileContainsNoDataError" xml:space="preserve">
+        <value>The file contains no data</value>
+    </data>
+    <data name="StringMaxSizeError" xml:space="preserve">
+        <value>The size of string '{0}' must not be more than {1} bytes</value>
+    </data>
 </root>

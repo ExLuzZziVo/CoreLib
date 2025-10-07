@@ -139,7 +139,7 @@ namespace CoreLib.STANDALONE.Types
 
             if (!result)
             {
-                var validationResult = results.First();
+                var validationResult = results[0];
                 error = validationResult.ErrorMessage;
             }
 

@@ -254,4 +254,10 @@
     <data name="ValueRangeValuesError" xml:space="preserve">
       <value>Значение поля '{0}' должно лежать в интервале '{1}' - '{2}'</value>
     </data>
+    <data name="FileContainsNoDataError" xml:space="preserve">
+      <value>Файл не содержит данных</value>
+    </data>
+    <data name="StringMaxSizeError" xml:space="preserve">
+      <value>Размер строки '{0}' не должен быть больше {1} байт</value>
+    </data>
 </root>

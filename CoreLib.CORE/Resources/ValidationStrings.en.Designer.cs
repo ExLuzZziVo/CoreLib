@@ -231,6 +231,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file contains no data.
+        /// </summary>
+        public static string FileContainsNoDataError {
+            get {
+                return ResourceManager.GetString("FileContainsNoDataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The size of file &apos;{0}&apos; must be less than {1}.
         /// </summary>
         public static string FileMaxSizeError {
@@ -371,6 +380,15 @@ namespace CoreLib.CORE.Resources {
         public static string StringMaxLengthError {
             get {
                 return ResourceManager.GetString("StringMaxLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of string &apos;{0}&apos; must not be more than {1} bytes.
+        /// </summary>
+        public static string StringMaxSizeError {
+            get {
+                return ResourceManager.GetString("StringMaxSizeError", resourceCulture);
             }
         }
         
