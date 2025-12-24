@@ -161,4 +161,10 @@
     <data name="StringMaxSizeError" xml:space="preserve">
         <value>The size of string '{0}' must not be more than {1} bytes</value>
     </data>
+    <data name="StringSizeError" xml:space="preserve">
+        <value>The size of string '{0}' must equal {1} bytes</value>
+    </data>
+    <data name="StringLengthError" xml:space="preserve">
+        <value>Field '{0}' must contain {1} characters</value>
+    </data>
 </root>

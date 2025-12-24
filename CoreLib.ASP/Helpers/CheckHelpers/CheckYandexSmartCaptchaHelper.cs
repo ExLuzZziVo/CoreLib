@@ -44,7 +44,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
 
             using (var response = await _httpClient
                        .GetAsync(
-                           $"https://smartcaptcha.yandexcloud.net/validate?secret={secretKey}&token={verificationToken}{(userIp == null ? string.Empty : $"&ip={userIp.ToString()}")}"))
+                           $"https://smartcaptcha.cloud.yandex.ru/validate?secret={secretKey}&token={verificationToken}{(userIp == null ? string.Empty : $"&ip={userIp.ToString()}")}"))
             {
                 if (!response.IsSuccessStatusCode)
                 {

@@ -260,4 +260,10 @@
     <data name="StringMaxSizeError" xml:space="preserve">
       <value>Размер строки '{0}' не должен быть больше {1} байт</value>
     </data>
+    <data name="StringSizeError" xml:space="preserve">
+      <value>Размер строки '{0}' должен быть равен {1} байт</value>
+    </data>
+    <data name="StringLengthError" xml:space="preserve">
+      <value>Поле '{0}' должно содержать {1} символов</value>
+    </data>
 </root>

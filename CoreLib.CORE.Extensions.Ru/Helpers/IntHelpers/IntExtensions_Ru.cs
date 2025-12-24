@@ -15,8 +15,8 @@ namespace CoreLib.CORE.Helpers.IntHelpers
         /// <returns><paramref name="value"/> прописью</returns>
         public static string ToLongIntString(this int value)
         {
-            var number = 0;
-            var result = string.Empty;
+            int number;
+            string result;
 
             if (value < 0)
             {
@@ -27,7 +27,7 @@ namespace CoreLib.CORE.Helpers.IntHelpers
             {
                 return "ноль";
             }
-            else if (value > 0)
+            else
             {
                 number = value;
                 result = "";
@@ -223,7 +223,7 @@ namespace CoreLib.CORE.Helpers.IntHelpers
 
                             break;
                         case 18:
-                            result += " восемннадцать";
+                            result += " восемнадцать";
 
                             break;
                         case 19:
@@ -269,7 +269,7 @@ namespace CoreLib.CORE.Helpers.IntHelpers
 
                             break;
                         case 18:
-                            result += " восемннадцать";
+                            result += " восемнадцать";
 
                             break;
                         case 19:
@@ -310,6 +310,31 @@ namespace CoreLib.CORE.Helpers.IntHelpers
             }
 
             return result.TrimWholeString();
+        }
+
+        /// <summary>
+        /// Преобразует число в строку, представляющую собой денежную сумму в рублях
+        /// </summary>
+        /// <param name="value">Число</param>
+        /// <returns>Строка, представляющая собой денежную сумму в рублях</returns>
+        public static string ToRubleString(this int value)
+        {
+            var result = value.ToLongIntString();
+
+            if (result.EndsWith("один"))
+            {
+                result += " рубль";
+            }
+            else if (result.EndsWithAny("два", "три", "четыре"))
+            {
+                result += " рубля";
+            }
+            else
+            {
+                result += " рублей";
+            }
+
+            return result;
         }
     }
 }

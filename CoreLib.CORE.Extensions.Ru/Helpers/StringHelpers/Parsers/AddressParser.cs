@@ -295,9 +295,15 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                 return string.Empty;
             }
 
-            var reversedArray = source.Split(',').Reverse();
+            var result = source.Split(',');
 
-            return string.Join(", ", reversedArray).FormatText();
+#if NETSTANDARD2_0
+            result = result.Reverse().ToArray();
+#else
+            result.Reverse();
+#endif
+
+            return string.Join(", ", result).FormatText();
         }
 
         /// <summary>

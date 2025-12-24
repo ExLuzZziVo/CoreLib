@@ -375,6 +375,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Поле &apos;{0}&apos; должно содержать {1} символов.
+        /// </summary>
+        public static string StringLengthError {
+            get {
+                return ResourceManager.GetString("StringLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Поле &apos;{0}&apos; должно содержать не более {1} символов.
         /// </summary>
         public static string StringMaxLengthError {
@@ -407,6 +416,15 @@ namespace CoreLib.CORE.Resources {
         public static string StringRangeLengthError {
             get {
                 return ResourceManager.GetString("StringRangeLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Размер строки &apos;{0}&apos; должен быть равен {1} байт.
+        /// </summary>
+        public static string StringSizeError {
+            get {
+                return ResourceManager.GetString("StringSizeError", resourceCulture);
             }
         }
         

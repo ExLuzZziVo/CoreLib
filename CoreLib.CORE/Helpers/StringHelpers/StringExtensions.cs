@@ -289,5 +289,51 @@ namespace CoreLib.CORE.Helpers.StringHelpers
 
             return resultStr;
         }
+
+        /// <summary>
+        /// Checks if provided string starts with at least one of the values parameters
+        /// </summary>
+        /// <param name="str">Target string</param>
+        /// <param name="values">Values to check</param>
+        /// <returns>True if the provided string starts with at least one of the values parameters</returns>
+        public static bool StartsWithAny(this string str, params string[] values)
+        {
+            return StartsWithAny(str, StringComparison.CurrentCulture, values);
+        }
+
+        /// <summary>
+        /// Checks if provided string starts with at least one of the values parameters
+        /// </summary>
+        /// <param name="str">Target string</param>
+        /// <param name="comparisonType">String comparison type</param>
+        /// <param name="values">Values to check</param>
+        /// <returns>True if the provided string starts with at least one of the values parameters</returns>
+        public static bool StartsWithAny(this string str, StringComparison comparisonType, params string[] values)
+        {
+            return values.Any(s => str.StartsWith(s, comparisonType));
+        }
+
+        /// <summary>
+        /// Checks if provided string ends with at least one of the values parameters
+        /// </summary>
+        /// <param name="str">Target string</param>
+        /// <param name="values">Values to check</param>
+        /// <returns>True if at least one of the values parameters matches the end of the provided string</returns>
+        public static bool EndsWithAny(this string str, params string[] values)
+        {
+            return EndsWithAny(str, StringComparison.CurrentCulture, values);
+        }
+
+        /// <summary>
+        /// Checks if provided string ends with at least one of the values parameters
+        /// </summary>
+        /// <param name="str">Target string</param>
+        /// <param name="comparisonType">String comparison type</param>
+        /// <param name="values">Values to check</param>
+        /// <returns>True if at least one of the values parameters matches the end of the provided string</returns>
+        public static bool EndsWithAny(this string str, StringComparison comparisonType, params string[] values)
+        {
+            return values.Any(s => str.EndsWith(s, comparisonType));
+        }
     }
 }

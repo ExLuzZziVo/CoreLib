@@ -375,6 +375,15 @@ namespace CoreLib.CORE.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field &apos;{0}&apos; must contain {1} characters.
+        /// </summary>
+        public static string StringLengthError {
+            get {
+                return ResourceManager.GetString("StringLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field &apos;{0}&apos; must contain no more than {1} characters.
         /// </summary>
         public static string StringMaxLengthError {
@@ -407,6 +416,15 @@ namespace CoreLib.CORE.Resources {
         public static string StringRangeLengthError {
             get {
                 return ResourceManager.GetString("StringRangeLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of string &apos;{0}&apos; must equal {1} bytes.
+        /// </summary>
+        public static string StringSizeError {
+            get {
+                return ResourceManager.GetString("StringSizeError", resourceCulture);
             }
         }
         

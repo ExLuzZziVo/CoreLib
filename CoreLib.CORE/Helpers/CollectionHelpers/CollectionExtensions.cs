@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CoreLib.CORE.Types;
 
 #endregion
 
@@ -184,5 +185,22 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
 
             return enumerable.GroupBy(s => i++ / length).Select(g => g.ToArray()).ToArray();
         }
+
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+
+        // https://stackoverflow.com/questions/48743165/toarrayasync-throws-the-source-iqueryable-doesnt-implement-iasyncenumerable
+        /// <summary>
+        /// Returns the target sequence as <see cref="IQueryable{T}"/> that can be queried asynchronously
+        /// </summary>
+        /// <param name="enumerable">Target sequence</param>
+        /// <typeparam name="T">The type of the elements of source</typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Throws if <paramref name="enumerable"/> is null</exception>
+        public static IQueryable<T> AsAsyncQueryable<T>(this IEnumerable<T> enumerable)
+        {
+            return new AsyncQueryable<T>(enumerable ?? throw new ArgumentNullException(nameof(enumerable)));
+        }
+
+#endif
     }
 }
