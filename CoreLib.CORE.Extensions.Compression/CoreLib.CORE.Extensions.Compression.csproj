@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;</TargetFrameworks>
 		<PackageId>CoreLib.CORE.Extensions.Compression</PackageId>
-		<VersionPrefix>1.0.7</VersionPrefix>
+		<VersionPrefix>1.0.8</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Compression helpers for development</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

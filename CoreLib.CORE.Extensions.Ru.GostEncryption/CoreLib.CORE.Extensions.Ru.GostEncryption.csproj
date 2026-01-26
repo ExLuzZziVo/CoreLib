@@ -5,7 +5,7 @@
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<AssemblyName>CoreLib.CORE.Extensions.Ru.GostEncryption</AssemblyName>
 		<PackageId>CoreLib.CORE.Extensions.Ru.GostEncryption</PackageId>
-		<VersionPrefix>1.0.7</VersionPrefix>
+		<VersionPrefix>1.0.8</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Вспомогательный класс для шифрования строк и объектов с помощью шифра Кузнечик (ГОСТ 34.12-2015)</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>

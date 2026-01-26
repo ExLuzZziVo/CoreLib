@@ -4,7 +4,7 @@
 		<TargetFrameworks>net8.0;net8.0-windows;</TargetFrameworks>
 		<DefineConstants Condition="'$(TargetFramework)' == 'net8.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
 		<PackageId>CoreLib.ASP</PackageId>
-		<VersionPrefix>1.0.7</VersionPrefix>
+		<VersionPrefix>1.0.8</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>A bunch of helper classes for web applications development</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
@@ -25,7 +25,7 @@
 
 	<ItemGroup>
 		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.119.1"/>
-		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.22"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'true'" Include="System.Drawing.Common" Version="8.0.23"/>
 	</ItemGroup>
 
 	<ItemGroup>

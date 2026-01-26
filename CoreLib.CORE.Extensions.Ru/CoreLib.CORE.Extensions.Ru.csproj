@@ -5,7 +5,7 @@
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<AssemblyName>CoreLib.CORE.Extensions.Ru</AssemblyName>
 		<PackageId>CoreLib.CORE.Extensions.Ru</PackageId>
-		<VersionPrefix>1.0.7</VersionPrefix>
+		<VersionPrefix>1.0.8</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Специфичные для русскоязычных приложений вспомогательные классы и методы расширения типов</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
