@@ -186,7 +186,7 @@ namespace CoreLib.CORE.Helpers.CollectionHelpers
             return enumerable.GroupBy(s => i++ / length).Select(g => g.ToArray()).ToArray();
         }
 
-#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
 
         // https://stackoverflow.com/questions/48743165/toarrayasync-throws-the-source-iqueryable-doesnt-implement-iasyncenumerable
         /// <summary>

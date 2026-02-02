@@ -16,7 +16,7 @@ namespace CoreLib.STANDALONE.Types.ObservableDictionary
     public class ObservableDictionary<TKey, TValue> : ObservableCollection<ObservableKeyValuePair<TKey, TValue>>,
         IDictionary<TKey, TValue>, IDictionary
     {
-        private readonly KeyedObservableKeyValuePairCollection<TKey, TValue> _internalDictionary = new KeyedObservableKeyValuePairCollection<TKey, TValue>();
+        private readonly KeyedObservableKeyValuePairCollection<TKey, TValue> _internalDictionary = [];
 
         public ObservableDictionary() : base() { }
 

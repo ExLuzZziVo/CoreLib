@@ -121,25 +121,13 @@ namespace CoreLib.STANDALONE.Helpers.Converters
             {
                 if (parameter is TextCase stringCase)
                 {
-                    switch (stringCase)
+                    return stringCase switch
                     {
-                        case TextCase.Upper:
-                        {
-                            return s.ToUpper();
-                        }
-                        case TextCase.Lower:
-                        {
-                            return s.ToLower();
-                        }
-                        case TextCase.Title:
-                        {
-                            return culture.TextInfo.ToTitleCase(s);
-                        }
-                        default:
-                        {
-                            return value;
-                        }
-                    }
+                        TextCase.Upper => s.ToUpper(),
+                        TextCase.Lower => s.ToLower(),
+                        TextCase.Title => culture.TextInfo.ToTitleCase(s),
+                        _ => value
+                    };
                 }
             }
 

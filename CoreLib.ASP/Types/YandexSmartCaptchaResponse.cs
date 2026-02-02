@@ -1,9 +1,3 @@
-#region
-
-using System;
-
-#endregion
-
 namespace CoreLib.ASP.Types
 {
     /// <summary>
@@ -11,10 +5,10 @@ namespace CoreLib.ASP.Types
     /// </summary>
     public class YandexSmartCaptchaResponse
     {
-        public string Status { get; set; }
+        public string Status { get; init; }
 
-        public string Message { get; set; }
+        public string Message { get; init; }
 
-        public string Host { get; set; }
+        public string Host { get; init; }
     }
 }

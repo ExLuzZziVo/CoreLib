@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CoreLib.ASP.Helpers.CheckHelpers;
@@ -46,7 +45,7 @@ namespace CoreLib.ASP.Filters
         /// <summary>
         /// Names of page handlers to validate. If empty, only POST handlers are validated
         /// </summary>
-        public string[] HandlerNames { get; set; } = new string[0];
+        public string[] HandlerNames { get; set; } = [];
 
         public Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
         {

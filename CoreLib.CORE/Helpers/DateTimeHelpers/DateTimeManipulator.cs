@@ -32,7 +32,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return months;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets number of months in the specified period
         /// </summary>
@@ -83,7 +83,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return age;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Calculates the age using provided birth date and <see cref="DateOnly"/>
         /// </summary>

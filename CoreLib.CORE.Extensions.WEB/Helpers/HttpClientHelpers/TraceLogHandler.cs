@@ -67,7 +67,7 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
             var requestContent = request.Content == null || _requestBodyLogLimit < 1
                 ? "(empty)"
                 : await request.Content.ReadAsStringAsync(
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
                         cancellationToken
 #endif
                 );
@@ -95,7 +95,7 @@ namespace CoreLib.CORE.Helpers.HttpClientHelpers
             var responseContent = response.Content == null || _responseBodyLogLimit < 1
                 ? "(empty)"
                 : await response.Content.ReadAsStringAsync(
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
                         cancellationToken
 #endif
                 );

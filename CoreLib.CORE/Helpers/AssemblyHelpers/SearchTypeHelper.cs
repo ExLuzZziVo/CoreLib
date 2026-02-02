@@ -41,7 +41,7 @@ namespace CoreLib.CORE.Helpers.AssemblyHelpers
                 }
                 else
                 {
-                    _assemblyNames = new List<AssemblyName>();
+                    _assemblyNames = [];
 
                     foreach (var a in stackTrace.Select(a => a.GetMethod().ReflectedType.Assembly).Distinct().ToArray())
                     {
@@ -61,7 +61,7 @@ namespace CoreLib.CORE.Helpers.AssemblyHelpers
                 }
             }
 
-            _assemblyNames = new List<AssemblyName> { currentAssembly.GetName() };
+            _assemblyNames = [currentAssembly.GetName()];
 
             if (searchInDlls)
             {

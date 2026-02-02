@@ -4,7 +4,7 @@
     {
         public YouTubePlaylistResponseItem()
         {
-            Items = new PlaylistItem[0];
+            Items = [];
         }
 
         public PlaylistItem[] Items { get; set; }

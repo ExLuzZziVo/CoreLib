@@ -59,7 +59,7 @@ namespace CoreLib.ASP.Helpers.CheckHelpers
                 }
 
                 var buffer = new byte[ImageMinimumBytes];
-                postedFile.OpenReadStream().Read(buffer, 0, ImageMinimumBytes);
+                postedFile.OpenReadStream().ReadExactly(buffer, 0, ImageMinimumBytes);
                 var content = Encoding.UTF8.GetString(buffer);
 
                 if (Regex.IsMatch(content,

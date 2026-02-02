@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace CoreLib.ASP.Helpers.IdentityHelpers
 {
     /// <summary>
-    /// Руссификация ошибок системы аутентификации и авторизации
+    /// Русификация ошибок системы аутентификации и авторизации
     /// </summary>
     public class IdentityErrorDescriber_Ru : IdentityErrorDescriber
     {
@@ -27,7 +27,7 @@ namespace CoreLib.ASP.Helpers.IdentityHelpers
 
         public override IdentityError PasswordMismatch()
         {
-            return new IdentityError { Code = nameof(PasswordMismatch), Description = "Некорретный пароль" };
+            return new IdentityError { Code = nameof(PasswordMismatch), Description = "Некорректный пароль" };
         }
 
         public override IdentityError InvalidToken()

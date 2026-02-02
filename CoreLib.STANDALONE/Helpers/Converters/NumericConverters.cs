@@ -61,21 +61,14 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 return NullValue;
             }
 
-            var result = false;
-
-            if (GreaterThanValue != null && LessThenValue != null &&
-                val.Value.IsGreaterThan(GreaterThanValue.Value) && val.Value.IsLessThan(LessThenValue.Value))
-            {
-                result = true;
-            }
-            else if (GreaterThanValue != null && val.Value.IsGreaterThan(GreaterThanValue.Value))
-            {
-                result = true;
-            }
-            else if (LessThenValue != null && val.Value.IsLessThan(LessThenValue.Value))
-            {
-                result = true;
-            }
+            var result = GreaterThanValue != null &&
+                          LessThenValue != null &&
+                          val.Value.IsGreaterThan(GreaterThanValue.Value) &&
+                          val.Value.IsLessThan(LessThenValue.Value) ||
+                          GreaterThanValue != null &&
+                          val.Value.IsGreaterThan(GreaterThanValue.Value) ||
+                          LessThenValue != null &&
+                          val.Value.IsLessThan(LessThenValue.Value);
 
             if (bool.TryParse(parameter?.ToString(), out var par))
             {

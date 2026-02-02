@@ -127,7 +127,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// Flag indicating that <see cref="DateTime.Today"/> will be used instead of <see cref="DateToCompare"/>
         /// </summary>
         public bool IsDateTimeTodayToCompare { get; } = false;
-        
+
         /// <summary>
         /// Flag indicating that <see cref="DateTime.Now"/> will be used instead of <see cref="DateTime.Today"/> if <see cref="IsDateTimeTodayToCompare"/> is set to true
         /// </summary>
@@ -155,31 +155,24 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// <param name="isAge">Generate default error message for age or date validation</param>
         private static string GetDefaultErrorMessage(ComparisonType comparisonType, bool isAge = false)
         {
-            switch (comparisonType)
+            return comparisonType switch
             {
-                case ComparisonType.Equal:
-                    return ValidationStrings.ResourceManager.GetString("ValueEqualError");
-                case ComparisonType.NotEqual:
-                    return ValidationStrings.ResourceManager.GetString("ValueNotEqualError");
-                case ComparisonType.Less:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanError")
-                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanError");
-                case ComparisonType.LessOrEqual:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError")
-                        : ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError");
-                case ComparisonType.Greater:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanError")
-                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanError");
-                case ComparisonType.GreaterOrEqual:
-                    return isAge
-                        ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError")
-                        : ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError");
-                default:
-                    throw new ArgumentNullException(nameof(comparisonType));
-            }
+                ComparisonType.Equal => ValidationStrings.ResourceManager.GetString("ValueEqualError"),
+                ComparisonType.NotEqual => ValidationStrings.ResourceManager.GetString("ValueNotEqualError"),
+                ComparisonType.Less => isAge
+                    ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanError")
+                    : ValidationStrings.ResourceManager.GetString("ValueSmallerThanError"),
+                ComparisonType.LessOrEqual => isAge
+                    ? ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError")
+                    : ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError"),
+                ComparisonType.Greater => isAge
+                    ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanError")
+                    : ValidationStrings.ResourceManager.GetString("ValueGreaterThanError"),
+                ComparisonType.GreaterOrEqual => isAge
+                    ? ValidationStrings.ResourceManager.GetString("ValueSmallerThanOrEqualError")
+                    : ValidationStrings.ResourceManager.GetString("ValueGreaterThanOrEqualError"),
+                _ => throw new ArgumentNullException(nameof(comparisonType))
+            };
         }
 
         public override string FormatErrorMessage(string name)
@@ -214,7 +207,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                     ? ValidationResult.Success
                     : new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
             }
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
             else if (value is DateOnly dateOnly)
             {
                 return CompareToAttribute.CompareValues(dateOnly,

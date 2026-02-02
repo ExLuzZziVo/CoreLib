@@ -58,9 +58,11 @@ namespace CoreLib.ASP.Helpers.FileHelpers
 
                     using (var sr = new StreamReader(s, encoding))
                     {
-                        while (!sr.EndOfStream)
+                        string line;
+
+                        while ((line = await sr.ReadLineAsync()) is not null)
                         {
-                            result.Add(await sr.ReadLineAsync());
+                            result.Add(line);
                         }
                     }
                 }

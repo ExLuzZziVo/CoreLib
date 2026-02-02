@@ -43,8 +43,8 @@ namespace CoreLib.CORE.Types
         /// <param name="message">Error text</param>
         public ExtendedValidationException(string message)
         {
-            _validationResults = new[] { new ValidationResult(message) };
-            _validationErrors = new[] { message };
+            _validationResults = [new ValidationResult(message)];
+            _validationErrors = [message];
         }
 
         /// <summary>

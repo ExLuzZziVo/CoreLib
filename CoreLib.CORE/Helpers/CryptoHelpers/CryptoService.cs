@@ -129,7 +129,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         public virtual T DecryptObject<T>(Stream s)
         {
 // SYSLIB0041 Temp Solution to migrate
-#if NET7_0_OR_GREATER
+#if !NETSTANDARD2_0
             try
             {
 #endif
@@ -140,7 +140,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
                 }
 
 // SYSLIB0041 Temp Solution to migrate
-#if NET7_0_OR_GREATER
+#if !NETSTANDARD2_0
             }
             catch
             {
@@ -160,22 +160,25 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>AES encryptor</returns>
         protected virtual ICryptoTransform CreateEncryptor(Stream s)
         {
-#if NET7_0_OR_GREATER
-            using (var key = new Rfc2898DeriveBytes(Key, Salt, 4096, HashAlgorithmName.SHA512))
-            {
-#else
+#if NETSTANDARD2_0
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
 #endif
                 using (var aesAlg = Aes.Create())
                 {
+#if NETSTANDARD2_0
                     aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+#else
+                    aesAlg.Key = Rfc2898DeriveBytes.Pbkdf2(Key, Salt, 4096, HashAlgorithmName.SHA512, aesAlg.KeySize / 8);
+#endif
                     s.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
                     s.Write(aesAlg.IV, 0, aesAlg.IV.Length);
 
                     return aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
                 }
+#if NETSTANDARD2_0
             }
+#endif
         }
 
         /// <summary>
@@ -185,30 +188,32 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
         /// <returns>AES decryptor</returns>
         protected virtual ICryptoTransform CreateDecryptor(Stream s)
         {
-#if NET7_0_OR_GREATER
-            using (var key = new Rfc2898DeriveBytes(Key, Salt, 4096, HashAlgorithmName.SHA512))
-            {
-#else
+#if NETSTANDARD2_0
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
             {
 #endif
                 using (var aesAlg = Aes.Create())
                 {
+#if NETSTANDARD2_0
                     aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+#else
+                    aesAlg.Key = Rfc2898DeriveBytes.Pbkdf2(Key, Salt, 4096, HashAlgorithmName.SHA512, aesAlg.KeySize / 8);
+#endif
                     aesAlg.IV = ReadByteArray(s);
 
                     return aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
                 }
+#if NETSTANDARD2_0
             }
+#endif
         }
 
 // SYSLIB0041 Temp Solution to migrate
-#if NET7_0_OR_GREATER
+#if !NETSTANDARD2_0
+        [Obsolete]
         private ICryptoTransform CreateLegacyDecryptor(Stream s)
         {
-#pragma warning disable SYSLIB0041
             using (var key = new Rfc2898DeriveBytes(Key, Salt))
-#pragma warning restore SYSLIB0041
             {
                 using (var aesAlg = Aes.Create())
                 {
@@ -266,7 +271,7 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
             var bytes = Convert.FromBase64String(str);
 
 // SYSLIB0041 Temp Solution to migrate
-#if NET7_0_OR_GREATER
+#if !NETSTANDARD2_0
             try
             {
 #endif
@@ -283,14 +288,16 @@ namespace CoreLib.CORE.Helpers.CryptoHelpers
                 }
 
 // SYSLIB0041 Temp Solution to migrate
-#if NET7_0_OR_GREATER
+#if !NETSTANDARD2_0
             }
             catch
             {
                 using (var msDecrypt = new MemoryStream(bytes))
                 {
                     using (var csDecrypt =
+#pragma warning disable CS0612
                            new CryptoStream(msDecrypt, CreateLegacyDecryptor(msDecrypt), CryptoStreamMode.Read))
+#pragma warning restore CS0612
                     {
                         using (var srDecrypt = new StreamReader(csDecrypt))
                         {

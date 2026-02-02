@@ -18,7 +18,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return $"{dateTime.Hour.ToString("00")} час. {dateTime.Minute.ToString("00")} мин.";
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
 
         /// <summary>
         /// Конвертирует время в строку с форматом "HH час. mm мин."
@@ -43,7 +43,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
                 $"{dateTime.Hour.ToString("00")} час. {dateTime.Minute.ToString("00")} мин. {dateTime.Second.ToString("00")} сек.";
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Конвертирует время в строку с форматом "HH час. mm мин. ss сек."
         /// </summary>
@@ -66,7 +66,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime.ToString("MM.yyyy");
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Конвертирует дату в строку с форматом "MM.yyyy"
         /// </summary>
@@ -88,7 +88,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return $"{dateTime.ToString("MMMM yyyy")} г.";
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Конвертирует дату в строку с форматом "MMMM yyyy г."
         /// </summary>
@@ -110,7 +110,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime.ToString("dd.MM");
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Конвертирует дату в строку с форматом "dd.MM"
         /// </summary>
@@ -132,7 +132,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime.ToString("dd MMMM");
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Конвертирует дату в строку с форматом "dd MMMM"
         /// </summary>

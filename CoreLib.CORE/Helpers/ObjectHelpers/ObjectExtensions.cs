@@ -53,7 +53,8 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
                 if (array.Length < 2)
                 {
-                    throw new ArgumentOutOfRangeException(propertyName, $"Invalid format of property name: {propertyName}");
+                    throw new ArgumentOutOfRangeException(propertyName,
+                        $"Invalid format of property name: {propertyName}");
                 }
 
                 var propertyInfo = type.GetProperty(array[0]);
@@ -101,7 +102,8 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
 
                 if (array.Length < 2)
                 {
-                    throw new ArgumentOutOfRangeException(propertyName, $"Invalid format of property name: {propertyName}");
+                    throw new ArgumentOutOfRangeException(propertyName,
+                        $"Invalid format of property name: {propertyName}");
                 }
 
                 var propertyInfo = type.GetProperty(array[0]);
@@ -167,7 +169,8 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             {
                 try
                 {
-                    return ((DescriptionAttribute)propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description;
+                    return ((DescriptionAttribute)propertyInfo.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                        [0]).Description;
                 }
                 catch
                 {
@@ -215,7 +218,7 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             return null;
         }
 
-#if !NET6_0_OR_GREATER
+#if NETSTANDARD2_0
         /// <summary>
         /// Converts an object to byte array
         /// </summary>
@@ -366,12 +369,12 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
             var typeSrc = source.GetType();
 
             var results = from srcProp in typeSrc.GetProperties()
-                          let targetProperty = typeDest.GetProperty(srcProp.Name)
-                          where srcProp.CanRead && targetProperty?.GetSetMethod(true) != null &&
-                                !targetProperty.GetSetMethod(true).IsPrivate &&
-                                (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
-                                targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
-                          select new { sourceProperty = srcProp, targetProperty };
+                let targetProperty = typeDest.GetProperty(srcProp.Name)
+                where srcProp.CanRead && targetProperty?.GetSetMethod(true) != null &&
+                      !targetProperty.GetSetMethod(true).IsPrivate &&
+                      (targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) == 0 &&
+                      targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
+                select new { sourceProperty = srcProp, targetProperty };
 
             foreach (var props in results)
             {
@@ -457,23 +460,21 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 return nullableType.IsNumeric();
             }
 
-            switch (Type.GetTypeCode(type))
+            return Type.GetTypeCode(type) switch
             {
-                case TypeCode.SByte:
-                case TypeCode.Byte:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
-                default:
-                    return false;
-            }
+                TypeCode.SByte or
+                    TypeCode.Byte or
+                    TypeCode.Int16 or
+                    TypeCode.Int32 or
+                    TypeCode.Int64 or
+                    TypeCode.UInt16 or
+                    TypeCode.UInt32 or
+                    TypeCode.UInt64 or
+                    TypeCode.Decimal or
+                    TypeCode.Double or
+                    TypeCode.Single => true,
+                _ => false
+            };
         }
     }
 }

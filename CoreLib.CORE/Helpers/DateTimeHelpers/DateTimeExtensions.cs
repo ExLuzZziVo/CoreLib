@@ -26,7 +26,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime >= startDate && dateTime <= endDate;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Checks if <see cref="DateOnly"/> belongs to period
         /// </summary>
@@ -73,7 +73,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return new DateTime(dateTime.Year, dateTime.Month, 1);
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets a first day of month of the provided <see cref="DateOnly"/>
         /// </summary>
@@ -95,7 +95,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime.GetFirstDayOfMonth().AddMonths(1).AddDays(-1);
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets a last day of month of the provided <see cref="DateOnly"/>
         /// </summary>
@@ -117,7 +117,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return dateTime == null || dateTime == new DateTime();
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Checks if <see cref="DateOnly"/> is null or equals new <see cref="DateOnly"/>
         /// </summary>
@@ -149,7 +149,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return (dateTime.Month + 2) / 3;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets a quarter of the provided <see cref="DateOnly"/>
         /// </summary>
@@ -171,7 +171,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return (dateTime.AddMonths(3).Month + 2) / 3;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets a financial quarter of the provided <see cref="DateOnly"/>
         /// </summary>
@@ -222,7 +222,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return firstDayInWeek;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets the first day of the week that belongs to provided <see cref="DateOnly"/> using <see cref="CultureInfo.CurrentCulture"/>
         /// </summary>
@@ -274,7 +274,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return GetFirstDayOfWeek(dayInWeek, cultureInfo).AddDays(6);
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets the last day of the week that belongs to provided <see cref="DateOnly"/> using <see cref="CultureInfo.CurrentCulture"/>
         /// </summary>
@@ -328,7 +328,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return result;
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Gets the <see cref="DateOnly"/> that represents provided <see cref="DayOfWeek"/> that belongs to provided <see cref="DateOnly"/> using <see cref="CultureInfo.CurrentCulture"/>
         /// </summary>
@@ -372,7 +372,7 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return new DateTime(date.Ticks - date.Ticks % ticks, date.Kind);
         }
 
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
         /// <summary>
         /// Converts <see cref="DateTime"/> to <see cref="DateOnly"/>
         /// </summary>

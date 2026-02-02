@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 #endregion
 
@@ -222,6 +221,7 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
             switch (documentType)
             {
                 case DocumentType.RU_Passport:
+                {
                     tempNumber = number.Replace(" ", "");
 
                     if (tempNumber.Length != 10)
@@ -231,7 +231,9 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                     }
 
                     return tempNumber.Insert(4, " ");
+                }
                 case DocumentType.RU_Residence:
+                {
                     tempNumber = number.Replace(" ", "");
 
                     if (tempNumber.Length != 9)
@@ -241,10 +243,13 @@ namespace CoreLib.CORE.Helpers.StringHelpers.Parsers
                     }
 
                     return tempNumber.Insert(2, " ");
+                }
                 case DocumentType.Custom:
                 case DocumentType.RU_TempResidence:
                 default:
+                {
                     return number;
+                }
             }
         }
     }

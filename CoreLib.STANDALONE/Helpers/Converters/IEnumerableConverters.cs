@@ -42,50 +42,30 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch (value)
+            return value switch
             {
-                case null:
-                {
-                    return NullValue;
-                }
+                null => NullValue,
+
                 // For dictionaries
-                case ICollection collection:
-                {
-                    return GetValue(collection.Count, parameter);
-                }
-                case IEnumerable<object> enumerable:
-                {
-                    return GetValue(enumerable.Count(), parameter);
-                }
-                default:
-                {
-                    throw new NotSupportedException();
-                }
-            }
+                ICollection collection => GetValue(collection.Count, parameter),
+                IEnumerable<object> enumerable => GetValue(enumerable.Count(), parameter),
+                _ => throw new NotSupportedException()
+            };
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
-        
+
         private T GetValue(int count, object parameter)
         {
-            var result = false;
-
-            if (GreaterThanValue != null && LessThenValue != null &&
-                count > GreaterThanValue && count < LessThenValue)
-            {
-                result = true;
-            }
-            else if (GreaterThanValue != null && count > GreaterThanValue)
-            {
-                result = true;
-            }
-            else if (LessThenValue != null && count < LessThenValue.Value)
-            {
-                result = true;
-            }
+            var result = GreaterThanValue != null &&
+                LessThenValue != null &&
+                count > GreaterThanValue &&
+                count < LessThenValue ||
+                count > GreaterThanValue ||
+                count < LessThenValue;
 
             if (bool.TryParse(parameter?.ToString(), out var par))
             {
@@ -129,34 +109,15 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = false;
-
-            switch (value)
+            var result = value switch
             {
-                case null:
-                {
-                    result = false;
+                null => false,
 
-                    break;
-                }
                 // For dictionaries
-                case ICollection collection:
-                {
-                    result = collection.Count > 0;
-
-                    break;
-                }
-                case IEnumerable<object> enumerable:
-                {
-                    result = enumerable.Any();
-
-                    break;
-                }
-                default:
-                {
-                    throw new NotSupportedException();
-                }
-            }
+                ICollection collection => collection.Count > 0,
+                IEnumerable<object> enumerable => enumerable.Any(),
+                _ => throw new NotSupportedException()
+            };
 
             if (bool.TryParse(parameter?.ToString(), out var par))
             {

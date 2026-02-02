@@ -86,11 +86,14 @@ namespace CoreLib.ASP.Filters
             switch (ThrottlingBy)
             {
                 case ThrottlingType.ByIp:
+                {
                     throttlingTypeKeyPart += $":{context.HttpContext.Connection.RemoteIpAddress}";
 
                     break;
+                }
                 case ThrottlingType.ByUser:
-                    if (context.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    if (context.HttpContext.User.Identity?.IsAuthenticated == true)
                     {
                         throttlingTypeKeyPart += $":{context.HttpContext.User.Identity.Name}";
                     }
@@ -100,6 +103,7 @@ namespace CoreLib.ASP.Filters
                     }
 
                     break;
+                }
             }
 
             var key = $"{nameof(ThrottleActionFilterAttribute)}:{Key}:{throttlingTypeKeyPart}";

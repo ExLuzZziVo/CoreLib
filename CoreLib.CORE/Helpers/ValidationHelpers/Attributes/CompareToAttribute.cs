@@ -58,23 +58,18 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         /// <param name="comparisonType">Comparison type</param>
         private static string GetDefaultErrorMessage(ComparisonType comparisonType)
         {
-            switch (comparisonType)
+            return comparisonType switch
             {
-                case ComparisonType.Equal:
-                    return ValidationStrings.ResourceManager.GetString("CompareToEqualError");
-                case ComparisonType.NotEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToNotEqualError");
-                case ComparisonType.Less:
-                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanError");
-                case ComparisonType.LessOrEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToSmallerThanOrEqualError");
-                case ComparisonType.Greater:
-                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanError");
-                case ComparisonType.GreaterOrEqual:
-                    return ValidationStrings.ResourceManager.GetString("CompareToGreaterThanOrEqualError");
-                default:
-                    throw new ArgumentNullException(nameof(comparisonType));
-            }
+                ComparisonType.Equal => ValidationStrings.ResourceManager.GetString("CompareToEqualError"),
+                ComparisonType.NotEqual => ValidationStrings.ResourceManager.GetString("CompareToNotEqualError"),
+                ComparisonType.Less => ValidationStrings.ResourceManager.GetString("CompareToSmallerThanError"),
+                ComparisonType.LessOrEqual => ValidationStrings.ResourceManager.GetString(
+                    "CompareToSmallerThanOrEqualError"),
+                ComparisonType.Greater => ValidationStrings.ResourceManager.GetString("CompareToGreaterThanError"),
+                ComparisonType.GreaterOrEqual => ValidationStrings.ResourceManager.GetString(
+                    "CompareToGreaterThanOrEqualError"),
+                _ => throw new ArgumentNullException(nameof(comparisonType))
+            };
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -151,25 +146,16 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
         {
             var comparisonResult = targetValue.CompareTo(compareToValue);
 
-            switch (comparisonType)
+            return comparisonType switch
             {
-                case ComparisonType.Equal:
-                    return comparisonResult == 0;
-                case ComparisonType.NotEqual:
-                    return comparisonResult != 0;
-                case ComparisonType.Less:
-                    return comparisonResult < 0;
-                case ComparisonType.LessOrEqual:
-                    return comparisonResult <= 0;
-                case ComparisonType.Greater:
-                    return comparisonResult > 0;
-                case ComparisonType.GreaterOrEqual:
-                    return comparisonResult >= 0;
-                default:
-                    return true;
-            }
-
-            return true;
+                ComparisonType.Equal => comparisonResult == 0,
+                ComparisonType.NotEqual => comparisonResult != 0,
+                ComparisonType.Less => comparisonResult < 0,
+                ComparisonType.LessOrEqual => comparisonResult <= 0,
+                ComparisonType.Greater => comparisonResult > 0,
+                ComparisonType.GreaterOrEqual => comparisonResult >= 0,
+                _ => true
+            };
         }
 
         public override bool Equals(object obj)

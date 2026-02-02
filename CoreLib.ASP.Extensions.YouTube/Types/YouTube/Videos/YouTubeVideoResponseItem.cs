@@ -4,7 +4,7 @@
     {
         public YouTubeVideoResponseItem()
         {
-            Items = new VideoItem[0];
+            Items = [];
         }
 
         public VideoItem[] Items { get; set; }

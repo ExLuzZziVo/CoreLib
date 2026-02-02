@@ -116,7 +116,7 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 {
                     isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateTimeOffset);
                 }
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
                 else if (currentOtherPropertyValue is DateOnly dateOnly)
                 {
                     isRequired = CheckIfOtherPropertyValueIsStringAndCompare(dateOnly);

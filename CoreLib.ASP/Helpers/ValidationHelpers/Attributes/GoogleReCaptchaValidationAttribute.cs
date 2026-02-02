@@ -31,7 +31,7 @@ namespace CoreLib.ASP.Helpers.ValidationHelpers.Attributes
         {
             var errorResult = new Lazy<ValidationResult>(() =>
                 new ValidationResult(ValidationStrings.ResourceManager.GetString("CaptchaValidationError"),
-                    new[] { validationContext.MemberName }));
+                    [validationContext.MemberName]));
 
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
             {

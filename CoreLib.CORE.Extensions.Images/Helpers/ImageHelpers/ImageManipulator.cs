@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 #if SYSTEM_DRAWING
 using System.Drawing;

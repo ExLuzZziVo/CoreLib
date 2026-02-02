@@ -2,7 +2,6 @@
 
 using System;
 using System.Globalization;
-using CoreLib.CORE.Helpers.DateTimeHelpers;
 
 #endregion
 
@@ -35,7 +34,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
 
                     break;
                 }
-#if NET6_0_OR_GREATER
+#if !NETSTANDARD2_0
                 case DateOnly dateOnly:
                 {
                     result = dateOnly == new DateOnly();
@@ -52,7 +51,7 @@ namespace CoreLib.STANDALONE.Helpers.Converters
                 default:
                 {
                     result = true;
-                    
+
                     break;
                 }
             }

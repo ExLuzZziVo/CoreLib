@@ -132,8 +132,8 @@ namespace CoreLib.OPENXML
         {
             var maxColWidth = new Dictionary<int, int>();
             var rows = sheetData.Elements<Row>();
-            uint[] numberStyles = { }; //styles that will add extra chars
-            uint[] boldStyles = { 2 }; //styles that will bold
+            uint[] numberStyles = []; //styles that will add extra chars
+            uint[] boldStyles = [2]; //styles that will bold
 
             foreach (var r in rows)
             {

@@ -8,7 +8,7 @@ namespace CoreLib.ASP.Extensions.YouTube.Types.YouTube.Channels
     {
         public YouTubeChannelResponseItem()
         {
-            Items = new ChannelItem[0];
+            Items = [];
         }
 
         public ChannelItem[] Items { get; set; }

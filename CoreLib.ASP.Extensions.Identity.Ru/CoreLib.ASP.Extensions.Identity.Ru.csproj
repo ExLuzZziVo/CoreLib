@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<RootNamespace>CoreLib.ASP</RootNamespace>
 		<AssemblyName>CoreLib.ASP.Extensions.Identity.Ru</AssemblyName>
 		<PackageId>CoreLib.ASP.Extensions.Identity.Ru</PackageId>
-		<VersionPrefix>1.0.8</VersionPrefix>
+		<VersionPrefix>1.0.9</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Локализация текстов ошибок пакета Identity.UI на русский</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
@@ -17,7 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.23"/>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
