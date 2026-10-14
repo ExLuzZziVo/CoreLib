@@ -4,13 +4,13 @@
 		<TargetFrameworks>netstandard2.0;net10.0;</TargetFrameworks>
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<PackageId>CoreLib.CORE.Extensions.Json</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>System.Text.Json converters and helpers</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>json;json converters;json helpers</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Text.Json" Version="10.0.2" />
+		<PackageReference Include="System.Text.Json" Version="10.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>

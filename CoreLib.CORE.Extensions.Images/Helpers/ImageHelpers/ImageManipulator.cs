@@ -587,5 +587,89 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
 
             return true;
         }
+
+#if SYSTEM_DRAWING
+        /// <summary>
+        /// Adds a watermark to the top-left corner of the target image
+        /// </summary>
+        /// <param name="pathToImage">Path to the image</param>
+        /// <param name="pathToWatermark">The path to the watermark image. It will be scaled to 16% of the target image's width or height (whichever is greater)</param>
+        /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
+        public static void AddWatermarkToImage(string pathToImage, string pathToWatermark, string pathToNewImage = null)
+        {
+            using var image = Image.FromFile(pathToImage);
+            using var watermarkImage = Image.FromFile(pathToWatermark);
+            using var imageGraphics = Graphics.FromImage(image);
+            using var watermarkBrush = new TextureBrush(watermarkImage);
+
+            var watermarkAspectRatio = (double)watermarkImage.Width / watermarkImage.Height;
+
+            var watermarkHeight =
+                Convert.ToInt32(Math.Round((image.Height > image.Width ? image.Height : image.Width) * 0.16, 0,
+                    MidpointRounding.AwayFromZero));
+
+            var watermarkWidth = Convert.ToInt32(Math.Round(watermarkHeight * watermarkAspectRatio, 0,
+                MidpointRounding.AwayFromZero));
+
+            imageGraphics.FillRectangle(watermarkBrush, new Rectangle(new Point(0, 0), new Size(watermarkWidth, watermarkHeight)));
+
+            image.Save(string.IsNullOrEmpty(pathToNewImage) ? pathToImage : pathToNewImage);
+        }
+#else
+        /// <summary>
+        /// Adds a watermark to the top-left corner of the target image
+        /// </summary>
+        /// <param name="pathToImage">Path to the image</param>
+        /// <param name="pathToWatermark">The path to the watermark image. It will be scaled to 16% of the target image's width or height (whichever is greater)</param>
+        /// <param name="pathToNewImage">The path to save the transformed image. If null, the target image will be replaced. Default value: null</param>
+        public static void AddWatermarkToImage(string pathToImage, string pathToWatermark, string pathToNewImage = null)
+        {
+            var imageData = File.ReadAllBytes(pathToImage);
+
+            using var image = SKImage.FromEncodedData(imageData);
+
+            var (imageWidth, imageHeight) = image.GetWidthAndHeight();
+
+            using var resultImage = SKBitmap.Decode(image.EncodedData, image.Info);
+
+            using var canvas = new SKCanvas(resultImage);
+
+            using var watermarkImage = SKBitmap.Decode(pathToWatermark);
+
+            var watermarkAspectRatio = (double)watermarkImage.Info.Width / watermarkImage.Info.Height;
+
+            var watermarkHeight =
+                Convert.ToInt32(Math.Round((imageHeight > imageWidth ? imageHeight : imageWidth) * 0.16, 0,
+                    MidpointRounding.AwayFromZero));
+
+            var watermarkWidth = Convert.ToInt32(Math.Round(watermarkHeight * watermarkAspectRatio, 0,
+                MidpointRounding.AwayFromZero));
+
+            using var resizedWatermarkImage =
+                watermarkImage.Resize(new SKSizeI(watermarkWidth, watermarkHeight),
+                    SKSamplingOptions.Default);
+
+            var rect = SKRect.Create(0, 0, resultImage.Width, resultImage.Height);
+
+            using var shader = SKShader.CreateBitmap(resizedWatermarkImage, SKShaderTileMode.Decal,
+                SKShaderTileMode.Decal);
+
+            using var backgroundPaint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Shader = shader
+            };
+
+            canvas.DrawRect(rect, backgroundPaint);
+
+            using var encoderInfo = SKCodec.Create(image.EncodedData);
+
+            using var newImage = resultImage.Encode(encoderInfo.EncodedFormat, 80);
+
+            File.WriteAllBytes(
+                string.IsNullOrEmpty(pathToNewImage) ? pathToImage : pathToNewImage,
+                newImage.ToArray());
+        }
+#endif
     }
 }

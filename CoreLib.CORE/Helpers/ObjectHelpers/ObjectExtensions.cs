@@ -476,5 +476,16 @@ namespace CoreLib.CORE.Helpers.ObjectHelpers
                 _ => false
             };
         }
+
+        /// <summary>
+        /// Checks if specified nullable struct value equals null or the default value
+        /// </summary>
+        /// <param name="target">Nullable struct value</param>
+        /// <typeparam name="T">A struct type</typeparam>
+        /// <returns>True if <see cref="target"/> equals null or the default value of <see cref="T"/></returns>
+        public static bool IsNullOrDefault<T>(this T? target) where T : struct
+        {
+            return !target.HasValue || EqualityComparer<T?>.Default.Equals(target, default(T));
+        }
     }
 }

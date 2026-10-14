@@ -5,13 +5,13 @@
 		<AssemblyName>CoreLib.CORE.Extensions.WEB</AssemblyName>
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<PackageId>CoreLib.CORE.Extensions.WEB</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>HttpRequest extension methods and helpers</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>helpers;types extensions;extension methods;httpclient;httprequest;http client;http request</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -21,8 +21,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.13" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>

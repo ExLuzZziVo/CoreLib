@@ -15,6 +15,8 @@ namespace CoreLib.OPENXML
 {
     public static class ExcelHelpers
     {
+        private const string IgnoreAutoSizing = nameof(IgnoreAutoSizing);
+
         /// <summary>
         /// Gets all cells from the specified row
         /// </summary>
@@ -102,11 +104,13 @@ namespace CoreLib.OPENXML
         {
             var maxColWidth = GetMaxCharacterWidth(sheetData);
             var columns = new Columns();
-            const double maxWidth = 4D;
+            const double maxWidth = 8D;
 
             foreach (var item in maxColWidth)
             {
-                var width = Math.Truncate((item.Value * maxWidth + 16) / maxWidth * 256) / 256;
+                var width = Math.Truncate(((item.Value + 4) * maxWidth + 5) / maxWidth * 256) / 256;
+                var pixels = Math.Truncate(((256 * width + Math.Truncate(128 / maxWidth)) / 256) * maxWidth);
+                var characterWidth = Math.Truncate((pixels - 5) / maxWidth * 100 + 0.5) / 100;
 
                 var col = new Column
                 {
@@ -114,7 +118,7 @@ namespace CoreLib.OPENXML
                     Min = (uint)(item.Key + 1),
                     Max = (uint)(item.Key + 1),
                     CustomWidth = true,
-                    Width = width
+                    Width = characterWidth
                 };
 
                 columns.Append(col);
@@ -133,7 +137,7 @@ namespace CoreLib.OPENXML
             var maxColWidth = new Dictionary<int, int>();
             var rows = sheetData.Elements<Row>();
             uint[] numberStyles = []; //styles that will add extra chars
-            uint[] boldStyles = [2]; //styles that will bold
+            uint[] boldStyles = [1]; //styles that will bold
 
             foreach (var r in rows)
             {
@@ -142,22 +146,45 @@ namespace CoreLib.OPENXML
                 for (var i = 0; i < cells.Length; i++)
                 {
                     var cell = cells[i];
-                    var cellValue = cell.CellValue == null ? string.Empty : cell.CellValue.InnerText;
-                    var cellTextLength = cellValue.Length;
+                    var cellTextLength = 0;
 
-                    if (cell.StyleIndex != null && ((IList)numberStyles).Contains(cell.StyleIndex))
+                    var isAutoSizingIgnored = cell.ExtendedAttributes.Any(a =>
+                        a.LocalName == IgnoreAutoSizing &&
+                        a.NamespaceUri == nameof(CoreLib));
+
+                    if (isAutoSizingIgnored)
                     {
-                        var thousandCount = (int)Math.Truncate((double)cellTextLength / 4);
-                        cellTextLength += 3 + thousandCount;
+                        cell.RemoveAttribute(nameof(IgnoreAutoSizing), nameof(CoreLib));
                     }
-
-                    if (cell.StyleIndex != null && ((IList)boldStyles).Contains(cell.StyleIndex))
+                    else
                     {
-                        cellTextLength += 1;
-                    }
+                        var cellValue = cell.CellValue == null
+                            ? (cell.FirstChild is InlineString str ? str.Text?.Text ?? string.Empty : string.Empty)
+                            : cell.CellValue.InnerText;
 
-                    cellTextLength += (int)Math.Round(cellValue.UppercaseCharactersCount() * 0.5, 0,
-                        MidpointRounding.AwayFromZero);
+                        cellTextLength = cellValue.Length;
+
+                        if (cellTextLength > 0)
+                        {
+                            if (cell.StyleIndex != null && ((IList)numberStyles).Contains(cell.StyleIndex))
+                            {
+                                var thousandCount = (int)Math.Truncate((double)cellTextLength / 4);
+                                cellTextLength += 3 + thousandCount;
+                            }
+
+                            if (cell.StyleIndex != null && ((IList)boldStyles).Contains(cell.StyleIndex))
+                            {
+                                cellTextLength += 1;
+                            }
+
+                            cellTextLength -= (int)Math.Round(
+                                cellValue.Count(ch => char.IsPunctuation(ch) || char.IsWhiteSpace(ch)) * 0.4, 0,
+                                MidpointRounding.AwayFromZero);
+
+                            cellTextLength += (int)Math.Round(cellValue.UppercaseCharactersCount() * 0.4, 0,
+                                MidpointRounding.AwayFromZero);
+                        }
+                    }
 
                     if (maxColWidth.ContainsKey(i))
                     {
@@ -345,6 +372,15 @@ namespace CoreLib.OPENXML
             }
 
             return columnName;
+        }
+
+        /// <summary>
+        /// Gets an <see cref="OpenXmlAttribute"/> attribute that can be attached to a <see cref="Cell"/> to ignore its automatic resizing by the <see cref="AutoSize"/> method
+        /// </summary>
+        /// <returns>The <see cref="OpenXmlAttribute"/> to ignore resizing by the <see cref="AutoSize"/> method</returns>
+        public static OpenXmlAttribute GetIgnoreAutoSizingAttribute()
+        {
+            return new OpenXmlAttribute(IgnoreAutoSizing, nameof(CoreLib), null);
         }
     }
 }

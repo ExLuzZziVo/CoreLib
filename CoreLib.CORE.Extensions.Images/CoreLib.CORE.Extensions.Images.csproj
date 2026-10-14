@@ -6,19 +6,20 @@
 		<AssemblyName>CoreLib.CORE.Extensions.Images</AssemblyName>
 		<DefineConstants Condition="'$(TargetFramework)' == 'net10.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
 		<PackageId>CoreLib.CORE.Extensions.Images</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>A bunch of helper classes for cropping, cutting, resizing and compressing images</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>images;resize images;compress images;crop to circle;crop images;cut images</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.119.1"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="4.153.1"/>
+		<PackageReference Condition="'$(TargetFramework)' == 'net10.0-windows'" Include="System.Drawing.Common" Version="10.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,10 +27,6 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows'">
-	  <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
 	</ItemGroup>
 
 </Project>

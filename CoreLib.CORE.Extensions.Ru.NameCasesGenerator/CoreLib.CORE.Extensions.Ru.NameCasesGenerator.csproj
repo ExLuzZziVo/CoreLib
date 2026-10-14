@@ -5,13 +5,13 @@
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<AssemblyName>CoreLib.CORE.Extensions.NameCasesGenerator</AssemblyName>
 		<PackageId>CoreLib.CORE.Extensions.NameCasesGenerator</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Вспомогательные методы для склонения и форматирования ФИО</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>склонение;склонение имен;склонение фамилий;склонение фио</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

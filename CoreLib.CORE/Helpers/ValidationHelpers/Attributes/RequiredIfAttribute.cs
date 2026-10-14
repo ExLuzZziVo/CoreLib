@@ -3,6 +3,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using CoreLib.CORE.Helpers.ObjectHelpers;
 using CoreLib.CORE.Helpers.StringHelpers;
@@ -67,7 +69,13 @@ namespace CoreLib.CORE.Helpers.ValidationHelpers.Attributes
                 throw new ArgumentNullException(nameof(validationContext));
             }
 
-            var otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
+            var otherProperties = validationContext.ObjectType.GetProperties()
+                .Where(p => p.Name == OtherPropertyName)
+                .ToArray();
+
+            var otherProperty = otherProperties.Length > 1 ?
+                validationContext.ObjectType.GetProperty(OtherPropertyName, BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public) :
+                otherProperties.FirstOrDefault();
 
             if (otherProperty == null)
             {

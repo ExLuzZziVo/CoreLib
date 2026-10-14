@@ -4,13 +4,13 @@
 		<TargetFrameworks>netstandard2.0;net10.0;</TargetFrameworks>
 		<RootNamespace>CoreLib.CORE</RootNamespace>
 		<PackageId>CoreLib.CORE.Extensions.Json.Newtonsoft</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>Newtonsoft.Json converters and helpers</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>json;json converters;json helpers</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

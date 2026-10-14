@@ -14,8 +14,6 @@ namespace CoreLib.CORE.Helpers.Converters
     /// </summary>
     internal class UnixTimestampConverter : JsonConverter<object>
     {
-        private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
         private readonly bool _useLocalTime;
 
         /// <summary>
@@ -47,8 +45,9 @@ namespace CoreLib.CORE.Helpers.Converters
                     $"Unexpected value when converting date. Expected DateTime but got {value.GetType()}.");
             }
 
-            writer.WriteStringValue(((_useLocalTime ? dateTime.ToUniversalTime() : dateTime) - UnixEpoch)
-                .TotalMilliseconds + "000");
+            DateTimeOffset dateTimeOffset = DateTime.SpecifyKind(dateTime, _useLocalTime ? DateTimeKind.Local : DateTimeKind.Utc);
+
+            writer.WriteStringValue(dateTimeOffset.ToUnixTimeMilliseconds().ToString());
         }
 
         public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -82,9 +81,9 @@ namespace CoreLib.CORE.Helpers.Converters
                 value = long.Parse(str);
             }
 
-            var result = UnixEpoch.AddMilliseconds(value);
+            var result = DateTimeOffset.FromUnixTimeMilliseconds(value);
 
-            return _useLocalTime ? result.ToLocalTime() : result;
+            return _useLocalTime ? result.LocalDateTime : result.UtcDateTime;
         }
 
         public override bool CanConvert(Type typeToConvert)

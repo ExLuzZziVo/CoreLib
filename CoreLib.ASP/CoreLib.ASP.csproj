@@ -4,13 +4,13 @@
 		<TargetFrameworks>net10.0;net10.0-windows;</TargetFrameworks>
 		<DefineConstants Condition="'$(TargetFramework)' == 'net10.0-windows' Or $(RuntimeIdentifier.StartsWith('win'))">SYSTEM_DRAWING</DefineConstants>
 		<PackageId>CoreLib.ASP</PackageId>
-		<VersionPrefix>1.0.9</VersionPrefix>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>Khatin S.A.</Authors>
 		<Description>A bunch of helper classes for web applications development</Description>
 		<PackageProjectUrl>https://github.com/ExLuzZziVo/CoreLib</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ExLuzZziVo/CoreLib</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
 		<PackageTags>asp action filters;asp helpers;recaptcha;recaptcha action filter;throttle action filter;validation attributes;modelbinders</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="3.119.1"/>
+		<PackageReference Condition="'$(DefineConstants.Contains(`SYSTEM_DRAWING`))' == 'false'" Include="SkiaSharp" Version="4.153.1"/>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -56,7 +56,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-windows'">
-	  <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+	  <PackageReference Include="System.Drawing.Common" Version="10.0.13" />
 	</ItemGroup>
 
 </Project>

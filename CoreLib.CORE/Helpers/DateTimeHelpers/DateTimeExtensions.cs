@@ -1,5 +1,6 @@
 ﻿#region
 
+using CoreLib.CORE.Helpers.ObjectHelpers;
 using System;
 using System.Globalization;
 
@@ -107,44 +108,47 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
         }
 #endif
 
-        /// <summary>
-        /// Checks if <see cref="DateTime"/> is null or equals new <see cref="DateTime"/>
-        /// </summary>
-        /// <param name="dateTime"><see cref="DateTime"/> to check</param>
-        /// <returns>True if provided <see cref="DateTime"/> is null or equals new <see cref="DateTime"/></returns>
-        public static bool IsNullOrNewDateTime(this DateTime? dateTime)
-        {
-            return dateTime == null || dateTime == new DateTime();
-        }
+		/// <summary>
+		/// Checks if <see cref="DateTime"/> is null or equals new <see cref="DateTime"/>
+		/// </summary>
+		/// <param name="dateTime"><see cref="DateTime"/> to check</param>
+		/// <returns>True if provided <see cref="DateTime"/> is null or equals new <see cref="DateTime"/></returns>
+        [Obsolete("Please, use 'IsNullOrDefault()' from 'ObjectExtensions' instead.")]
+		public static bool IsNullOrNewDateTime(this DateTime? dateTime)
+		{
+			return dateTime.IsNullOrDefault();
+		}
 
 #if !NETSTANDARD2_0
-        /// <summary>
-        /// Checks if <see cref="DateOnly"/> is null or equals new <see cref="DateOnly"/>
-        /// </summary>
-        /// <param name="date"><see cref="DateOnly"/> to check</param>
-        /// <returns>True if provided <see cref="DateOnly"/> is null or equals new <see cref="DateOnly"/></returns>
-        public static bool IsNullOrNewDateOnly(this DateOnly? date)
+		/// <summary>
+		/// Checks if <see cref="DateOnly"/> is null or equals new <see cref="DateOnly"/>
+		/// </summary>
+		/// <param name="date"><see cref="DateOnly"/> to check</param>
+		/// <returns>True if provided <see cref="DateOnly"/> is null or equals new <see cref="DateOnly"/></returns>
+		[Obsolete("Please, use 'IsNullOrDefault()' from 'ObjectExtensions' instead.")]
+		public static bool IsNullOrNewDateOnly(this DateOnly? date)
         {
-            return date == null || date == new DateOnly();
+            return date.IsNullOrDefault();
         }
 
-        /// <summary>
-        /// Checks if <see cref="TimeOnly"/> is null or equals new <see cref="TimeOnly"/>
-        /// </summary>
-        /// <param name="time"><see cref="TimeOnly"/> to check</param>
-        /// <returns>True if provided <see cref="TimeOnly"/> is null or equals new <see cref="TimeOnly"/></returns>
-        public static bool IsNullOrNewTimeOnly(this TimeOnly? time)
+		/// <summary>
+		/// Checks if <see cref="TimeOnly"/> is null or equals new <see cref="TimeOnly"/>
+		/// </summary>
+		/// <param name="time"><see cref="TimeOnly"/> to check</param>
+		/// <returns>True if provided <see cref="TimeOnly"/> is null or equals new <see cref="TimeOnly"/></returns>
+		[Obsolete("Please, use 'IsNullOrDefault()' from 'ObjectExtensions' instead.")]
+		public static bool IsNullOrNewTimeOnly(this TimeOnly? time)
         {
-            return time == null || time == new TimeOnly();
+            return time.IsNullOrDefault();
         }
 #endif
 
-        /// <summary>
-        /// Gets a quarter of the provided <see cref="DateTime"/>
-        /// </summary>
-        /// <param name="dateTime">A <see cref="DateTime"/> to process</param>
-        /// <returns>Quarter</returns>
-        public static int GetQuarter(this DateTime dateTime)
+		/// <summary>
+		/// Gets a quarter of the provided <see cref="DateTime"/>
+		/// </summary>
+		/// <param name="dateTime">A <see cref="DateTime"/> to process</param>
+		/// <returns>Quarter</returns>
+		public static int GetQuarter(this DateTime dateTime)
         {
             return (dateTime.Month + 2) / 3;
         }
@@ -398,5 +402,17 @@ namespace CoreLib.CORE.Helpers.DateTimeHelpers
             return DateOnly.FromDateTime(dateTime.Value);
         }
 #endif
+
+        /// <summary>
+        /// Converts <see cref="DateTime"/> to unix timestamp in milliseconds
+        /// </summary>
+        /// <param name="dateTime">A <see cref="DateTime"/> to process</param>
+        /// <returns>A unix timestamp in milliseconds</returns>
+        public static long ToUnixTimeMilliseconds(this DateTime dateTime)
+        {
+            DateTimeOffset dateTimeOffset = dateTime;
+
+            return dateTimeOffset.ToUnixTimeMilliseconds();
+        }
     }
 }

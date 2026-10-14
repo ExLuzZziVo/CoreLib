@@ -434,13 +434,17 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 {
                     canvas.Clear(background);
 
-                    using (var path = new SKPath())
+                    using (var pathBuilder = new SKPathBuilder())
                     {
-                        path.AddCircle(radius, radius, radius);
-                        canvas.ClipPath(path);
+                        pathBuilder.AddCircle(radius, radius, radius);
 
-                        canvas.DrawImage(img, SKRect.Create(x - radius, y - radius, newImageSize, newImageSize),
-                            SKRect.Create(newImageSize, newImageSize));
+                        using (var path = pathBuilder.Snapshot())
+                        {
+                            canvas.ClipPath(path);
+
+                            canvas.DrawImage(img, SKRect.Create(x - radius, y - radius, newImageSize, newImageSize),
+                                SKRect.Create(newImageSize, newImageSize), SKSamplingOptions.Default);
+                        }
                     }
                 }
 
@@ -536,7 +540,7 @@ namespace CoreLib.CORE.Helpers.ImageHelpers
                 {
                     canvas.DrawImage(img,
                         SKRect.Create(rectangleXPosition, rectangleYPosition, rectangleWidth, rectangleHeight),
-                        SKRect.Create(0, 0, rectangleWidth, rectangleHeight));
+                        SKRect.Create(0, 0, rectangleWidth, rectangleHeight), SKSamplingOptions.Default);
                 }
 
                 return SKImage.FromBitmap(bmpImage);

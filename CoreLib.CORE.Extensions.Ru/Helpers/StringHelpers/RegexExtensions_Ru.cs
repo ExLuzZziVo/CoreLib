@@ -34,9 +34,19 @@ namespace CoreLib.CORE.Helpers.StringHelpers
         public const string BIKPattern = @"^\d{9}$";
 
         /// <summary>
+        /// ОГРН ЮЛ
+        /// </summary>
+        public const string OGRNULPattern = @"^\d{13}$";
+
+        /// <summary>
+        /// ОГРНИП
+        /// </summary>
+        public const string OGRNIPPattern = @"^\d{15}$";
+
+        /// <summary>
         /// ОГРН
         /// </summary>
-        public const string OGRNPattern = @"^\d{13}$";
+        public const string OGRNPattern = OGRNULPattern + "|" + OGRNIPPattern;
 
         /// <summary>
         /// ОКПО

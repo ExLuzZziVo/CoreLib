@@ -1,0 +1,16 @@
+<Solution>
+  <Project Path="CoreLib.ASP.Extensions.Identity.Ru/CoreLib.ASP.Extensions.Identity.Ru.csproj" />
+  <Project Path="CoreLib.ASP.Extensions.YouTube/CoreLib.ASP.Extensions.YouTube.csproj" />
+  <Project Path="CoreLib.ASP/CoreLib.ASP.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Compression/CoreLib.CORE.Extensions.Compression.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Images/CoreLib.CORE.Extensions.Images.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Json.Newtonsoft/CoreLib.CORE.Extensions.Json.Newtonsoft.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Json/CoreLib.CORE.Extensions.Json.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Ru.GostEncryption/CoreLib.CORE.Extensions.Ru.GostEncryption.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Ru.NameCasesGenerator/CoreLib.CORE.Extensions.Ru.NameCasesGenerator.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.Ru/CoreLib.CORE.Extensions.Ru.csproj" />
+  <Project Path="CoreLib.CORE.Extensions.WEB/CoreLib.CORE.Extensions.WEB.csproj" />
+  <Project Path="CoreLib.CORE/CoreLib.CORE.csproj" />
+  <Project Path="CoreLib.OPENXML/CoreLib.OPENXML.csproj" />
+  <Project Path="CoreLib.STANDALONE/CoreLib.STANDALONE.csproj" />
+</Solution>
